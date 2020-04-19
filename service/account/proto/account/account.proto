@@ -1,0 +1,302 @@
+syntax = "proto3";
+
+package kmaguswira.srv.account;
+
+service Account {
+	rpc Call(Request) returns (Response) {}
+	rpc Stream(StreamingRequest) returns (stream StreamingResponse) {}
+	rpc PingPong(stream Ping) returns (stream Pong) {}
+	rpc SignUp(SignUpRequest) returns (SignUpResponse) {}
+	rpc SignIn (SignInRequest) returns (SignInResponse) {}
+	// rpc AccountActivation (AccountActivationRequest) returns (AccountActivationResponse) {}
+	// rpc ForgotPassword (ForgotPasswordRequest) returns (ForgotPasswordResponse) {}
+	// rpc ResetPassword (ResetPasswordRequest) returns (ResetPasswordResponse) {}
+	// rpc ChangePassword (ChangePasswordRequest) returns (ChangePasswordResponse) {}
+
+	rpc CreateRole (CreateRoleRequest) returns (CreateRoleResponse) {}
+	rpc FindRoleById (FindRoleByIdRequest) returns (FindRoleByIdResponse) {}
+	rpc FindAllRole (FindAllRoleRequest) returns (FindAllRoleResponse) {}
+	rpc UpdateRole (UpdateRoleRequest) returns (UpdateRoleResponse) {}
+	rpc DeleteRole (DeleteRoleRequest) returns (DeleteRoleResponse) {}
+	rpc FindRoleByTitle (FindRoleByTitleRequest) returns (FindRoleByTitleResponse) {}
+	rpc CreateACL (CreateACLRequest) returns (CreateACLResponse) {}
+	rpc FindACLById (FindACLByIdRequest) returns (FindACLByIdResponse) {}
+	rpc FindAllACL (FindAllACLRequest) returns (FindAllACLResponse) {}
+	rpc UpdateACL (UpdateACLRequest) returns (UpdateACLResponse) {}
+	rpc DeleteACL (DeleteACLRequest) returns (DeleteACLResponse) {}
+	rpc CreateUser (CreateUserRequest) returns (CreateUserResponse) {}
+	rpc FindUserById (FindUserByIdRequest) returns (FindUserByIdResponse) {}
+	rpc FindAllUser (FindAllUserRequest) returns (FindAllUserResponse) {}
+	rpc UpdateUser (UpdateUserRequest) returns (UpdateUserResponse) {}
+	rpc DeleteUser (DeleteUserRequest) returns (DeleteUserResponse) {}
+}
+
+message Message {
+	string say = 1;
+}
+
+message Request {
+	string name = 1;
+}
+
+message Response {
+	string msg = 1;
+}
+
+message StreamingRequest {
+	int64 count = 1;
+}
+
+message StreamingResponse {
+	int64 count = 1;
+}
+
+message Ping {
+	int64 stroke = 1;
+}
+
+message Pong {
+	int64 stroke = 1;
+}
+
+
+///////////////////////////////////
+// BASE
+///////////////////////////////////
+
+message User {
+    string id = 1;
+    string name = 2;
+    string email = 3;
+    string role = 4;
+    string status = 5;
+}
+
+message ACL {
+	string ID = 1;
+    string handler = 2;
+    bool isPublic = 3;
+    string title = 4;
+    string permitted = 5;
+}
+
+message Role {
+    string id = 1;
+    string title = 2;
+}
+
+message BaseResponse {
+    string status = 1;
+    string message = 2;
+    int32 limit = 3;
+    int32 offset = 4;
+}
+
+message BaseQuery {
+	string query = 1;
+	int32 limit = 2;
+	int32 offset = 3;
+	string sort = 4;
+}
+
+///////////////////////////////////
+// REQUEST-RESPONSE
+///////////////////////////////////
+
+message SignUpRequest {
+	string email = 1;
+	string name = 2;
+	string username = 3;
+	string password = 4;
+}
+
+message SignUpResponse {
+	BaseResponse responseInfo = 1;
+	User result = 2;
+}
+
+message SignInRequest {
+	string user = 1;
+	string password = 2;
+}
+
+message SignInResponse {
+	BaseResponse responseInfo = 1;
+	User result = 2;
+}
+
+// message AccountActivationRequest {
+
+// }
+
+// message AccountActivationResponse {
+
+// }
+
+// message ForgotPasswordRequest {
+
+// }
+
+// message ForgotPasswordResponse {
+
+// }
+
+// message ResetPasswordRequest {
+
+// }
+
+// message ResetPasswordResponse {
+
+// }
+
+// message ChangePasswordRequest {
+
+// }
+
+// message ChangePasswordResponse {
+
+// }
+
+message CreateRoleRequest {
+	string title = 1;
+}
+
+message CreateRoleResponse {
+	BaseResponse responseInfo = 1;
+	Role result = 2;
+}
+
+message FindRoleByIdRequest {
+	string id = 1;
+}
+
+message FindRoleByIdResponse {
+	BaseResponse responseInfo = 1;
+	Role result = 2;
+}
+
+message FindAllRoleRequest {
+	BaseQuery query = 1;
+}
+
+message FindAllRoleResponse {
+	BaseResponse responseInfo = 1;
+	repeated Role result = 2;
+}
+
+message UpdateRoleRequest {
+	Role update = 1;
+}
+
+message UpdateRoleResponse {
+	BaseResponse responseInfo = 1;
+	Role result = 2;
+}
+
+message DeleteRoleRequest {
+	string id = 1;
+}
+
+message DeleteRoleResponse {
+	BaseResponse responseInfo = 1;
+	Role result = 2;
+}
+
+message FindRoleByTitleRequest {
+	string title = 1;
+}
+
+message FindRoleByTitleResponse {
+	BaseResponse responseInfo = 1;
+	Role result = 2;
+}
+
+message CreateACLRequest {
+	ACL new = 1;
+}
+
+message CreateACLResponse {
+	BaseResponse responseInfo = 1;
+	ACL result = 2;
+}
+
+message FindACLByIdRequest {
+	string id = 1;
+}
+
+message FindACLByIdResponse {
+	BaseResponse responseInfo = 1;
+	ACL result = 2;
+}
+
+message FindAllACLRequest {
+	BaseQuery query = 1;
+}
+
+message FindAllACLResponse {
+	BaseResponse responseInfo = 1;
+	repeated ACL result = 2;
+}
+
+message UpdateACLRequest {
+	ACL update = 1;
+}
+
+message UpdateACLResponse {
+	BaseResponse responseInfo = 1;
+	ACL result = 2;
+}
+
+message DeleteACLRequest {
+	string id = 1;
+}
+
+message DeleteACLResponse {
+	BaseResponse responseInfo = 1;
+	ACL result = 2;
+}
+
+message CreateUserRequest {
+	User new = 1;
+}
+
+message CreateUserResponse {
+	BaseResponse responseInfo = 1;
+	User result = 2;
+}
+
+message FindUserByIdRequest {
+	string id = 1;
+}
+
+message FindUserByIdResponse {
+	BaseResponse responseInfo = 1;
+	User result = 2;
+}
+
+message FindAllUserRequest {
+	BaseQuery query = 1;
+}
+
+message FindAllUserResponse {
+	BaseResponse responseInfo = 1;
+	repeated User result = 2;
+}
+
+message UpdateUserRequest {
+	User update = 1;
+}
+
+message UpdateUserResponse {
+	BaseResponse responseInfo = 1;
+	User result = 2;
+}
+
+message DeleteUserRequest {
+	string id = 1;
+}
+
+message DeleteUserResponse {
+	BaseResponse responseInfo = 1;
+	User result = 2;
+}

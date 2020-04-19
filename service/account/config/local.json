@@ -1,0 +1,29 @@
+{
+    "name": "local",
+    "server": {
+        "name": "kmaguswira.srv.account",
+        "port": "3101",
+        "secret": "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
+    },
+    "repositories": {
+        "read": {
+            "driver": "mysql",
+            "name": "micro_clean",
+            "user": "root",
+            "password": "root",
+            "host": "localhost",
+            "port": "3306",
+            "drop": false
+        },
+        "readWrite": {
+            "driver": "mysql",
+            "name": "micro_clean",
+            "user": "root",
+            "password": "root",
+            "host": "localhost",
+            "port": "3306",
+            "drop": false
+        }
+        
+    }
+}

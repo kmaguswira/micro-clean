@@ -1,0 +1,29 @@
+{
+    "name": "local",
+    "server": {
+        "port": ":3100",
+        "secret": "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
+    },
+    "infrastructure": {
+        "persistance": {
+            "readWrite": {
+                "driver": "sqllite",
+                "name": "core-micro-clean",
+                "user": "adm",
+                "password": "Password1$",
+                "host": "localhost",
+                "port": "5432"
+            }
+        }
+    },
+    "security": {
+        "cors": {
+            "allowOrigin": ["http://localhost:4200"],
+            "maxAge": 86400,
+            "allowMethod": ["POST", "GET", "OPTIONS", "PUT", "DELETE", "UPDATE"],
+            "allowHeaders": ["Origin", "Content-Type", "Content-Length", "Accept-Encoding", "X-CSRF-Token"],
+            "exposeHeaders": ["Content-Length"],
+            "allowCredentials": true
+        }
+    }
+}
