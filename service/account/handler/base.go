@@ -15,8 +15,12 @@ type Account struct {
 	signUpUseCase          usecases.ISignUp
 	signInUseCase          usecases.ISignIn
 	createRoleUseCase      usecases.ICreateRole
+	findRoleByIDUseCase    usecases.IFindRoleByID
 	findRoleByTitleUseCase usecases.IFindRoleByTitle
 	createACLUseCase       usecases.ICreateACL
+	findACLByIDUseCase     usecases.IFindACLByID
+	createUserUseCase      usecases.ICreateUser
+	findUserByIDUseCase    usecases.IFindUserByID
 	response               utils.Response
 }
 
@@ -28,8 +32,12 @@ func NewAccount() *Account {
 		signUpUseCase:          usecases.NewSignUpUseCase(readWriteRepository),
 		signInUseCase:          usecases.NewSignInUseCase(readRepository),
 		createRoleUseCase:      usecases.NewCreateRoleUseCase(readWriteRepository),
-		createACLUseCase:       usecases.NewCreateACLUseCase(readWriteRepository),
+		findRoleByIDUseCase:    usecases.NewFindRoleByIDUseCase(readRepository),
 		findRoleByTitleUseCase: usecases.NewfindRoleByTitleUseCase(readRepository),
+		createACLUseCase:       usecases.NewCreateACLUseCase(readWriteRepository),
+		findACLByIDUseCase:     usecases.NewFindACLByIDUseCase(readRepository),
+		createUserUseCase:      usecases.NewCreateUserUseCase(readWriteRepository),
+		findUserByIDUseCase:    usecases.NewFindUserByIDUseCase(readRepository),
 		response:               utils.Response{},
 	}
 }

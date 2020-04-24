@@ -48,6 +48,31 @@ func (t *Account) CreateACL(ctx context.Context, req *account.CreateACLRequest, 
 }
 
 func (t *Account) FindACLById(ctx context.Context, req *account.FindACLByIdRequest, res *account.FindACLByIdResponse) error {
+	log.Log("Received Account.FindACLById")
+
+	result, err := t.findACLByIDUseCase.Execute(req.Id)
+
+	if err != nil {
+		res.ResponseInfo = t.response.InternalServerError()
+		return nil
+	}
+
+	var roleID []string
+	From(result.Permitted).Select(func(c interface{}) interface{} {
+		return c.(domain.Role).ID
+	}).ToSlice(&roleID)
+
+	Result := account.ACL{
+		ID:        result.ID,
+		Title:     result.Title,
+		Handler:   result.Handler,
+		IsPublic:  result.IsPublic,
+		Permitted: strings.Join(roleID, ","),
+	}
+
+	res.ResponseInfo = t.response.OK()
+	res.Result = &Result
+
 	return nil
 }
 

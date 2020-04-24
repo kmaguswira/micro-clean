@@ -39,6 +39,7 @@ func (s *signUpUseCase) Execute(input SignUpInput) (SignUpOutput, error) {
 		Name:     input.Name,
 		Username: input.Username,
 		RoleID:   input.Role,
+		Status:   "not_verified",
 	}
 	newUser.SetPassword(input.Password)
 	result, err := s.readWriteRepository.CreateUser(&newUser)

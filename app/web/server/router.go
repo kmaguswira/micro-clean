@@ -49,14 +49,36 @@ func RouterV1(router *gin.Engine) {
 		authGroup := v1.Group("auth")
 		{
 			auth := new(controllers.AuthController)
-			// user := new(controllers.UserController)
 
 			authGroup.POST("/sign-up", auth.SignUp)
 			authGroup.POST("/sign-in", auth.SignIn)
 			// authGroup.GET("/self", auth.Self)
 			// authGroup.POST("/sign-in/admin", auth.PostSignInAdmin)
 			// authGroup.GET("/all", user.GetUsers)
+		}
 
+		userGroup := v1.Group("user")
+		{
+			user := new(controllers.UserController)
+
+			userGroup.POST("/create", user.Create)
+			userGroup.GET("/:id", user.FindById)
+		}
+
+		roleGroup := v1.Group("role")
+		{
+			role := new(controllers.RoleController)
+
+			roleGroup.POST("/create", role.Create)
+			roleGroup.GET("/:id", role.FindById)
+		}
+
+		aclGroup := v1.Group("acl")
+		{
+			acl := new(controllers.ACLController)
+
+			aclGroup.POST("/create", acl.Create)
+			aclGroup.GET("/:id", acl.FindById)
 		}
 	}
 

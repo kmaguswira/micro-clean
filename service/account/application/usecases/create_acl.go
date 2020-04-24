@@ -21,12 +21,12 @@ type CreateACLInput struct {
 }
 
 type createACLUseCase struct {
-	readWriteRpositories repositories.IReadWriteRepository
+	readWriteRepository repositories.IReadWriteRepository
 }
 
 func NewCreateACLUseCase(ReadWriteRepository repositories.IReadWriteRepository) ICreateACL {
 	return &createACLUseCase{
-		readWriteRpositories: ReadWriteRepository,
+		readWriteRepository: ReadWriteRepository,
 	}
 }
 
@@ -46,7 +46,7 @@ func (t *createACLUseCase) Execute(input CreateACLInput) (domain.ACL, error) {
 		IsPublic:  input.IsPublic,
 		Permitted: role,
 	}
-	result, err := t.readWriteRpositories.CreateACL(&newACL)
+	result, err := t.readWriteRepository.CreateACL(&newACL)
 
 	if err == nil {
 		return *result, nil

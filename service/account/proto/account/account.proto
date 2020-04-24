@@ -66,10 +66,12 @@ message Pong {
 
 message User {
     string id = 1;
-    string name = 2;
-    string email = 3;
-    string role = 4;
-    string status = 5;
+	string name = 2;
+	string username =3;
+    string email = 4;
+    string roleId = 5;
+	string status = 6;
+	string password = 7;
 }
 
 message ACL {
@@ -158,7 +160,7 @@ message SignInResponse {
 // }
 
 message CreateRoleRequest {
-	string title = 1;
+	Role new = 1;
 }
 
 message CreateRoleResponse {

@@ -62,5 +62,6 @@ func (t *readWriteRepository) CreateUser(user *domain.User) (*domain.User, error
 		RoleID:   user.RoleID,
 	}
 	t.db.Create(&newUser)
+	user.ID = newUser.ID
 	return user, nil
 }
