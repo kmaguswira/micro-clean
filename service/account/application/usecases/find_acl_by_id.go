@@ -8,7 +8,7 @@ import (
 )
 
 type IFindACLByID interface {
-	Execute(id string) (domain.ACL, error)
+	Execute(ID string) (domain.ACL, error)
 }
 
 type findACLByIDUseCase struct {
@@ -21,8 +21,8 @@ func NewFindACLByIDUseCase(ReadRepository repositories.IReadRepository) IFindACL
 	}
 }
 
-func (t *findACLByIDUseCase) Execute(id string) (domain.ACL, error) {
-	result, err := t.readRepository.FindACLByID(id)
+func (t *findACLByIDUseCase) Execute(ID string) (domain.ACL, error) {
+	result, err := t.readRepository.FindACLByID(ID)
 
 	if err == nil {
 		return *result, nil

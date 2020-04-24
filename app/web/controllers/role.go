@@ -50,3 +50,20 @@ func (t RoleController) FindById(c *gin.Context) {
 
 	return
 }
+
+func (t RoleController) Delete(c *gin.Context) {
+	id := c.Param("id")
+
+	response, err := accountService.DeleteRole(c, &account.DeleteRoleRequest{
+		Id: id,
+	})
+
+	if err != nil {
+		t.BadRequest(c, err.Error())
+		return
+	}
+
+	t.OKSingleData(c, response)
+
+	return
+}

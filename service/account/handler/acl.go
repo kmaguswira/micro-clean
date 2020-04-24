@@ -85,5 +85,30 @@ func (t *Account) UpdateACL(ctx context.Context, req *account.UpdateACLRequest, 
 }
 
 func (t *Account) DeleteACL(ctx context.Context, req *account.DeleteACLRequest, res *account.DeleteACLResponse) error {
+	log.Log("Received Account.DeleteACL")
+
+	result, err := t.deleteACLUseCase.Execute(req.Id)
+
+	if err != nil {
+		res.ResponseInfo = t.response.InternalServerError()
+		return nil
+	}
+
+	var roleID []string
+	From(result.Permitted).Select(func(c interface{}) interface{} {
+		return c.(domain.Role).ID
+	}).ToSlice(&roleID)
+
+	Result := account.ACL{
+		ID:        result.ID,
+		Title:     result.Title,
+		Handler:   result.Handler,
+		IsPublic:  result.IsPublic,
+		Permitted: strings.Join(roleID, ","),
+	}
+
+	res.ResponseInfo = t.response.OK()
+	res.Result = &Result
+
 	return nil
 }

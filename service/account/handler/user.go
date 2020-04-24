@@ -76,5 +76,26 @@ func (t *Account) UpdateUser(ctx context.Context, req *account.UpdateUserRequest
 }
 
 func (t *Account) DeleteUser(ctx context.Context, req *account.DeleteUserRequest, res *account.DeleteUserResponse) error {
+	log.Log("Received Account.DeleteUser")
+
+	result, err := t.deleteUserUseCase.Execute(req.Id)
+
+	if err != nil {
+		res.ResponseInfo = t.response.InternalServerError()
+		return nil
+	}
+
+	Result := account.User{
+		Id:       result.ID,
+		Name:     result.Name,
+		Email:    result.Email,
+		Username: result.Username,
+		Status:   result.Status,
+		RoleId:   result.RoleID,
+	}
+
+	res.ResponseInfo = t.response.OK()
+	res.Result = &Result
+
 	return nil
 }

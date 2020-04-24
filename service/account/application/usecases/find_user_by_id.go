@@ -8,7 +8,7 @@ import (
 )
 
 type IFindUserByID interface {
-	Execute(id string) (domain.User, error)
+	Execute(ID string) (domain.User, error)
 }
 
 type findUserByIDUseCase struct {
@@ -21,8 +21,8 @@ func NewFindUserByIDUseCase(ReadRepository repositories.IReadRepository) IFindUs
 	}
 }
 
-func (t *findUserByIDUseCase) Execute(id string) (domain.User, error) {
-	result, err := t.readRepository.FindUserByID(id)
+func (t *findUserByIDUseCase) Execute(ID string) (domain.User, error) {
+	result, err := t.readRepository.FindUserByID(ID)
 
 	if err == nil {
 		return *result, nil

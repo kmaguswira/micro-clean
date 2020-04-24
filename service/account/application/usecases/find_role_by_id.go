@@ -8,7 +8,7 @@ import (
 )
 
 type IFindRoleByID interface {
-	Execute(id string) (domain.Role, error)
+	Execute(ID string) (domain.Role, error)
 }
 
 type findRoleByIDUseCase struct {
@@ -21,8 +21,8 @@ func NewFindRoleByIDUseCase(ReadRepository repositories.IReadRepository) IFindRo
 	}
 }
 
-func (t *findRoleByIDUseCase) Execute(id string) (domain.Role, error) {
-	result, err := t.readRepository.FindRoleByID(id)
+func (t *findRoleByIDUseCase) Execute(ID string) (domain.Role, error) {
+	result, err := t.readRepository.FindRoleByID(ID)
 
 	if err == nil {
 		return *result, nil

@@ -57,3 +57,20 @@ func (t ACLController) FindById(c *gin.Context) {
 
 	return
 }
+
+func (t ACLController) Delete(c *gin.Context) {
+	id := c.Param("id")
+
+	response, err := accountService.DeleteACL(c, &account.DeleteACLRequest{
+		Id: id,
+	})
+
+	if err != nil {
+		t.BadRequest(c, err.Error())
+		return
+	}
+
+	t.OKSingleData(c, response)
+
+	return
+}

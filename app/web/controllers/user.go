@@ -55,3 +55,20 @@ func (t UserController) FindById(c *gin.Context) {
 
 	return
 }
+
+func (t UserController) Delete(c *gin.Context) {
+	id := c.Param("id")
+
+	response, err := accountService.DeleteUser(c, &account.DeleteUserRequest{
+		Id: id,
+	})
+
+	if err != nil {
+		t.BadRequest(c, err.Error())
+		return
+	}
+
+	t.OKSingleData(c, response)
+
+	return
+}

@@ -56,6 +56,23 @@ func (t *Account) UpdateRole(ctx context.Context, req *account.UpdateRoleRequest
 }
 
 func (t *Account) DeleteRole(ctx context.Context, req *account.DeleteRoleRequest, res *account.DeleteRoleResponse) error {
+	log.Log("Received Account.DeleteRole")
+
+	result, err := t.deleteRoleUseCase.Execute(req.Id)
+
+	if err != nil {
+		res.ResponseInfo = t.response.InternalServerError()
+		return nil
+	}
+
+	Result := account.Role{
+		Id:    result.ID,
+		Title: result.Title,
+	}
+
+	res.ResponseInfo = t.response.OK()
+	res.Result = &Result
+
 	return nil
 }
 
