@@ -24,7 +24,7 @@ func (t UserController) Create(c *gin.Context) {
 			Name:     createUserRequest.Name,
 			Username: createUserRequest.Username,
 			Email:    createUserRequest.Email,
-			RoleId:   createUserRequest.RoleID,
+			RoleID:   createUserRequest.RoleID,
 			Status:   createUserRequest.Status,
 			Password: createUserRequest.Password,
 		},
@@ -61,6 +61,37 @@ func (t UserController) Delete(c *gin.Context) {
 
 	response, err := accountService.DeleteUser(c, &account.DeleteUserRequest{
 		Id: id,
+	})
+
+	if err != nil {
+		t.BadRequest(c, err.Error())
+		return
+	}
+
+	t.OKSingleData(c, response)
+
+	return
+}
+
+func (t UserController) Update(c *gin.Context) {
+	id := c.Param("id")
+
+	var updateUserRequest requests.UpdateUser
+
+	if err := c.BindJSON(&updateUserRequest); err != nil {
+		t.BadRequest(c, err.Error())
+		return
+	}
+
+	response, err := accountService.UpdateUser(c, &account.UpdateUserRequest{
+		Update: &account.User{
+			ID:       id,
+			Name:     updateUserRequest.Name,
+			Username: updateUserRequest.Username,
+			Email:    updateUserRequest.Email,
+			RoleID:   updateUserRequest.RoleID,
+			Status:   updateUserRequest.Status,
+		},
 	})
 
 	if err != nil {

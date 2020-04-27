@@ -67,3 +67,30 @@ func (t RoleController) Delete(c *gin.Context) {
 
 	return
 }
+
+func (t RoleController) Update(c *gin.Context) {
+	id := c.Param("id")
+
+	var updateRoleRequest requests.UpdateRole
+
+	if err := c.BindJSON(&updateRoleRequest); err != nil {
+		t.BadRequest(c, err.Error())
+		return
+	}
+
+	response, err := accountService.UpdateRole(c, &account.UpdateRoleRequest{
+		Update: &account.Role{
+			ID:    id,
+			Title: updateRoleRequest.Title,
+		},
+	})
+
+	if err != nil {
+		t.BadRequest(c, err.Error())
+		return
+	}
+
+	t.OKSingleData(c, response)
+
+	return
+}

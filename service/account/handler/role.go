@@ -3,6 +3,7 @@ package handler
 import (
 	"context"
 
+	"github.com/kmaguswira/micro-clean/service/account/application/usecases"
 	account "github.com/kmaguswira/micro-clean/service/account/proto/account"
 	"github.com/micro/go-micro/util/log"
 )
@@ -17,7 +18,7 @@ func (t *Account) CreateRole(ctx context.Context, req *account.CreateRoleRequest
 	}
 
 	Result := account.Role{
-		Id:    result.ID,
+		ID:    result.ID,
 		Title: result.Title,
 	}
 	res.ResponseInfo = t.response.Created()
@@ -37,7 +38,7 @@ func (t *Account) FindRoleById(ctx context.Context, req *account.FindRoleByIdReq
 	}
 
 	Result := account.Role{
-		Id:    result.ID,
+		ID:    result.ID,
 		Title: result.Title,
 	}
 
@@ -52,6 +53,28 @@ func (t *Account) FindAllRole(ctx context.Context, req *account.FindAllRoleReque
 }
 
 func (t *Account) UpdateRole(ctx context.Context, req *account.UpdateRoleRequest, res *account.UpdateRoleResponse) error {
+	log.Log("Received Account.UpdateRole")
+
+	input := usecases.UpdateRoleInput{
+		ID:    req.Update.ID,
+		Title: req.Update.Title,
+	}
+
+	result, err := t.updateRoleUseCase.Execute(input)
+
+	if err != nil {
+		res.ResponseInfo = t.response.InternalServerError()
+		return nil
+	}
+
+	Result := account.Role{
+		ID:    result.ID,
+		Title: result.Title,
+	}
+
+	res.ResponseInfo = t.response.OK()
+	res.Result = &Result
+
 	return nil
 }
 
@@ -66,7 +89,7 @@ func (t *Account) DeleteRole(ctx context.Context, req *account.DeleteRoleRequest
 	}
 
 	Result := account.Role{
-		Id:    result.ID,
+		ID:    result.ID,
 		Title: result.Title,
 	}
 
@@ -87,7 +110,7 @@ func (t *Account) FindRoleByTitle(ctx context.Context, req *account.FindRoleByTi
 	}
 
 	Result := account.Role{
-		Id:    result.ID,
+		ID:    result.ID,
 		Title: result.Title,
 	}
 

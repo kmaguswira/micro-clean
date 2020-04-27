@@ -17,7 +17,7 @@ func (t *Account) CreateUser(ctx context.Context, req *account.CreateUserRequest
 		Username: req.New.Username,
 		Password: req.New.Password,
 		Status:   req.New.Status,
-		RoleID:   req.New.RoleId,
+		RoleID:   req.New.RoleID,
 	}
 
 	result, err := t.createUserUseCase.Execute(input)
@@ -28,12 +28,12 @@ func (t *Account) CreateUser(ctx context.Context, req *account.CreateUserRequest
 	}
 
 	Result := account.User{
-		Id:       result.ID,
+		ID:       result.ID,
 		Name:     result.Name,
 		Email:    result.Email,
 		Username: result.Username,
 		Status:   result.Status,
-		RoleId:   result.RoleID,
+		RoleID:   result.RoleID,
 	}
 
 	res.ResponseInfo = t.response.OK()
@@ -53,12 +53,12 @@ func (t *Account) FindUserById(ctx context.Context, req *account.FindUserByIdReq
 	}
 
 	Result := account.User{
-		Id:       result.ID,
+		ID:       result.ID,
 		Name:     result.Name,
 		Email:    result.Email,
 		Username: result.Username,
 		Status:   result.Status,
-		RoleId:   result.RoleID,
+		RoleID:   result.RoleID,
 	}
 
 	res.ResponseInfo = t.response.OK()
@@ -72,6 +72,36 @@ func (t *Account) FindAllUser(ctx context.Context, req *account.FindAllUserReque
 }
 
 func (t *Account) UpdateUser(ctx context.Context, req *account.UpdateUserRequest, res *account.UpdateUserResponse) error {
+	log.Log("Received Account.UpdateUser")
+
+	input := usecases.UpdateUserInput{
+		ID:       req.Update.ID,
+		Name:     req.Update.Name,
+		Username: req.Update.Username,
+		Email:    req.Update.Email,
+		RoleID:   req.Update.RoleID,
+		Status:   req.Update.Status,
+	}
+
+	result, err := t.updateUserUseCase.Execute(input)
+
+	if err != nil {
+		res.ResponseInfo = t.response.InternalServerError()
+		return nil
+	}
+
+	Result := account.User{
+		ID:       result.ID,
+		Name:     result.Name,
+		Email:    result.Email,
+		Username: result.Username,
+		Status:   result.Status,
+		RoleID:   result.RoleID,
+	}
+
+	res.ResponseInfo = t.response.OK()
+	res.Result = &Result
+
 	return nil
 }
 
@@ -86,12 +116,12 @@ func (t *Account) DeleteUser(ctx context.Context, req *account.DeleteUserRequest
 	}
 
 	Result := account.User{
-		Id:       result.ID,
+		ID:       result.ID,
 		Name:     result.Name,
 		Email:    result.Email,
 		Username: result.Username,
 		Status:   result.Status,
-		RoleId:   result.RoleID,
+		RoleID:   result.RoleID,
 	}
 
 	res.ResponseInfo = t.response.OK()

@@ -65,11 +65,11 @@ message Pong {
 ///////////////////////////////////
 
 message User {
-    string id = 1;
+    string ID = 1;
 	string name = 2;
 	string username =3;
     string email = 4;
-    string roleId = 5;
+    string roleID = 5;
 	string status = 6;
 	string password = 7;
 }
@@ -83,7 +83,7 @@ message ACL {
 }
 
 message Role {
-    string id = 1;
+    string ID = 1;
     string title = 2;
 }
 

@@ -74,3 +74,33 @@ func (t ACLController) Delete(c *gin.Context) {
 
 	return
 }
+
+func (t ACLController) Update(c *gin.Context) {
+	id := c.Param("id")
+
+	var updateACLRequest requests.UpdateACL
+
+	if err := c.BindJSON(&updateACLRequest); err != nil {
+		t.BadRequest(c, err.Error())
+		return
+	}
+
+	response, err := accountService.UpdateACL(c, &account.UpdateACLRequest{
+		Update: &account.ACL{
+			ID:        id,
+			Handler:   updateACLRequest.Handler,
+			IsPublic:  updateACLRequest.IsPublic,
+			Title:     updateACLRequest.Title,
+			Permitted: updateACLRequest.Permitted,
+		},
+	})
+
+	if err != nil {
+		t.BadRequest(c, err.Error())
+		return
+	}
+
+	t.OKSingleData(c, response)
+
+	return
+}

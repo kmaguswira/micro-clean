@@ -17,13 +17,16 @@ type Account struct {
 	createRoleUseCase      usecases.ICreateRole
 	findRoleByIDUseCase    usecases.IFindRoleByID
 	deleteRoleUseCase      usecases.IDeleteRole
+	updateRoleUseCase      usecases.IUpdateRole
 	findRoleByTitleUseCase usecases.IFindRoleByTitle
 	createACLUseCase       usecases.ICreateACL
 	findACLByIDUseCase     usecases.IFindACLByID
 	deleteACLUseCase       usecases.IDeleteACL
+	updateACLUseCase       usecases.IUpdateACL
 	createUserUseCase      usecases.ICreateUser
 	findUserByIDUseCase    usecases.IFindUserByID
 	deleteUserUseCase      usecases.IDeleteUser
+	updateUserUseCase      usecases.IUpdateUser
 	response               utils.Response
 }
 
@@ -37,13 +40,16 @@ func NewAccount() *Account {
 		createRoleUseCase:      usecases.NewCreateRoleUseCase(readWriteRepository),
 		findRoleByIDUseCase:    usecases.NewFindRoleByIDUseCase(readRepository),
 		deleteRoleUseCase:      usecases.NewDeleteRoleUseCase(readWriteRepository),
+		updateRoleUseCase:      usecases.NewUpdateRoleUseCase(readWriteRepository),
 		findRoleByTitleUseCase: usecases.NewfindRoleByTitleUseCase(readRepository),
 		createACLUseCase:       usecases.NewCreateACLUseCase(readWriteRepository),
 		findACLByIDUseCase:     usecases.NewFindACLByIDUseCase(readRepository),
 		deleteACLUseCase:       usecases.NewDeleteACLUseCase(readWriteRepository),
+		updateACLUseCase:       usecases.NewUpdateACLUseCase(readWriteRepository),
 		createUserUseCase:      usecases.NewCreateUserUseCase(readWriteRepository),
 		findUserByIDUseCase:    usecases.NewFindUserByIDUseCase(readRepository),
 		deleteUserUseCase:      usecases.NewDeleteUserUseCase(readWriteRepository),
+		updateUserUseCase:      usecases.NewUpdateUserUseCase(readWriteRepository),
 		response:               utils.Response{},
 	}
 }

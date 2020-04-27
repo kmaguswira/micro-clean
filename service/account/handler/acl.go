@@ -81,6 +81,39 @@ func (t *Account) FindAllACL(ctx context.Context, req *account.FindAllACLRequest
 }
 
 func (t *Account) UpdateACL(ctx context.Context, req *account.UpdateACLRequest, res *account.UpdateACLResponse) error {
+	log.Log("Received Account.UpdateACL")
+
+	input := usecases.UpdateACLInput{
+		ID:        req.Update.ID,
+		Title:     req.Update.Title,
+		Handler:   req.Update.Handler,
+		IsPublic:  req.Update.IsPublic,
+		Permitted: req.Update.Permitted,
+	}
+
+	result, err := t.updateACLUseCase.Execute(input)
+
+	if err != nil {
+		res.ResponseInfo = t.response.InternalServerError()
+		return nil
+	}
+
+	var roleID []string
+	From(result.Permitted).Select(func(c interface{}) interface{} {
+		return c.(domain.Role).ID
+	}).ToSlice(&roleID)
+
+	Result := account.ACL{
+		ID:        result.ID,
+		Title:     result.Title,
+		Handler:   result.Handler,
+		IsPublic:  result.IsPublic,
+		Permitted: strings.Join(roleID, ","),
+	}
+
+	res.ResponseInfo = t.response.OK()
+	res.Result = &Result
+
 	return nil
 }
 

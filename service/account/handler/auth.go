@@ -36,7 +36,7 @@ func (t *Account) SignUp(ctx context.Context, req *account.SignUpRequest, res *a
 
 	res.ResponseInfo = t.response.Created()
 	res.Result = &account.User{
-		Id:   result.User.ID,
+		ID:   result.User.ID,
 		Name: result.User.Name,
 	}
 	return nil
@@ -59,7 +59,7 @@ func (t *Account) SignIn(ctx context.Context, req *account.SignInRequest, res *a
 
 	res.ResponseInfo = t.response.OK()
 	res.Result = &account.User{
-		Id:   result.User.ID,
+		ID:   result.User.ID,
 		Name: result.User.Name,
 	}
 	return nil

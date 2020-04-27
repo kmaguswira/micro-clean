@@ -33,7 +33,7 @@ func (t AuthController) SignIn(c *gin.Context) {
 		return
 	}
 	cfg := config.GetConfig()
-	token := utils.GenerateToken(response.Result.Id, response.Result.RoleId, cfg.Server.Secret)
+	token := utils.GenerateToken(response.Result.ID, response.Result.RoleID, cfg.Server.Secret)
 
 	t.OKSingleData(c, token)
 	return

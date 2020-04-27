@@ -64,6 +64,7 @@ func RouterV1(router *gin.Engine) {
 			userGroup.POST("/create", user.Create)
 			userGroup.GET("/:id", user.FindById)
 			userGroup.DELETE("/:id", user.Delete)
+			userGroup.PUT("/:id", user.Update)
 		}
 
 		roleGroup := v1.Group("role")
@@ -73,6 +74,7 @@ func RouterV1(router *gin.Engine) {
 			roleGroup.POST("/create", role.Create)
 			roleGroup.GET("/:id", role.FindById)
 			roleGroup.DELETE("/:id", role.Delete)
+			roleGroup.PUT("/:id", role.Update)
 		}
 
 		aclGroup := v1.Group("acl")
@@ -82,6 +84,7 @@ func RouterV1(router *gin.Engine) {
 			aclGroup.POST("/create", acl.Create)
 			aclGroup.GET("/:id", acl.FindById)
 			aclGroup.DELETE("/:id", acl.Delete)
+			aclGroup.PUT("/:id", acl.Update)
 		}
 	}
 
