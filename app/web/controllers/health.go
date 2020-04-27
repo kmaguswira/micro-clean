@@ -10,6 +10,7 @@ type HealthController struct {
 }
 
 func (t HealthController) Check(c *gin.Context) {
-	t.OKSingleData(c, "OK")
+	test := utils.QueryBuilder(c)
+	t.OKSingleData(c, test)
 	return
 }

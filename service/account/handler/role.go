@@ -3,7 +3,10 @@ package handler
 import (
 	"context"
 
+	. "github.com/ahmetb/go-linq"
+	"github.com/kmaguswira/micro-clean/service/account/application/global"
 	"github.com/kmaguswira/micro-clean/service/account/application/usecases"
+	"github.com/kmaguswira/micro-clean/service/account/domain"
 	account "github.com/kmaguswira/micro-clean/service/account/proto/account"
 	"github.com/micro/go-micro/util/log"
 )
@@ -49,6 +52,35 @@ func (t *Account) FindRoleById(ctx context.Context, req *account.FindRoleByIdReq
 }
 
 func (t *Account) FindAllRole(ctx context.Context, req *account.FindAllRoleRequest, res *account.FindAllRoleResponse) error {
+	log.Log("Received Account.FindAllRole")
+
+	input := global.FindAllInput{
+		QueryKey: req.Query.QueryKey,
+		Limit:    req.Query.Limit,
+		Offset:   req.Query.Offset,
+		Sort:     req.Query.Sort,
+	}
+
+	input.ParseValue(req.Query.QueryValue)
+
+	result, err := t.findAllRoleUseCase.Execute(input)
+
+	if err != nil {
+		res.ResponseInfo = t.response.InternalServerError()
+		return nil
+	}
+
+	var roles []*account.Role
+	From(result).Select(func(c interface{}) interface{} {
+		d := c.(domain.Role)
+		return &account.Role{
+			ID:    d.ID,
+			Title: d.Title,
+		}
+	}).ToSlice(&roles)
+
+	res.ResponseInfo = t.response.OK()
+	res.Result = roles
 	return nil
 }
 

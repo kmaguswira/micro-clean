@@ -104,3 +104,26 @@ func (t ACLController) Update(c *gin.Context) {
 
 	return
 }
+
+func (t ACLController) FindAll(c *gin.Context) {
+	q := utils.QueryBuilder(c)
+
+	response, err := accountService.FindAllACL(c, &account.FindAllACLRequest{
+		Query: &account.BaseQuery{
+			QueryKey:   q.QueryKey,
+			QueryValue: q.QueryValue,
+			Limit:      q.Limit,
+			Offset:     q.Offset,
+			Sort:       q.Sort,
+		},
+	})
+
+	if err != nil {
+		t.BadRequest(c, err.Error())
+		return
+	}
+
+	t.OKSingleData(c, response)
+
+	return
+}

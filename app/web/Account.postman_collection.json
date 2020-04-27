@@ -334,6 +334,221 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "localhost:3100/v1/acl/bqj9ufth5s5kb92918l0",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"handler\": \"github.com/kmaguswira/micro-clean/app/web/controllers.RoleController.Create-fm\",\n\t\"isPublic\": true,\n\t\"title\": \"Create Role\",\n\t\"permitted\": \"bqdvp8lh5s5h9b0ju7eg\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:3100/v1/acl/bqj9ufth5s5kb92918l0",
+					"host": [
+						"localhost"
+					],
+					"port": "3100",
+					"path": [
+						"v1",
+						"acl",
+						"bqj9ufth5s5kb92918l0"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:3100/v1/user/bqja8hth5s5lejvagqkg",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"user4 Update\",\n    \"username\": \"user4\",\n    \"email\": \"user4@mail.com\",\n    \"roleID\": \"bqbbublh5s5n99fe8ch0\",\n    \"status\": \"pending\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:3100/v1/user/bqja8hth5s5lejvagqkg",
+					"host": [
+						"localhost"
+					],
+					"port": "3100",
+					"path": [
+						"v1",
+						"user",
+						"bqja8hth5s5lejvagqkg"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:3100/v1/role/bqjaaodh5s5li0fqlfv0",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"title\": \"tester\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:3100/v1/role/bqjaaodh5s5li0fqlfv0",
+					"host": [
+						"localhost"
+					],
+					"port": "3100",
+					"path": [
+						"v1",
+						"role",
+						"bqjaaodh5s5li0fqlfv0"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:3100/v1/role?l=1&o=0&s=\"title asc\"&q={\"title=\": \"user\"}",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:3100/v1/role?l=1&o=0&s=\"title asc\"&q={\"title=\": \"user\"}",
+					"host": [
+						"localhost"
+					],
+					"port": "3100",
+					"path": [
+						"v1",
+						"role"
+					],
+					"query": [
+						{
+							"key": "l",
+							"value": "1"
+						},
+						{
+							"key": "o",
+							"value": "0"
+						},
+						{
+							"key": "s",
+							"value": "\"title asc\""
+						},
+						{
+							"key": "q",
+							"value": "{\"title=\": \"user\"}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:3100/v1/user?l=1&o=1&s=name asc&q={\"status=\":\"pending\"}",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:3100/v1/user?l=1&o=1&s=name asc&q={\"status=\":\"pending\"}",
+					"host": [
+						"localhost"
+					],
+					"port": "3100",
+					"path": [
+						"v1",
+						"user"
+					],
+					"query": [
+						{
+							"key": "l",
+							"value": "1"
+						},
+						{
+							"key": "o",
+							"value": "1"
+						},
+						{
+							"key": "s",
+							"value": "name asc"
+						},
+						{
+							"key": "q",
+							"value": "{\"status=\":\"pending\"}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:3100/v1/acl?l=10&o=0&q={\"is_public=\":\"true\"}",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:3100/v1/acl?l=10&o=0&q={\"is_public=\":\"true\"}",
+					"host": [
+						"localhost"
+					],
+					"port": "3100",
+					"path": [
+						"v1",
+						"acl"
+					],
+					"query": [
+						{
+							"key": "l",
+							"value": "10"
+						},
+						{
+							"key": "o",
+							"value": "0"
+						},
+						{
+							"key": "q",
+							"value": "{\"is_public=\":\"true\"}"
+						}
+					]
+				}
+			},
+			"response": []
 		}
 	],
 	"protocolProfileBehavior": {}

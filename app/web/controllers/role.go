@@ -94,3 +94,26 @@ func (t RoleController) Update(c *gin.Context) {
 
 	return
 }
+
+func (t RoleController) FindAll(c *gin.Context) {
+	q := utils.QueryBuilder(c)
+
+	response, err := accountService.FindAllRole(c, &account.FindAllRoleRequest{
+		Query: &account.BaseQuery{
+			QueryKey:   q.QueryKey,
+			QueryValue: q.QueryValue,
+			Limit:      q.Limit,
+			Offset:     q.Offset,
+			Sort:       q.Sort,
+		},
+	})
+
+	if err != nil {
+		t.BadRequest(c, err.Error())
+		return
+	}
+
+	t.OKSingleData(c, response)
+
+	return
+}

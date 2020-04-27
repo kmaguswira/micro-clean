@@ -103,3 +103,26 @@ func (t UserController) Update(c *gin.Context) {
 
 	return
 }
+
+func (t UserController) FindAll(c *gin.Context) {
+	q := utils.QueryBuilder(c)
+
+	response, err := accountService.FindAllUser(c, &account.FindAllUserRequest{
+		Query: &account.BaseQuery{
+			QueryKey:   q.QueryKey,
+			QueryValue: q.QueryValue,
+			Limit:      q.Limit,
+			Offset:     q.Offset,
+			Sort:       q.Sort,
+		},
+	})
+
+	if err != nil {
+		t.BadRequest(c, err.Error())
+		return
+	}
+
+	t.OKSingleData(c, response)
+
+	return
+}

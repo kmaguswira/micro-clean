@@ -5,6 +5,7 @@ import (
 	"strings"
 
 	. "github.com/ahmetb/go-linq"
+	"github.com/kmaguswira/micro-clean/service/account/application/global"
 	"github.com/kmaguswira/micro-clean/service/account/application/usecases"
 	"github.com/kmaguswira/micro-clean/service/account/domain"
 	account "github.com/kmaguswira/micro-clean/service/account/proto/account"
@@ -77,6 +78,44 @@ func (t *Account) FindACLById(ctx context.Context, req *account.FindACLByIdReque
 }
 
 func (t *Account) FindAllACL(ctx context.Context, req *account.FindAllACLRequest, res *account.FindAllACLResponse) error {
+	log.Log("Received Account.FindAllACL")
+
+	input := global.FindAllInput{
+		QueryKey: req.Query.QueryKey,
+		Limit:    req.Query.Limit,
+		Offset:   req.Query.Offset,
+		Sort:     req.Query.Sort,
+	}
+
+	input.ParseValue(req.Query.QueryValue)
+
+	result, err := t.findAllACLUseCase.Execute(input)
+
+	if err != nil {
+		res.ResponseInfo = t.response.InternalServerError()
+		return nil
+	}
+
+	var acls []*account.ACL
+	From(result).Select(func(c interface{}) interface{} {
+		d := c.(domain.ACL)
+
+		var roleID []string
+		From(d.Permitted).Select(func(c interface{}) interface{} {
+			return c.(domain.Role).ID
+		}).ToSlice(&roleID)
+
+		return &account.ACL{
+			ID:        d.ID,
+			Title:     d.Title,
+			Handler:   d.Handler,
+			IsPublic:  d.IsPublic,
+			Permitted: strings.Join(roleID, ","),
+		}
+	}).ToSlice(&acls)
+
+	res.ResponseInfo = t.response.OK()
+	res.Result = acls
 	return nil
 }
 

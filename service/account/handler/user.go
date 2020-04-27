@@ -3,7 +3,10 @@ package handler
 import (
 	"context"
 
+	. "github.com/ahmetb/go-linq"
+	"github.com/kmaguswira/micro-clean/service/account/application/global"
 	"github.com/kmaguswira/micro-clean/service/account/application/usecases"
+	"github.com/kmaguswira/micro-clean/service/account/domain"
 	account "github.com/kmaguswira/micro-clean/service/account/proto/account"
 	"github.com/micro/go-micro/util/log"
 )
@@ -68,6 +71,39 @@ func (t *Account) FindUserById(ctx context.Context, req *account.FindUserByIdReq
 }
 
 func (t *Account) FindAllUser(ctx context.Context, req *account.FindAllUserRequest, res *account.FindAllUserResponse) error {
+	log.Log("Received Account.FindAllUser")
+
+	input := global.FindAllInput{
+		QueryKey: req.Query.QueryKey,
+		Limit:    req.Query.Limit,
+		Offset:   req.Query.Offset,
+		Sort:     req.Query.Sort,
+	}
+
+	input.ParseValue(req.Query.QueryValue)
+
+	result, err := t.findAllUserUseCase.Execute(input)
+
+	if err != nil {
+		res.ResponseInfo = t.response.InternalServerError()
+		return nil
+	}
+
+	var users []*account.User
+	From(result).Select(func(c interface{}) interface{} {
+		d := c.(domain.User)
+		return &account.User{
+			ID:       d.ID,
+			Name:     d.Name,
+			Username: d.Username,
+			Email:    d.Email,
+			Status:   d.Status,
+			RoleID:   d.RoleID,
+		}
+	}).ToSlice(&users)
+
+	res.ResponseInfo = t.response.OK()
+	res.Result = users
 	return nil
 }
 

@@ -10,7 +10,8 @@ import (
 	// "github.com/jinzhu/gorm/dialects/sqlite"
 	// "github.com/jinzhu/gorm/dialects/mssql"
 	_ "github.com/jinzhu/gorm/dialects/mysql"
-	config "github.com/kmaguswira/micro-clean/service/account/config"
+	"github.com/kmaguswira/micro-clean/service/account/config"
+	"github.com/kmaguswira/micro-clean/service/account/utils"
 )
 
 type DB struct {
@@ -56,7 +57,7 @@ func (t *DB) Connect(connection config.DB) {
 }
 
 func (t *DB) Migrate(isDrop bool, tables []interface{}) {
-	reverseTables := reverseArray(tables)
+	reverseTables := utils.ReverseArray(tables)
 
 	for _, model := range reverseTables {
 		if isDrop {
@@ -71,22 +72,4 @@ func (t *DB) Migrate(isDrop bool, tables []interface{}) {
 			log.Println("Auto migrating", reflect.TypeOf(model).Name(), "...")
 		}
 	}
-}
-
-func reverseArray(arr []interface{}) []interface{} {
-	if arr == nil {
-		return nil
-	}
-
-	newArr := append(arr[:0:0], arr...)
-
-	i := 0
-	j := len(newArr) - 1
-	for i < j {
-		newArr[i], newArr[j] = newArr[j], newArr[i]
-		i++
-		j--
-	}
-
-	return newArr
 }

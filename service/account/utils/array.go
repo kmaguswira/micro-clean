@@ -1,8 +1,6 @@
 package utils
 
-type ArrayUtils struct{}
-
-func (au ArrayUtils) ReverseArray(arr []interface{}) []interface{} {
+func ReverseArray(arr []interface{}) []interface{} {
 	if arr == nil {
 		return nil
 	}

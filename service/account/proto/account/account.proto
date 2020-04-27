@@ -90,15 +90,16 @@ message Role {
 message BaseResponse {
     string status = 1;
     string message = 2;
-    int32 limit = 3;
-    int32 offset = 4;
+    int64 limit = 3;
+    int64 offset = 4;
 }
 
 message BaseQuery {
-	string query = 1;
-	int32 limit = 2;
-	int32 offset = 3;
-	string sort = 4;
+	string queryKey = 1;
+	repeated string queryValue = 2;
+	int64 limit = 3;
+	int64 offset = 4;
+	string sort = 5;
 }
 
 ///////////////////////////////////
