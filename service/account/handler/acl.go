@@ -124,3 +124,20 @@ func (t *Account) DeleteACL(ctx context.Context, req *account.DeleteACLRequest, 
 
 	return nil
 }
+
+func (t *Account) FindACLByHandler(ctx context.Context, req *account.FindACLByHandlerRequest, res *account.FindACLByHandlerResponse) error {
+	log.Log("Received Account.FindACLByHandler")
+
+	result, err := t.findACLByHandlerUseCase.Execute(req.Handler)
+
+	if err != nil {
+		res.ResponseInfo = t.response.InternalServerError()
+		return nil
+	}
+
+	aclResponse := populateACLResponse(result)
+	res.ResponseInfo = t.response.OK()
+	res.Result = &aclResponse
+
+	return nil
+}

@@ -8,6 +8,7 @@ import (
 type IReadRepository interface {
 	FindACLByID(input string) (*domain.ACL, error)
 	FindAllACL(input global.FindAllInput) (*[]domain.ACL, error)
+	FindACLByHandler(input string) (*domain.ACL, error)
 	FindRoleByID(input string) (*domain.Role, error)
 	FindAllRole(input global.FindAllInput) (*[]domain.Role, error)
 	FindRoleByTitle(input string) (*domain.Role, error)

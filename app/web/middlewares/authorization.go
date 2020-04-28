@@ -1,7 +1,6 @@
 package middlewares
 
 import (
-	"fmt"
 	"log"
 	"strings"
 
@@ -13,49 +12,56 @@ import (
 )
 
 var accountService = account.NewAccountService("kmaguswira.srv.account", client.DefaultClient)
+var r utils.Response
 
 func AuthorizationMiddleware() gin.HandlerFunc {
 	cfg := config.GetConfig()
 
 	return func(c *gin.Context) {
-		authorizationHeader := c.Request.Header.Get("Authorization")
-		var userID string
-		var roleID string
+		response, _ := accountService.FindACLByHandler(c, &account.FindACLByHandlerRequest{
+			Handler: c.HandlerName(),
+		})
 
-		if authorizationHeader != "" {
-			token := strings.Split(authorizationHeader, " ")
+		if response.Result == nil {
+			r.InternalError(c, "Can't Connect to Account Service")
+			return
+		}
 
-			if token[0] == "Bearer" {
-				isAuthorized, user, role, err := utils.IsValidToken(token[1], cfg.Server.Secret)
+		if !response.Result.IsPublic {
+			authorizationHeader := c.Request.Header.Get("Authorization")
+			var userID string
+			var roleID string
 
-				if isAuthorized {
-					userID = user
-					roleID = role
-					c.Set(utils.JWT_USER_ID, userID)
-					c.Set(utils.JWT_ROLE_ID, roleID)
-					fmt.Println(user, role)
+			if authorizationHeader != "" {
+				token := strings.Split(authorizationHeader, " ")
+
+				if token[0] == "Bearer" {
+					isAuthorized, user, role, err := utils.IsValidToken(token[1], cfg.Server.Secret)
+
+					if err != nil {
+						log.Println(err)
+						r.NotAuthorize(c, err.Error())
+						return
+					}
+
+					if isAuthorized {
+						userID = user
+						roleID = role
+						c.Set(utils.JWT_USER_ID, userID)
+						c.Set(utils.JWT_ROLE_ID, roleID)
+					} else {
+						r.NotAuthorize(c, err.Error())
+						return
+					}
 				}
+			}
 
-				if err != nil {
-					log.Println(err)
-				}
+			if roleID == "" || !strings.Contains(response.Result.Permitted, roleID) {
+				r.Forbidden(c, "Role Not Allowed")
+				return
 			}
 		}
 
-		fmt.Println(c.HandlerName())
-
-		// Check acl
-		// response, err := accountService.SignIn(c, &account.SignInRequest{
-		// 	RoleID: RoleID,
-		// 	Handler: c.HandlerName(),
-		// })
-
-		// if err != nil {
-		// 	t.BadRequest(c, err.Error())
-		// 	return
-		// }
-
 		c.Next()
 	}
-
 }

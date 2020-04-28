@@ -52,6 +52,7 @@ type AccountService interface {
 	CreateACL(ctx context.Context, in *CreateACLRequest, opts ...client.CallOption) (*CreateACLResponse, error)
 	FindACLById(ctx context.Context, in *FindACLByIdRequest, opts ...client.CallOption) (*FindACLByIdResponse, error)
 	FindAllACL(ctx context.Context, in *FindAllACLRequest, opts ...client.CallOption) (*FindAllACLResponse, error)
+	FindACLByHandler(ctx context.Context, in *FindACLByHandlerRequest, opts ...client.CallOption) (*FindACLByHandlerResponse, error)
 	UpdateACL(ctx context.Context, in *UpdateACLRequest, opts ...client.CallOption) (*UpdateACLResponse, error)
 	DeleteACL(ctx context.Context, in *DeleteACLRequest, opts ...client.CallOption) (*DeleteACLResponse, error)
 	CreateUser(ctx context.Context, in *CreateUserRequest, opts ...client.CallOption) (*CreateUserResponse, error)
@@ -329,6 +330,16 @@ func (c *accountService) FindAllACL(ctx context.Context, in *FindAllACLRequest, 
 	return out, nil
 }
 
+func (c *accountService) FindACLByHandler(ctx context.Context, in *FindACLByHandlerRequest, opts ...client.CallOption) (*FindACLByHandlerResponse, error) {
+	req := c.c.NewRequest(c.name, "Account.FindACLByHandler", in)
+	out := new(FindACLByHandlerResponse)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *accountService) UpdateACL(ctx context.Context, in *UpdateACLRequest, opts ...client.CallOption) (*UpdateACLResponse, error) {
 	req := c.c.NewRequest(c.name, "Account.UpdateACL", in)
 	out := new(UpdateACLResponse)
@@ -420,6 +431,7 @@ type AccountHandler interface {
 	CreateACL(context.Context, *CreateACLRequest, *CreateACLResponse) error
 	FindACLById(context.Context, *FindACLByIdRequest, *FindACLByIdResponse) error
 	FindAllACL(context.Context, *FindAllACLRequest, *FindAllACLResponse) error
+	FindACLByHandler(context.Context, *FindACLByHandlerRequest, *FindACLByHandlerResponse) error
 	UpdateACL(context.Context, *UpdateACLRequest, *UpdateACLResponse) error
 	DeleteACL(context.Context, *DeleteACLRequest, *DeleteACLResponse) error
 	CreateUser(context.Context, *CreateUserRequest, *CreateUserResponse) error
@@ -449,6 +461,7 @@ func RegisterAccountHandler(s server.Server, hdlr AccountHandler, opts ...server
 		CreateACL(ctx context.Context, in *CreateACLRequest, out *CreateACLResponse) error
 		FindACLById(ctx context.Context, in *FindACLByIdRequest, out *FindACLByIdResponse) error
 		FindAllACL(ctx context.Context, in *FindAllACLRequest, out *FindAllACLResponse) error
+		FindACLByHandler(ctx context.Context, in *FindACLByHandlerRequest, out *FindACLByHandlerResponse) error
 		UpdateACL(ctx context.Context, in *UpdateACLRequest, out *UpdateACLResponse) error
 		DeleteACL(ctx context.Context, in *DeleteACLRequest, out *DeleteACLResponse) error
 		CreateUser(ctx context.Context, in *CreateUserRequest, out *CreateUserResponse) error
@@ -605,6 +618,10 @@ func (h *accountHandler) FindACLById(ctx context.Context, in *FindACLByIdRequest
 
 func (h *accountHandler) FindAllACL(ctx context.Context, in *FindAllACLRequest, out *FindAllACLResponse) error {
 	return h.AccountHandler.FindAllACL(ctx, in, out)
+}
+
+func (h *accountHandler) FindACLByHandler(ctx context.Context, in *FindACLByHandlerRequest, out *FindACLByHandlerResponse) error {
+	return h.AccountHandler.FindACLByHandler(ctx, in, out)
 }
 
 func (h *accountHandler) UpdateACL(ctx context.Context, in *UpdateACLRequest, out *UpdateACLResponse) error {

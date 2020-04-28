@@ -21,6 +21,7 @@ service Account {
 	rpc CreateACL (CreateACLRequest) returns (CreateACLResponse) {}
 	rpc FindACLById (FindACLByIdRequest) returns (FindACLByIdResponse) {}
 	rpc FindAllACL (FindAllACLRequest) returns (FindAllACLResponse) {}
+	rpc FindACLByHandler (FindACLByHandlerRequest) returns (FindACLByHandlerResponse) {}
 	rpc UpdateACL (UpdateACLRequest) returns (UpdateACLResponse) {}
 	rpc DeleteACL (DeleteACLRequest) returns (DeleteACLResponse) {}
 	rpc CreateUser (CreateUserRequest) returns (CreateUserResponse) {}
@@ -257,6 +258,15 @@ message DeleteACLRequest {
 }
 
 message DeleteACLResponse {
+	BaseResponse responseInfo = 1;
+	ACL result = 2;
+}
+
+message FindACLByHandlerRequest {
+	string handler = 1;
+}
+
+message FindACLByHandlerResponse {
 	BaseResponse responseInfo = 1;
 	ACL result = 2;
 }

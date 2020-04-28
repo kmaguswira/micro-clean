@@ -58,6 +58,19 @@ func (t *readRepository) FindAllACL(input global.FindAllInput) (*[]domain.ACL, e
 	return &result, nil
 }
 
+func (t *readRepository) FindACLByHandler(input string) (*domain.ACL, error) {
+	var acl entity.ACL
+
+	if err := t.db.Where("handler = ?", input).First(&acl).Error; err != nil {
+		err := fmt.Errorf("ACL with handler %q not found", input)
+		return nil, err
+	}
+
+	aclDomain := populateACLDomain(acl)
+
+	return &aclDomain, nil
+}
+
 func (t *readRepository) FindRoleByID(input string) (*domain.Role, error) {
 	var role entity.Role
 

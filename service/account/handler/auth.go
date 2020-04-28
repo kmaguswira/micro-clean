@@ -59,11 +59,9 @@ func (t *Account) SignIn(ctx context.Context, req *account.SignInRequest, res *a
 		return nil
 	}
 
+	userResponse := populateUserResponse(result.User)
 	res.ResponseInfo = t.response.OK()
-	res.Result = &account.User{
-		ID:   result.User.ID,
-		Name: result.User.Name,
-	}
+	res.Result = &userResponse
 	return nil
 }
 

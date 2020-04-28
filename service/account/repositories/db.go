@@ -53,7 +53,7 @@ func (t *DB) Connect(connection config.DB) {
 		panic(t.err)
 	}
 
-	t.db.LogMode(true)
+	// t.db.LogMode(true)
 	log.Println("DB connected")
 }
 

@@ -34,6 +34,7 @@ func (r Response) BadRequest(c *gin.Context, info string) {
 		"status":  400,
 		"message": message,
 	})
+	c.AbortWithStatus(http.StatusBadRequest)
 }
 
 func (r Response) NotAuthorize(c *gin.Context, info string) {
@@ -46,6 +47,7 @@ func (r Response) NotAuthorize(c *gin.Context, info string) {
 		"status":  401,
 		"message": message,
 	})
+	c.AbortWithStatus(http.StatusUnauthorized)
 }
 
 func (r Response) Forbidden(c *gin.Context, info string) {
@@ -58,6 +60,7 @@ func (r Response) Forbidden(c *gin.Context, info string) {
 		"status":  403,
 		"message": message,
 	})
+	c.AbortWithStatus(http.StatusForbidden)
 }
 
 func (r Response) NotFound(c *gin.Context, info string) {
@@ -70,6 +73,7 @@ func (r Response) NotFound(c *gin.Context, info string) {
 		"status":  404,
 		"message": message,
 	})
+	c.AbortWithStatus(http.StatusNotFound)
 }
 
 func (r Response) InternalError(c *gin.Context, info string) {
@@ -82,4 +86,5 @@ func (r Response) InternalError(c *gin.Context, info string) {
 		"status":  500,
 		"message": message,
 	})
+	c.AbortWithStatus(http.StatusInternalServerError)
 }

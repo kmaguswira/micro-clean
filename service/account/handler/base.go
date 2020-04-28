@@ -14,29 +14,30 @@ import (
 )
 
 type Account struct {
-	signUpUseCase          usecases.ISignUp
-	signInUseCase          usecases.ISignIn
-	createRoleUseCase      usecases.ICreateRole
-	findRoleByIDUseCase    usecases.IFindRoleByID
-	deleteRoleUseCase      usecases.IDeleteRole
-	updateRoleUseCase      usecases.IUpdateRole
-	findAllRoleUseCase     usecases.IFindAllRole
-	findRoleByTitleUseCase usecases.IFindRoleByTitle
-	createACLUseCase       usecases.ICreateACL
-	findACLByIDUseCase     usecases.IFindACLByID
-	deleteACLUseCase       usecases.IDeleteACL
-	updateACLUseCase       usecases.IUpdateACL
-	findAllACLUseCase      usecases.IFindAllACL
-	createUserUseCase      usecases.ICreateUser
-	findUserByIDUseCase    usecases.IFindUserByID
-	deleteUserUseCase      usecases.IDeleteUser
-	updateUserUseCase      usecases.IUpdateUser
-	findAllUserUseCase     usecases.IFindAllUser
-	activateUserUseCase    usecases.IActivateUser
-	forgotPasswordUseCase  usecases.IForgotPassword
-	resetPasswordUseCase   usecases.IResetPassword
-	changePasswordUseCase  usecases.IChangePassword
-	response               utils.Response
+	signUpUseCase           usecases.ISignUp
+	signInUseCase           usecases.ISignIn
+	createRoleUseCase       usecases.ICreateRole
+	findRoleByIDUseCase     usecases.IFindRoleByID
+	deleteRoleUseCase       usecases.IDeleteRole
+	updateRoleUseCase       usecases.IUpdateRole
+	findAllRoleUseCase      usecases.IFindAllRole
+	findRoleByTitleUseCase  usecases.IFindRoleByTitle
+	createACLUseCase        usecases.ICreateACL
+	findACLByIDUseCase      usecases.IFindACLByID
+	deleteACLUseCase        usecases.IDeleteACL
+	updateACLUseCase        usecases.IUpdateACL
+	findAllACLUseCase       usecases.IFindAllACL
+	findACLByHandlerUseCase usecases.IFindACLByHandler
+	createUserUseCase       usecases.ICreateUser
+	findUserByIDUseCase     usecases.IFindUserByID
+	deleteUserUseCase       usecases.IDeleteUser
+	updateUserUseCase       usecases.IUpdateUser
+	findAllUserUseCase      usecases.IFindAllUser
+	activateUserUseCase     usecases.IActivateUser
+	forgotPasswordUseCase   usecases.IForgotPassword
+	resetPasswordUseCase    usecases.IResetPassword
+	changePasswordUseCase   usecases.IChangePassword
+	response                utils.Response
 }
 
 func NewAccount() *Account {
@@ -44,29 +45,30 @@ func NewAccount() *Account {
 	readRepository := repositories.NewReadRepository(nil)
 
 	return &Account{
-		signUpUseCase:          usecases.NewSignUpUseCase(readWriteRepository),
-		signInUseCase:          usecases.NewSignInUseCase(readRepository),
-		createRoleUseCase:      usecases.NewCreateRoleUseCase(readWriteRepository),
-		findRoleByIDUseCase:    usecases.NewFindRoleByIDUseCase(readRepository),
-		deleteRoleUseCase:      usecases.NewDeleteRoleUseCase(readWriteRepository),
-		updateRoleUseCase:      usecases.NewUpdateRoleUseCase(readWriteRepository),
-		findAllRoleUseCase:     usecases.NewFindAllRoleUseCase(readRepository),
-		findRoleByTitleUseCase: usecases.NewfindRoleByTitleUseCase(readRepository),
-		createACLUseCase:       usecases.NewCreateACLUseCase(readWriteRepository),
-		findACLByIDUseCase:     usecases.NewFindACLByIDUseCase(readRepository),
-		deleteACLUseCase:       usecases.NewDeleteACLUseCase(readWriteRepository),
-		updateACLUseCase:       usecases.NewUpdateACLUseCase(readWriteRepository),
-		findAllACLUseCase:      usecases.NewFindAllACLUseCase(readRepository),
-		createUserUseCase:      usecases.NewCreateUserUseCase(readWriteRepository),
-		findUserByIDUseCase:    usecases.NewFindUserByIDUseCase(readRepository),
-		deleteUserUseCase:      usecases.NewDeleteUserUseCase(readWriteRepository),
-		updateUserUseCase:      usecases.NewUpdateUserUseCase(readWriteRepository),
-		findAllUserUseCase:     usecases.NewFindAllUserUseCase(readRepository),
-		activateUserUseCase:    usecases.NewActivateUserUseCase(readRepository, readWriteRepository),
-		forgotPasswordUseCase:  usecases.NewForgotPasswordUseCase(readRepository, readWriteRepository),
-		resetPasswordUseCase:   usecases.NewResetPasswordUseCase(readRepository, readWriteRepository),
-		changePasswordUseCase:  usecases.NewChangePasswordUseCase(readRepository, readWriteRepository),
-		response:               utils.Response{},
+		signUpUseCase:           usecases.NewSignUpUseCase(readWriteRepository),
+		signInUseCase:           usecases.NewSignInUseCase(readRepository),
+		createRoleUseCase:       usecases.NewCreateRoleUseCase(readWriteRepository),
+		findRoleByIDUseCase:     usecases.NewFindRoleByIDUseCase(readRepository),
+		deleteRoleUseCase:       usecases.NewDeleteRoleUseCase(readWriteRepository),
+		updateRoleUseCase:       usecases.NewUpdateRoleUseCase(readWriteRepository),
+		findAllRoleUseCase:      usecases.NewFindAllRoleUseCase(readRepository),
+		findRoleByTitleUseCase:  usecases.NewfindRoleByTitleUseCase(readRepository),
+		createACLUseCase:        usecases.NewCreateACLUseCase(readWriteRepository),
+		findACLByIDUseCase:      usecases.NewFindACLByIDUseCase(readRepository),
+		deleteACLUseCase:        usecases.NewDeleteACLUseCase(readWriteRepository),
+		updateACLUseCase:        usecases.NewUpdateACLUseCase(readWriteRepository),
+		findAllACLUseCase:       usecases.NewFindAllACLUseCase(readRepository),
+		findACLByHandlerUseCase: usecases.NewFindACLByHandlerUseCase(readRepository),
+		createUserUseCase:       usecases.NewCreateUserUseCase(readWriteRepository),
+		findUserByIDUseCase:     usecases.NewFindUserByIDUseCase(readRepository),
+		deleteUserUseCase:       usecases.NewDeleteUserUseCase(readWriteRepository),
+		updateUserUseCase:       usecases.NewUpdateUserUseCase(readWriteRepository),
+		findAllUserUseCase:      usecases.NewFindAllUserUseCase(readRepository),
+		activateUserUseCase:     usecases.NewActivateUserUseCase(readRepository, readWriteRepository),
+		forgotPasswordUseCase:   usecases.NewForgotPasswordUseCase(readRepository, readWriteRepository),
+		resetPasswordUseCase:    usecases.NewResetPasswordUseCase(readRepository, readWriteRepository),
+		changePasswordUseCase:   usecases.NewChangePasswordUseCase(readRepository, readWriteRepository),
+		response:                utils.Response{},
 	}
 }
 
