@@ -74,7 +74,8 @@ func (t *Account) FindAllACL(ctx context.Context, req *account.FindAllACLRequest
 	var acls []*account.ACL
 	From(result).Select(func(c interface{}) interface{} {
 		d := c.(domain.ACL)
-		return populateACLResponse(d)
+		acl := populateACLResponse(d)
+		return &acl
 	}).ToSlice(&acls)
 
 	res.ResponseInfo = t.response.OK()

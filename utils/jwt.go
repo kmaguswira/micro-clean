@@ -11,9 +11,9 @@ func GenerateToken(userID string, roleID string, jwtSigned string) string {
 	token := jwt.New(jwt.SigningMethodHS256)
 
 	claims := token.Claims.(jwt.MapClaims)
-	claims["userID"] = userID
-	claims["roleID"] = roleID
-	claims["exp"] = time.Now().Add(time.Hour * 24).Unix()
+	claims[JWT_USER_ID] = userID
+	claims[JWT_ROLE_ID] = roleID
+	claims[JWT_EXPIRED] = time.Now().Add(time.Hour * 24).Unix()
 
 	tokenString, _ := token.SignedString([]byte(jwtSigned))
 
@@ -25,7 +25,7 @@ func IsValidToken(tokenString string, jwtSigned string) (bool, string, string, e
 		return []byte(jwtSigned), nil
 	}); token.Valid {
 		claims := token.Claims.(jwt.MapClaims)
-		return true, claims["userID"].(string), claims["roleID"].(string), nil
+		return true, claims[JWT_USER_ID].(string), claims[JWT_ROLE_ID].(string), nil
 	} else if ve, ok := err.(*jwt.ValidationError); ok {
 		var errMessage error
 		if ve.Errors&jwt.ValidationErrorMalformed != 0 {

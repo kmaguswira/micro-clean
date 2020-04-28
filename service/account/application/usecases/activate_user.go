@@ -3,6 +3,7 @@ package usecases
 import (
 	"errors"
 
+	"github.com/kmaguswira/micro-clean/service/account/application/global"
 	"github.com/kmaguswira/micro-clean/service/account/application/repositories"
 	"github.com/kmaguswira/micro-clean/service/account/domain"
 )
@@ -30,8 +31,9 @@ func (t *activateUserUseCase) Execute(token string) (domain.User, error) {
 		return domain.User{}, errors.New("Bad Request")
 	}
 
-	if user.Status == "pending" {
-		user, _ := t.readWriteRepository.ActivateUser(user.ID)
+	if user.Status == global.NOT_VERIFIED_USER_STATUS {
+		user.SetActivationToken("")
+		user, _ := t.readWriteRepository.ActivateUser(*user)
 		return *user, nil
 	}
 

@@ -14,5 +14,8 @@ type IReadWriteRepository interface {
 	CreateUser(user *domain.User) (*domain.User, error)
 	DeleteUser(ID string) (*domain.User, error)
 	UpdateUser(userUpdated *domain.User) (*domain.User, error)
-	ActivateUser(ID string) (*domain.User, error)
+	ActivateUser(input domain.User) (*domain.User, error)
+	SetForgotPasswordToken(input domain.User) (*domain.User, error)
+	ResetPassword(input domain.User) (*domain.User, error)
+	ChangePassword(input domain.User) (*domain.User, error)
 }

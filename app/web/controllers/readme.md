@@ -1,1 +1,0 @@
-controller for routing will be on the core service

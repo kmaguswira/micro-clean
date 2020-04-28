@@ -3,6 +3,7 @@ package usecases
 import (
 	"errors"
 
+	"github.com/kmaguswira/micro-clean/service/account/application/global"
 	"github.com/kmaguswira/micro-clean/service/account/application/repositories"
 	"github.com/kmaguswira/micro-clean/service/account/domain"
 )
@@ -39,9 +40,10 @@ func (s *signUpUseCase) Execute(input SignUpInput) (SignUpOutput, error) {
 		Name:     input.Name,
 		Username: input.Username,
 		RoleID:   input.Role,
-		Status:   "not_verified",
+		Status:   global.NOT_VERIFIED_USER_STATUS,
 	}
 	newUser.SetPassword(input.Password)
+	newUser.GenerateActivationToken()
 	result, err := s.readWriteRepository.CreateUser(&newUser)
 
 	if err == nil {

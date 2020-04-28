@@ -4,6 +4,8 @@ import (
 	"fmt"
 	"strings"
 
+	"github.com/kmaguswira/micro-clean/service/account/application/global"
+
 	. "github.com/ahmetb/go-linq"
 	"github.com/jinzhu/gorm"
 	iface "github.com/kmaguswira/micro-clean/service/account/application/repositories"
@@ -171,16 +173,63 @@ func (t *readWriteRepository) UpdateUser(userUpdated *domain.User) (*domain.User
 	return userUpdated, nil
 }
 
-func (t *readWriteRepository) ActivateUser(ID string) (*domain.User, error) {
+func (t *readWriteRepository) ActivateUser(input domain.User) (*domain.User, error) {
 	var user entity.User
 
-	if err := t.db.Where("id = ?", ID).First(&user).Error; err != nil {
-		err := fmt.Errorf("User with ID %q not found", ID)
+	if err := t.db.Where("id = ?", input.ID).First(&user).Error; err != nil {
+		err := fmt.Errorf("User with ID %q not found", input.ID)
 		return nil, err
 	}
 
-	user.Status = "active"
+	user.ActivationToken = input.GetActivationToken()
+	user.Status = global.VERIFIED_USER_STATUS
 
+	t.db.Save(&user)
+
+	userDomain := populateUserDomain(user)
+	return &userDomain, nil
+}
+
+func (t *readWriteRepository) SetForgotPasswordToken(input domain.User) (*domain.User, error) {
+	var user entity.User
+
+	if err := t.db.Where("id = ?", input.ID).First(&user).Error; err != nil {
+		err := fmt.Errorf("User with ID %q not found", input.ID)
+		return nil, err
+	}
+
+	user.ForgotPasswordToken = input.GetForgotPasswordToken()
+	t.db.Save(&user)
+
+	userDomain := populateUserDomain(user)
+	return &userDomain, nil
+}
+
+func (t *readWriteRepository) ResetPassword(input domain.User) (*domain.User, error) {
+	var user entity.User
+
+	if err := t.db.Where("id = ?", input.ID).First(&user).Error; err != nil {
+		err := fmt.Errorf("User with ID %q not found", input.ID)
+		return nil, err
+	}
+
+	user.Password = input.GetPassword()
+	user.ForgotPasswordToken = input.GetForgotPasswordToken()
+	t.db.Save(&user)
+
+	userDomain := populateUserDomain(user)
+	return &userDomain, nil
+}
+
+func (t *readWriteRepository) ChangePassword(input domain.User) (*domain.User, error) {
+	var user entity.User
+
+	if err := t.db.Where("id = ?", input.ID).First(&user).Error; err != nil {
+		err := fmt.Errorf("User with ID %q not found", input.ID)
+		return nil, err
+	}
+
+	user.Password = input.GetPassword()
 	t.db.Save(&user)
 
 	userDomain := populateUserDomain(user)

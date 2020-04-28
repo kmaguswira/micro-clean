@@ -19,7 +19,6 @@ func SetupRouter(env string) *gin.Engine {
 		router.Static("/public", "./public")
 	}
 
-	// CORS
 	router.Use(middlewares.CorsMiddleware())
 	router.Use(middlewares.AuthorizationMiddleware())
 
@@ -53,9 +52,10 @@ func RouterV1(router *gin.Engine) {
 			authGroup.POST("/sign-up", auth.SignUp)
 			authGroup.POST("/sign-in", auth.SignIn)
 			authGroup.GET("/activate-user/:token", auth.ActivateUser)
-			// authGroup.GET("/self", auth.Self)
-			// authGroup.POST("/sign-in/admin", auth.PostSignInAdmin)
-			// authGroup.GET("/all", user.GetUsers)
+			authGroup.POST("/forgot-password", auth.ForgotPassword)
+			authGroup.POST("/reset-password/:token", auth.ResetPassword)
+			authGroup.POST("/change-password", auth.ChangePassword)
+			authGroup.GET("/self", auth.Self)
 		}
 
 		userGroup := v1.Group("user")

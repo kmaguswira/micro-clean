@@ -66,7 +66,8 @@ func (t *Account) FindAllRole(ctx context.Context, req *account.FindAllRoleReque
 	var roles []*account.Role
 	From(result).Select(func(c interface{}) interface{} {
 		d := c.(domain.Role)
-		return populateRoleResponse(d)
+		role := populateRoleResponse(d)
+		return &role
 	}).ToSlice(&roles)
 
 	res.ResponseInfo = t.response.OK()

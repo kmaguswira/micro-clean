@@ -31,8 +31,8 @@ func AuthorizationMiddleware() gin.HandlerFunc {
 				if isAuthorized {
 					userID = user
 					roleID = role
-					c.Set("userID", userID)
-					c.Set("roleID", roleID)
+					c.Set(utils.JWT_USER_ID, userID)
+					c.Set(utils.JWT_ROLE_ID, roleID)
 					fmt.Println(user, role)
 				}
 

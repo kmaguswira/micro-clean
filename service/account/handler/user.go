@@ -76,7 +76,8 @@ func (t *Account) FindAllUser(ctx context.Context, req *account.FindAllUserReque
 	var users []*account.User
 	From(result).Select(func(c interface{}) interface{} {
 		d := c.(domain.User)
-		return populateUserResponse(d)
+		user := populateUserResponse(d)
+		return &user
 	}).ToSlice(&users)
 
 	res.ResponseInfo = t.response.OK()
@@ -124,32 +125,5 @@ func (t *Account) DeleteUser(ctx context.Context, req *account.DeleteUserRequest
 	res.ResponseInfo = t.response.OK()
 	res.Result = &userResponse
 
-	return nil
-}
-
-func (t *Account) ActivateUser(ctx context.Context, req *account.ActivateUserRequest, res *account.ActivateUserResponse) error {
-	log.Log("Received Account.DeleteUser")
-
-	_, err := t.activateUserUseCase.Execute(req.Token)
-
-	if err != nil {
-		res.ResponseInfo = t.response.InternalServerError()
-		return nil
-	}
-
-	res.ResponseInfo = t.response.OK()
-
-	return nil
-}
-
-func (t *Account) ForgotPassword(ctx context.Context, req *account.ForgotPasswordRequest, res *account.ForgotPasswordResponse) error {
-	return nil
-}
-
-func (t *Account) ResetPassword(ctx context.Context, req *account.ResetPasswordRequest, res *account.ResetPasswordResponse) error {
-	return nil
-}
-
-func (t *Account) ChangePassword(ctx context.Context, req *account.ChangePasswordRequest, res *account.ChangePasswordResponse) error {
 	return nil
 }

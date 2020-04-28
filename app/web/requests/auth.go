@@ -17,3 +17,16 @@ type SignUp struct {
 	Name     string `json:"name" binding:"required"`
 	Username string `json:"username" binding:"required"`
 }
+
+type ForgotPassword struct {
+	Email string `json:"email" binding:"required"`
+}
+
+type ResetPassword struct {
+	Password string `json:"password" binding:"required"`
+}
+
+type ChangePassword struct {
+	OldPassword string `json:"oldPassword" binding:"required"`
+	NewPassword string `json:"newPassword" binding:"required"`
+}

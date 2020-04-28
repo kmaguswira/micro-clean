@@ -154,3 +154,16 @@ func (t *readRepository) FindUserByActivationToken(input string) (*domain.User, 
 
 	return &userDomain, nil
 }
+
+func (t *readRepository) FindUserByResetPasswordToken(input string) (*domain.User, error) {
+	var user entity.User
+
+	if err := t.db.Where("forgot_password_token = ?", input).First(&user).Error; err != nil {
+		err := fmt.Errorf("User with forgot password token %q not found", input)
+		return nil, err
+	}
+
+	userDomain := populateUserDomain(user)
+
+	return &userDomain, nil
+}

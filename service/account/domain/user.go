@@ -6,15 +6,16 @@ import (
 )
 
 type User struct {
-	ID              string
-	Name            string
-	Username        string
-	Email           string
-	Role            Role
-	RoleID          string
-	Status          string
-	password        string
-	activationToken string
+	ID                  string
+	Name                string
+	Username            string
+	Email               string
+	Role                Role
+	RoleID              string
+	Status              string
+	password            string
+	activationToken     string
+	forgotPasswordToken string
 }
 
 func (t *User) SetPassword(password string) {
@@ -36,6 +37,18 @@ func (t *User) GetActivationToken() string {
 
 func (t *User) GenerateActivationToken() {
 	t.activationToken = xid.New().String()
+}
+
+func (t *User) SetForgotPasswordToken(token string) {
+	t.forgotPasswordToken = token
+}
+
+func (t *User) GetForgotPasswordToken() string {
+	return t.forgotPasswordToken
+}
+
+func (t *User) GenerateForgotActivationToken() {
+	t.forgotPasswordToken = xid.New().String()
 }
 
 func (t *User) SetHashedPassword(password string) {

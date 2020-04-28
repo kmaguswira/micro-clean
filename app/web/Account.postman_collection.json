@@ -549,6 +549,176 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "localhost:3100/v1/auth/activate-user/bqjufllh5s5mdljp6kfg",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:3100/v1/auth/activate-user/bqjufllh5s5mdljp6kfg",
+					"host": [
+						"localhost"
+					],
+					"port": "3100",
+					"path": [
+						"v1",
+						"auth",
+						"activate-user",
+						"bqjufllh5s5mdljp6kfg"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:3100/v1/auth/forgot-password",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"email\":\"user10@mail.com\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:3100/v1/auth/forgot-password",
+					"host": [
+						"localhost"
+					],
+					"port": "3100",
+					"path": [
+						"v1",
+						"auth",
+						"forgot-password"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:3100/v1/auth/reset-password/bqjumqth5s5mre9738tg",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"password\": \"Password2$\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:3100/v1/auth/reset-password/bqjumqth5s5mre9738tg",
+					"host": [
+						"localhost"
+					],
+					"port": "3100",
+					"path": [
+						"v1",
+						"auth",
+						"reset-password",
+						"bqjumqth5s5mre9738tg"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:3100/v1/auth/change-password",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJFWFBJUkVEIjoxNTg4MTUwNDU3LCJST0xFX0lEIjoiIiwiVVNFUl9JRCI6ImJxanVmbGxoNXM1bWRsanA2a2cwIn0.vz3sPvNgMD9wjQSyRMe995CY-15jaQvBT8w4vEohdXY",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"oldPassword\": \"Password2$\",\n\t\"newPassword\": \"Password1$\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:3100/v1/auth/change-password",
+					"host": [
+						"localhost"
+					],
+					"port": "3100",
+					"path": [
+						"v1",
+						"auth",
+						"change-password"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:3100/v1/auth/self",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJFWFBJUkVEIjoxNTg4MTUwNTYxLCJST0xFX0lEIjoiIiwiVVNFUl9JRCI6ImJxanVmbGxoNXM1bWRsanA2a2cwIn0.y5Hs7fReOI1FOZp7roxIYJnjulheylYDpELv_Rn7q3o",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:3100/v1/auth/self",
+					"host": [
+						"localhost"
+					],
+					"port": "3100",
+					"path": [
+						"v1",
+						"auth",
+						"self"
+					]
+				}
+			},
+			"response": []
 		}
 	],
 	"protocolProfileBehavior": {}

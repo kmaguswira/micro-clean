@@ -18,24 +18,24 @@ type FindAllRequest struct {
 
 func QueryBuilder(c *gin.Context) *FindAllRequest {
 	findAllRequest := FindAllRequest{
-		Sort:   "created_at desc",
+		Sort:   DEFAULT_SORT_FIND_ALL_REQUEST,
 		Limit:  30,
 		Offset: 0,
 	}
 
-	if sort, isExist := c.GetQuery("s"); isExist {
+	if sort, isExist := c.GetQuery(SORT_ID_FIND_ALL_REQUEST); isExist {
 		findAllRequest.Sort = sort
 	}
 
-	if limit, isExist := c.GetQuery("l"); isExist {
+	if limit, isExist := c.GetQuery(LIMIT_ID_FIND_ALL_REQUEST); isExist {
 		findAllRequest.Limit, _ = strconv.ParseInt(limit, 10, 64)
 	}
 
-	if offset, isExist := c.GetQuery("o"); isExist {
+	if offset, isExist := c.GetQuery(OFFSET_ID_FIND_ALL_REQUEST); isExist {
 		findAllRequest.Offset, _ = strconv.ParseInt(offset, 10, 64)
 	}
 
-	if where, isExist := c.GetQuery("q"); isExist {
+	if where, isExist := c.GetQuery(QUERY_ID_FIND_ALL_REQUEST); isExist {
 		var query interface{}
 		var queryKey []string
 		var queryValue []string

@@ -3,6 +3,7 @@ package handler
 import (
 	"context"
 
+	"github.com/kmaguswira/micro-clean/service/account/application/global"
 	"github.com/kmaguswira/micro-clean/service/account/application/usecases"
 	account "github.com/kmaguswira/micro-clean/service/account/proto/account"
 	"github.com/micro/go-micro/util/log"
@@ -11,8 +12,7 @@ import (
 func (t *Account) SignUp(ctx context.Context, req *account.SignUpRequest, res *account.SignUpResponse) error {
 	log.Log("Received Account.SignUp request")
 
-	// change to constant
-	userRole, err := t.findRoleByTitleUseCase.Execute("user")
+	userRole, err := t.findRoleByTitleUseCase.Execute(global.USER_ROLE)
 
 	if err != nil {
 		res.ResponseInfo = t.response.InternalServerError()
@@ -33,6 +33,8 @@ func (t *Account) SignUp(ctx context.Context, req *account.SignUpRequest, res *a
 		res.ResponseInfo = t.response.InternalServerError()
 		return nil
 	}
+
+	//TODO: send email activation
 
 	res.ResponseInfo = t.response.Created()
 	res.Result = &account.User{
@@ -62,5 +64,64 @@ func (t *Account) SignIn(ctx context.Context, req *account.SignInRequest, res *a
 		ID:   result.User.ID,
 		Name: result.User.Name,
 	}
+	return nil
+}
+
+func (t *Account) ActivateUser(ctx context.Context, req *account.ActivateUserRequest, res *account.ActivateUserResponse) error {
+	log.Log("Received Account.ActivateUser")
+
+	_, err := t.activateUserUseCase.Execute(req.Token)
+
+	if err != nil {
+		res.ResponseInfo = t.response.InternalServerError()
+		return nil
+	}
+
+	res.ResponseInfo = t.response.OK()
+
+	return nil
+}
+
+func (t *Account) ForgotPassword(ctx context.Context, req *account.ForgotPasswordRequest, res *account.ForgotPasswordResponse) error {
+	log.Log("Received Account.ForgotPassword")
+
+	_, err := t.forgotPasswordUseCase.Execute(req.Email)
+
+	if err != nil {
+		res.ResponseInfo = t.response.InternalServerError()
+		return nil
+	}
+
+	//TODO: send email
+
+	res.ResponseInfo = t.response.OK()
+	return nil
+}
+
+func (t *Account) ResetPassword(ctx context.Context, req *account.ResetPasswordRequest, res *account.ResetPasswordResponse) error {
+	log.Log("Received Account.ResetPassword")
+
+	_, err := t.resetPasswordUseCase.Execute(req.Token, req.Password)
+
+	if err != nil {
+		res.ResponseInfo = t.response.InternalServerError()
+		return nil
+	}
+
+	res.ResponseInfo = t.response.OK()
+	return nil
+}
+
+func (t *Account) ChangePassword(ctx context.Context, req *account.ChangePasswordRequest, res *account.ChangePasswordResponse) error {
+	log.Log("Received Account.ChangePassword")
+
+	_, err := t.changePasswordUseCase.Execute(req.UserID, req.OldPassword, req.NewPassword)
+
+	if err != nil {
+		res.ResponseInfo = t.response.InternalServerError()
+		return nil
+	}
+
+	res.ResponseInfo = t.response.OK()
 	return nil
 }

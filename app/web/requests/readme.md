@@ -1,1 +1,0 @@
-this directory will be store all request(user input) based on controller

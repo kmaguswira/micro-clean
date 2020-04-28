@@ -6,15 +6,16 @@ import (
 
 type User struct {
 	BaseModel
-	Name            string `gorm:"type:varchar(255)"`
-	Email           string `gorm:"type:varchar(255)"`
-	Username        string `gorm:"type:varchar(255)"`
-	Password        string `gorm:"type:varchar(255)"`
-	ActivationToken string `gorm:"type:varchar(255)"`
-	RefreshToken    string `gorm:"type:varchar(255)"`
-	RoleID          string `gorm:"type:char(20) REFERENCES roles(id)"`
-	Role            Role   `gorm:"foreignkey:ID;association_foreignkey:RoleID"`
-	Status          string `gorm:"type:varchar(255)"`
+	Name                string `gorm:"type:varchar(255)"`
+	Email               string `gorm:"type:varchar(255)"`
+	Username            string `gorm:"type:varchar(255)"`
+	Password            string `gorm:"type:varchar(255)"`
+	ActivationToken     string `gorm:"type:varchar(255)"`
+	ForgotPasswordToken string `gorm:"type:varchar(255)"`
+	RefreshToken        string `gorm:"type:varchar(255)"`
+	RoleID              string `gorm:"type:char(20) REFERENCES roles(id)"`
+	Role                Role   `gorm:"foreignkey:ID;association_foreignkey:RoleID"`
+	Status              string `gorm:"type:varchar(255)"`
 }
 
 func (t *User) HashPassword() bool {

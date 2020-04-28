@@ -1,1 +1,0 @@
-all assets for application will be stored here

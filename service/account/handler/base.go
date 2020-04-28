@@ -33,6 +33,9 @@ type Account struct {
 	updateUserUseCase      usecases.IUpdateUser
 	findAllUserUseCase     usecases.IFindAllUser
 	activateUserUseCase    usecases.IActivateUser
+	forgotPasswordUseCase  usecases.IForgotPassword
+	resetPasswordUseCase   usecases.IResetPassword
+	changePasswordUseCase  usecases.IChangePassword
 	response               utils.Response
 }
 
@@ -60,6 +63,9 @@ func NewAccount() *Account {
 		updateUserUseCase:      usecases.NewUpdateUserUseCase(readWriteRepository),
 		findAllUserUseCase:     usecases.NewFindAllUserUseCase(readRepository),
 		activateUserUseCase:    usecases.NewActivateUserUseCase(readRepository, readWriteRepository),
+		forgotPasswordUseCase:  usecases.NewForgotPasswordUseCase(readRepository, readWriteRepository),
+		resetPasswordUseCase:   usecases.NewResetPasswordUseCase(readRepository, readWriteRepository),
+		changePasswordUseCase:  usecases.NewChangePasswordUseCase(readRepository, readWriteRepository),
 		response:               utils.Response{},
 	}
 }

@@ -1,1 +1,0 @@
-contains configuration for core service

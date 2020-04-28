@@ -48,7 +48,5 @@ func (t *createUserUseCase) Execute(input CreateUserInput) (domain.User, error) 
 		return *result, nil
 	}
 
-	//TODO: send email activation
-
 	return domain.User{}, errors.New("Bad Request")
 }
