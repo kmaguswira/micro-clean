@@ -2,13 +2,15 @@ package handler
 
 import (
 	"context"
+	"strings"
 
-	"github.com/micro/go-micro/util/log"
-
+	. "github.com/ahmetb/go-linq"
 	"github.com/kmaguswira/micro-clean/service/account/application/usecases"
+	"github.com/kmaguswira/micro-clean/service/account/domain"
 	account "github.com/kmaguswira/micro-clean/service/account/proto/account"
 	"github.com/kmaguswira/micro-clean/service/account/repositories"
 	"github.com/kmaguswira/micro-clean/service/account/utils"
+	"github.com/micro/go-micro/util/log"
 )
 
 type Account struct {
@@ -30,6 +32,7 @@ type Account struct {
 	deleteUserUseCase      usecases.IDeleteUser
 	updateUserUseCase      usecases.IUpdateUser
 	findAllUserUseCase     usecases.IFindAllUser
+	activateUserUseCase    usecases.IActivateUser
 	response               utils.Response
 }
 
@@ -56,6 +59,7 @@ func NewAccount() *Account {
 		deleteUserUseCase:      usecases.NewDeleteUserUseCase(readWriteRepository),
 		updateUserUseCase:      usecases.NewUpdateUserUseCase(readWriteRepository),
 		findAllUserUseCase:     usecases.NewFindAllUserUseCase(readRepository),
+		activateUserUseCase:    usecases.NewActivateUserUseCase(readRepository, readWriteRepository),
 		response:               utils.Response{},
 	}
 }
@@ -95,4 +99,42 @@ func (t *Account) PingPong(ctx context.Context, stream account.Account_PingPongS
 			return err
 		}
 	}
+}
+
+func populateUserResponse(user domain.User) account.User {
+	userResponse := account.User{
+		ID:       user.ID,
+		Name:     user.Name,
+		Email:    user.Email,
+		Username: user.Username,
+		Status:   user.Status,
+		RoleID:   user.RoleID,
+	}
+
+	return userResponse
+}
+
+func populateRoleResponse(role domain.Role) account.Role {
+	roleResponse := account.Role{
+		ID:    role.ID,
+		Title: role.Title,
+	}
+
+	return roleResponse
+}
+
+func populateACLResponse(acl domain.ACL) account.ACL {
+	var roleID []string
+	From(acl.Permitted).Select(func(c interface{}) interface{} {
+		return c.(domain.Role).ID
+	}).ToSlice(&roleID)
+
+	aclResponse := account.ACL{
+		ID:        acl.ID,
+		Title:     acl.Title,
+		Handler:   acl.Handler,
+		IsPublic:  acl.IsPublic,
+		Permitted: strings.Join(roleID, ","),
+	}
+	return aclResponse
 }

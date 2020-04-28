@@ -30,17 +30,9 @@ func (t *Account) CreateUser(ctx context.Context, req *account.CreateUserRequest
 		return nil
 	}
 
-	Result := account.User{
-		ID:       result.ID,
-		Name:     result.Name,
-		Email:    result.Email,
-		Username: result.Username,
-		Status:   result.Status,
-		RoleID:   result.RoleID,
-	}
-
+	userResponse := populateUserResponse(result)
 	res.ResponseInfo = t.response.OK()
-	res.Result = &Result
+	res.Result = &userResponse
 
 	return nil
 }
@@ -55,17 +47,9 @@ func (t *Account) FindUserById(ctx context.Context, req *account.FindUserByIdReq
 		return nil
 	}
 
-	Result := account.User{
-		ID:       result.ID,
-		Name:     result.Name,
-		Email:    result.Email,
-		Username: result.Username,
-		Status:   result.Status,
-		RoleID:   result.RoleID,
-	}
-
+	userResponse := populateUserResponse(result)
 	res.ResponseInfo = t.response.OK()
-	res.Result = &Result
+	res.Result = &userResponse
 
 	return nil
 }
@@ -92,14 +76,7 @@ func (t *Account) FindAllUser(ctx context.Context, req *account.FindAllUserReque
 	var users []*account.User
 	From(result).Select(func(c interface{}) interface{} {
 		d := c.(domain.User)
-		return &account.User{
-			ID:       d.ID,
-			Name:     d.Name,
-			Username: d.Username,
-			Email:    d.Email,
-			Status:   d.Status,
-			RoleID:   d.RoleID,
-		}
+		return populateUserResponse(d)
 	}).ToSlice(&users)
 
 	res.ResponseInfo = t.response.OK()
@@ -126,17 +103,9 @@ func (t *Account) UpdateUser(ctx context.Context, req *account.UpdateUserRequest
 		return nil
 	}
 
-	Result := account.User{
-		ID:       result.ID,
-		Name:     result.Name,
-		Email:    result.Email,
-		Username: result.Username,
-		Status:   result.Status,
-		RoleID:   result.RoleID,
-	}
-
+	userResponse := populateUserResponse(result)
 	res.ResponseInfo = t.response.OK()
-	res.Result = &Result
+	res.Result = &userResponse
 
 	return nil
 }
@@ -151,17 +120,36 @@ func (t *Account) DeleteUser(ctx context.Context, req *account.DeleteUserRequest
 		return nil
 	}
 
-	Result := account.User{
-		ID:       result.ID,
-		Name:     result.Name,
-		Email:    result.Email,
-		Username: result.Username,
-		Status:   result.Status,
-		RoleID:   result.RoleID,
+	userResponse := populateUserResponse(result)
+	res.ResponseInfo = t.response.OK()
+	res.Result = &userResponse
+
+	return nil
+}
+
+func (t *Account) ActivateUser(ctx context.Context, req *account.ActivateUserRequest, res *account.ActivateUserResponse) error {
+	log.Log("Received Account.DeleteUser")
+
+	_, err := t.activateUserUseCase.Execute(req.Token)
+
+	if err != nil {
+		res.ResponseInfo = t.response.InternalServerError()
+		return nil
 	}
 
 	res.ResponseInfo = t.response.OK()
-	res.Result = &Result
 
+	return nil
+}
+
+func (t *Account) ForgotPassword(ctx context.Context, req *account.ForgotPasswordRequest, res *account.ForgotPasswordResponse) error {
+	return nil
+}
+
+func (t *Account) ResetPassword(ctx context.Context, req *account.ResetPasswordRequest, res *account.ResetPasswordResponse) error {
+	return nil
+}
+
+func (t *Account) ChangePassword(ctx context.Context, req *account.ChangePasswordRequest, res *account.ChangePasswordResponse) error {
 	return nil
 }

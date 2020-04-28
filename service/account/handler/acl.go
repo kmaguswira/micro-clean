@@ -2,7 +2,6 @@ package handler
 
 import (
 	"context"
-	"strings"
 
 	. "github.com/ahmetb/go-linq"
 	"github.com/kmaguswira/micro-clean/service/account/application/global"
@@ -29,21 +28,9 @@ func (t *Account) CreateACL(ctx context.Context, req *account.CreateACLRequest, 
 		return nil
 	}
 
-	var roleID []string
-	From(result.Permitted).Select(func(c interface{}) interface{} {
-		return c.(domain.Role).ID
-	}).ToSlice(&roleID)
-
-	Result := account.ACL{
-		ID:        result.ID,
-		Title:     result.Title,
-		Handler:   result.Handler,
-		IsPublic:  result.IsPublic,
-		Permitted: strings.Join(roleID, ","),
-	}
-
+	aclResponse := populateACLResponse(result)
 	res.ResponseInfo = t.response.OK()
-	res.Result = &Result
+	res.Result = &aclResponse
 
 	return nil
 }
@@ -58,21 +45,9 @@ func (t *Account) FindACLById(ctx context.Context, req *account.FindACLByIdReque
 		return nil
 	}
 
-	var roleID []string
-	From(result.Permitted).Select(func(c interface{}) interface{} {
-		return c.(domain.Role).ID
-	}).ToSlice(&roleID)
-
-	Result := account.ACL{
-		ID:        result.ID,
-		Title:     result.Title,
-		Handler:   result.Handler,
-		IsPublic:  result.IsPublic,
-		Permitted: strings.Join(roleID, ","),
-	}
-
+	aclResponse := populateACLResponse(result)
 	res.ResponseInfo = t.response.OK()
-	res.Result = &Result
+	res.Result = &aclResponse
 
 	return nil
 }
@@ -99,19 +74,7 @@ func (t *Account) FindAllACL(ctx context.Context, req *account.FindAllACLRequest
 	var acls []*account.ACL
 	From(result).Select(func(c interface{}) interface{} {
 		d := c.(domain.ACL)
-
-		var roleID []string
-		From(d.Permitted).Select(func(c interface{}) interface{} {
-			return c.(domain.Role).ID
-		}).ToSlice(&roleID)
-
-		return &account.ACL{
-			ID:        d.ID,
-			Title:     d.Title,
-			Handler:   d.Handler,
-			IsPublic:  d.IsPublic,
-			Permitted: strings.Join(roleID, ","),
-		}
+		return populateACLResponse(d)
 	}).ToSlice(&acls)
 
 	res.ResponseInfo = t.response.OK()
@@ -137,21 +100,9 @@ func (t *Account) UpdateACL(ctx context.Context, req *account.UpdateACLRequest, 
 		return nil
 	}
 
-	var roleID []string
-	From(result.Permitted).Select(func(c interface{}) interface{} {
-		return c.(domain.Role).ID
-	}).ToSlice(&roleID)
-
-	Result := account.ACL{
-		ID:        result.ID,
-		Title:     result.Title,
-		Handler:   result.Handler,
-		IsPublic:  result.IsPublic,
-		Permitted: strings.Join(roleID, ","),
-	}
-
+	aclResponse := populateACLResponse(result)
 	res.ResponseInfo = t.response.OK()
-	res.Result = &Result
+	res.Result = &aclResponse
 
 	return nil
 }
@@ -166,21 +117,9 @@ func (t *Account) DeleteACL(ctx context.Context, req *account.DeleteACLRequest, 
 		return nil
 	}
 
-	var roleID []string
-	From(result.Permitted).Select(func(c interface{}) interface{} {
-		return c.(domain.Role).ID
-	}).ToSlice(&roleID)
-
-	Result := account.ACL{
-		ID:        result.ID,
-		Title:     result.Title,
-		Handler:   result.Handler,
-		IsPublic:  result.IsPublic,
-		Permitted: strings.Join(roleID, ","),
-	}
-
+	aclResponse := populateACLResponse(result)
 	res.ResponseInfo = t.response.OK()
-	res.Result = &Result
+	res.Result = &aclResponse
 
 	return nil
 }

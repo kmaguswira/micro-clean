@@ -47,11 +47,7 @@ func (t *readWriteRepository) DeleteRole(ID string) (*domain.Role, error) {
 		return nil, err
 	}
 
-	roleDomain := domain.Role{
-		ID:    role.ID,
-		Title: role.Title,
-	}
-
+	roleDomain := populateRoleDomain(role)
 	t.db.Delete(&role)
 
 	return &roleDomain, nil
@@ -99,22 +95,7 @@ func (t *readWriteRepository) DeleteACL(ID string) (*domain.ACL, error) {
 		return nil, err
 	}
 
-	var role []domain.Role
-	roleIds := strings.Split(acl.Permitted, ",")
-
-	From(roleIds).Select(func(c interface{}) interface{} {
-		return domain.Role{
-			ID: c.(string),
-		}
-	}).ToSlice(&role)
-
-	aclDomain := domain.ACL{
-		ID:        acl.ID,
-		Title:     acl.Title,
-		Handler:   acl.Handler,
-		IsPublic:  acl.IsPublic,
-		Permitted: role,
-	}
+	aclDomain := populateACLDomain(acl)
 
 	t.db.Delete(&acl)
 
@@ -145,12 +126,13 @@ func (t *readWriteRepository) UpdateACL(aclUpdated *domain.ACL) (*domain.ACL, er
 
 func (t *readWriteRepository) CreateUser(user *domain.User) (*domain.User, error) {
 	newUser := entity.User{
-		Name:     user.Name,
-		Username: user.Username,
-		Email:    user.Email,
-		Status:   user.Status,
-		Password: user.GetPassword(),
-		RoleID:   user.RoleID,
+		Name:            user.Name,
+		Username:        user.Username,
+		Email:           user.Email,
+		Status:          user.Status,
+		Password:        user.GetPassword(),
+		RoleID:          user.RoleID,
+		ActivationToken: user.GetActivationToken(),
 	}
 	t.db.Create(&newUser)
 	user.ID = newUser.ID
@@ -165,17 +147,7 @@ func (t *readWriteRepository) DeleteUser(ID string) (*domain.User, error) {
 		return nil, err
 	}
 
-	userDomain := domain.User{
-		ID:       user.ID,
-		Name:     user.Name,
-		Username: user.Username,
-		Email:    user.Email,
-		RoleID:   user.RoleID,
-		Status:   user.Status,
-	}
-
-	userDomain.SetHashedPassword(user.Password)
-
+	userDomain := populateUserDomain(user)
 	t.db.Delete(&user)
 
 	return &userDomain, nil
@@ -197,4 +169,20 @@ func (t *readWriteRepository) UpdateUser(userUpdated *domain.User) (*domain.User
 
 	t.db.Save(&user)
 	return userUpdated, nil
+}
+
+func (t *readWriteRepository) ActivateUser(ID string) (*domain.User, error) {
+	var user entity.User
+
+	if err := t.db.Where("id = ?", ID).First(&user).Error; err != nil {
+		err := fmt.Errorf("User with ID %q not found", ID)
+		return nil, err
+	}
+
+	user.Status = "active"
+
+	t.db.Save(&user)
+
+	userDomain := populateUserDomain(user)
+	return &userDomain, nil
 }

@@ -14,4 +14,5 @@ type IReadRepository interface {
 	FindUserByID(input string) (*domain.User, error)
 	FindAllUser(input global.FindAllInput) (*[]domain.User, error)
 	FindUserByEmailOrUsername(input string) (*domain.User, error)
+	FindUserByActivationToken(input string) (*domain.User, error)
 }

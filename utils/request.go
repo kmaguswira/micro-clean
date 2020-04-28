@@ -29,7 +29,6 @@ func QueryBuilder(c *gin.Context) *FindAllRequest {
 
 	if limit, isExist := c.GetQuery("l"); isExist {
 		findAllRequest.Limit, _ = strconv.ParseInt(limit, 10, 64)
-
 	}
 
 	if offset, isExist := c.GetQuery("o"); isExist {

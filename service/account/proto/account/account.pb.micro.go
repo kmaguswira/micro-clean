@@ -39,6 +39,10 @@ type AccountService interface {
 	PingPong(ctx context.Context, opts ...client.CallOption) (Account_PingPongService, error)
 	SignUp(ctx context.Context, in *SignUpRequest, opts ...client.CallOption) (*SignUpResponse, error)
 	SignIn(ctx context.Context, in *SignInRequest, opts ...client.CallOption) (*SignInResponse, error)
+	ActivateUser(ctx context.Context, in *ActivateUserRequest, opts ...client.CallOption) (*ActivateUserResponse, error)
+	ForgotPassword(ctx context.Context, in *ForgotPasswordRequest, opts ...client.CallOption) (*ForgotPasswordResponse, error)
+	ResetPassword(ctx context.Context, in *ResetPasswordRequest, opts ...client.CallOption) (*ResetPasswordResponse, error)
+	ChangePassword(ctx context.Context, in *ChangePasswordRequest, opts ...client.CallOption) (*ChangePasswordResponse, error)
 	CreateRole(ctx context.Context, in *CreateRoleRequest, opts ...client.CallOption) (*CreateRoleResponse, error)
 	FindRoleById(ctx context.Context, in *FindRoleByIdRequest, opts ...client.CallOption) (*FindRoleByIdResponse, error)
 	FindAllRole(ctx context.Context, in *FindAllRoleRequest, opts ...client.CallOption) (*FindAllRoleResponse, error)
@@ -188,6 +192,46 @@ func (c *accountService) SignUp(ctx context.Context, in *SignUpRequest, opts ...
 func (c *accountService) SignIn(ctx context.Context, in *SignInRequest, opts ...client.CallOption) (*SignInResponse, error) {
 	req := c.c.NewRequest(c.name, "Account.SignIn", in)
 	out := new(SignInResponse)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *accountService) ActivateUser(ctx context.Context, in *ActivateUserRequest, opts ...client.CallOption) (*ActivateUserResponse, error) {
+	req := c.c.NewRequest(c.name, "Account.ActivateUser", in)
+	out := new(ActivateUserResponse)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *accountService) ForgotPassword(ctx context.Context, in *ForgotPasswordRequest, opts ...client.CallOption) (*ForgotPasswordResponse, error) {
+	req := c.c.NewRequest(c.name, "Account.ForgotPassword", in)
+	out := new(ForgotPasswordResponse)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *accountService) ResetPassword(ctx context.Context, in *ResetPasswordRequest, opts ...client.CallOption) (*ResetPasswordResponse, error) {
+	req := c.c.NewRequest(c.name, "Account.ResetPassword", in)
+	out := new(ResetPasswordResponse)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *accountService) ChangePassword(ctx context.Context, in *ChangePasswordRequest, opts ...client.CallOption) (*ChangePasswordResponse, error) {
+	req := c.c.NewRequest(c.name, "Account.ChangePassword", in)
+	out := new(ChangePasswordResponse)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
 		return nil, err
@@ -363,6 +407,10 @@ type AccountHandler interface {
 	PingPong(context.Context, Account_PingPongStream) error
 	SignUp(context.Context, *SignUpRequest, *SignUpResponse) error
 	SignIn(context.Context, *SignInRequest, *SignInResponse) error
+	ActivateUser(context.Context, *ActivateUserRequest, *ActivateUserResponse) error
+	ForgotPassword(context.Context, *ForgotPasswordRequest, *ForgotPasswordResponse) error
+	ResetPassword(context.Context, *ResetPasswordRequest, *ResetPasswordResponse) error
+	ChangePassword(context.Context, *ChangePasswordRequest, *ChangePasswordResponse) error
 	CreateRole(context.Context, *CreateRoleRequest, *CreateRoleResponse) error
 	FindRoleById(context.Context, *FindRoleByIdRequest, *FindRoleByIdResponse) error
 	FindAllRole(context.Context, *FindAllRoleRequest, *FindAllRoleResponse) error
@@ -388,6 +436,10 @@ func RegisterAccountHandler(s server.Server, hdlr AccountHandler, opts ...server
 		PingPong(ctx context.Context, stream server.Stream) error
 		SignUp(ctx context.Context, in *SignUpRequest, out *SignUpResponse) error
 		SignIn(ctx context.Context, in *SignInRequest, out *SignInResponse) error
+		ActivateUser(ctx context.Context, in *ActivateUserRequest, out *ActivateUserResponse) error
+		ForgotPassword(ctx context.Context, in *ForgotPasswordRequest, out *ForgotPasswordResponse) error
+		ResetPassword(ctx context.Context, in *ResetPasswordRequest, out *ResetPasswordResponse) error
+		ChangePassword(ctx context.Context, in *ChangePasswordRequest, out *ChangePasswordResponse) error
 		CreateRole(ctx context.Context, in *CreateRoleRequest, out *CreateRoleResponse) error
 		FindRoleById(ctx context.Context, in *FindRoleByIdRequest, out *FindRoleByIdResponse) error
 		FindAllRole(ctx context.Context, in *FindAllRoleRequest, out *FindAllRoleResponse) error
@@ -501,6 +553,22 @@ func (h *accountHandler) SignUp(ctx context.Context, in *SignUpRequest, out *Sig
 
 func (h *accountHandler) SignIn(ctx context.Context, in *SignInRequest, out *SignInResponse) error {
 	return h.AccountHandler.SignIn(ctx, in, out)
+}
+
+func (h *accountHandler) ActivateUser(ctx context.Context, in *ActivateUserRequest, out *ActivateUserResponse) error {
+	return h.AccountHandler.ActivateUser(ctx, in, out)
+}
+
+func (h *accountHandler) ForgotPassword(ctx context.Context, in *ForgotPasswordRequest, out *ForgotPasswordResponse) error {
+	return h.AccountHandler.ForgotPassword(ctx, in, out)
+}
+
+func (h *accountHandler) ResetPassword(ctx context.Context, in *ResetPasswordRequest, out *ResetPasswordResponse) error {
+	return h.AccountHandler.ResetPassword(ctx, in, out)
+}
+
+func (h *accountHandler) ChangePassword(ctx context.Context, in *ChangePasswordRequest, out *ChangePasswordResponse) error {
+	return h.AccountHandler.ChangePassword(ctx, in, out)
 }
 
 func (h *accountHandler) CreateRole(ctx context.Context, in *CreateRoleRequest, out *CreateRoleResponse) error {

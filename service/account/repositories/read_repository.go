@@ -2,7 +2,6 @@ package repositories
 
 import (
 	"fmt"
-	"strings"
 
 	. "github.com/ahmetb/go-linq"
 	"github.com/jinzhu/gorm"
@@ -37,22 +36,7 @@ func (t *readRepository) FindACLByID(input string) (*domain.ACL, error) {
 		return nil, err
 	}
 
-	var role []domain.Role
-	roleIds := strings.Split(acl.Permitted, ",")
-
-	From(roleIds).Select(func(c interface{}) interface{} {
-		return domain.Role{
-			ID: c.(string),
-		}
-	}).ToSlice(&role)
-
-	aclDomain := domain.ACL{
-		ID:        acl.ID,
-		Handler:   acl.Handler,
-		IsPublic:  acl.IsPublic,
-		Title:     acl.Title,
-		Permitted: role,
-	}
+	aclDomain := populateACLDomain(acl)
 
 	return &aclDomain, nil
 }
@@ -68,24 +52,7 @@ func (t *readRepository) FindAllACL(input global.FindAllInput) (*[]domain.ACL, e
 
 	From(acls).Select(func(c interface{}) interface{} {
 		e := c.(entity.ACL)
-		var roles []domain.Role
-		roleIds := strings.Split(e.Permitted, ",")
-
-		From(roleIds).Select(func(c interface{}) interface{} {
-			return domain.Role{
-				ID: c.(string),
-			}
-		}).ToSlice(&roles)
-
-		acl := domain.ACL{
-			ID:        e.ID,
-			Title:     e.Title,
-			IsPublic:  e.IsPublic,
-			Permitted: roles,
-			Handler:   e.Handler,
-		}
-
-		return acl
+		return populateACLDomain(e)
 	}).ToSlice(&result)
 
 	return &result, nil
@@ -99,21 +66,20 @@ func (t *readRepository) FindRoleByID(input string) (*domain.Role, error) {
 		return nil, err
 	}
 
-	roleDomain := domain.Role{
-		ID:    role.ID,
-		Title: role.Title,
-	}
+	roleDomain := populateRoleDomain(role)
 
 	return &roleDomain, nil
 }
 
 func (t *readRepository) FindRoleByTitle(input string) (*domain.Role, error) {
-	var role domain.Role
+	var role entity.Role
 	if err := t.db.Where("title = ?", input).First(&role).Error; err != nil {
 		err := fmt.Errorf("Role with title %q not found", input)
 		return nil, err
 	}
-	return &role, nil
+
+	roleDomain := populateRoleDomain(role)
+	return &roleDomain, nil
 }
 
 func (t *readRepository) FindAllRole(input global.FindAllInput) (*[]domain.Role, error) {
@@ -127,10 +93,7 @@ func (t *readRepository) FindAllRole(input global.FindAllInput) (*[]domain.Role,
 
 	From(roles).Select(func(c interface{}) interface{} {
 		e := c.(entity.Role)
-		return domain.Role{
-			ID:    e.ID,
-			Title: e.Title,
-		}
+		return populateRoleDomain(e)
 	}).ToSlice(&result)
 
 	return &result, nil
@@ -144,15 +107,7 @@ func (t *readRepository) FindUserByID(input string) (*domain.User, error) {
 		return nil, err
 	}
 
-	userDomain := domain.User{
-		ID:       user.ID,
-		Name:     user.Name,
-		Username: user.Username,
-		Email:    user.Email,
-		RoleID:   user.RoleID,
-		Status:   user.Status,
-	}
-	userDomain.SetHashedPassword(user.Password)
+	userDomain := populateUserDomain(user)
 	return &userDomain, nil
 }
 
@@ -167,16 +122,7 @@ func (t *readRepository) FindAllUser(input global.FindAllInput) (*[]domain.User,
 
 	From(users).Select(func(c interface{}) interface{} {
 		e := c.(entity.User)
-		user := domain.User{
-			ID:       e.ID,
-			Name:     e.Name,
-			Username: e.Username,
-			Email:    e.Email,
-			Status:   e.Status,
-			RoleID:   e.RoleID,
-		}
-
-		user.SetHashedPassword(e.Password)
+		user := populateUserDomain(e)
 		return user
 	}).ToSlice(&result)
 
@@ -191,16 +137,20 @@ func (t *readRepository) FindUserByEmailOrUsername(input string) (*domain.User, 
 		return nil, err
 	}
 
-	userDomain := domain.User{
-		ID:       user.ID,
-		Name:     user.Name,
-		Username: user.Username,
-		Email:    user.Email,
-		RoleID:   user.RoleID,
-		Status:   user.Status,
+	userDomain := populateUserDomain(user)
+
+	return &userDomain, nil
+}
+
+func (t *readRepository) FindUserByActivationToken(input string) (*domain.User, error) {
+	var user entity.User
+
+	if err := t.db.Where("activation_token = ?", input).First(&user).Error; err != nil {
+		err := fmt.Errorf("User with activation token %q not found", input)
+		return nil, err
 	}
 
-	userDomain.SetHashedPassword(user.Password)
+	userDomain := populateUserDomain(user)
 
 	return &userDomain, nil
 }

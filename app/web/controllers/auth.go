@@ -62,3 +62,19 @@ func (t AuthController) SignUp(c *gin.Context) {
 	t.OKSingleData(c, response)
 	return
 }
+
+func (t AuthController) ActivateUser(c *gin.Context) {
+	token := c.Param("token")
+
+	response, err := accountService.ActivateUser(c, &account.ActivateUserRequest{
+		Token: token,
+	})
+
+	if err != nil {
+		t.BadRequest(c, err.Error())
+		return
+	}
+
+	t.OKSingleData(c, response)
+	return
+}

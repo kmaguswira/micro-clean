@@ -20,12 +20,9 @@ func (t *Account) CreateRole(ctx context.Context, req *account.CreateRoleRequest
 		return nil
 	}
 
-	Result := account.Role{
-		ID:    result.ID,
-		Title: result.Title,
-	}
+	roleResponse := populateRoleResponse(result)
 	res.ResponseInfo = t.response.Created()
-	res.Result = &Result
+	res.Result = &roleResponse
 
 	return nil
 }
@@ -40,13 +37,9 @@ func (t *Account) FindRoleById(ctx context.Context, req *account.FindRoleByIdReq
 		return nil
 	}
 
-	Result := account.Role{
-		ID:    result.ID,
-		Title: result.Title,
-	}
-
+	roleResponse := populateRoleResponse(result)
 	res.ResponseInfo = t.response.OK()
-	res.Result = &Result
+	res.Result = &roleResponse
 
 	return nil
 }
@@ -73,10 +66,7 @@ func (t *Account) FindAllRole(ctx context.Context, req *account.FindAllRoleReque
 	var roles []*account.Role
 	From(result).Select(func(c interface{}) interface{} {
 		d := c.(domain.Role)
-		return &account.Role{
-			ID:    d.ID,
-			Title: d.Title,
-		}
+		return populateRoleResponse(d)
 	}).ToSlice(&roles)
 
 	res.ResponseInfo = t.response.OK()
@@ -99,13 +89,9 @@ func (t *Account) UpdateRole(ctx context.Context, req *account.UpdateRoleRequest
 		return nil
 	}
 
-	Result := account.Role{
-		ID:    result.ID,
-		Title: result.Title,
-	}
-
+	roleResponse := populateRoleResponse(result)
 	res.ResponseInfo = t.response.OK()
-	res.Result = &Result
+	res.Result = &roleResponse
 
 	return nil
 }
@@ -120,13 +106,9 @@ func (t *Account) DeleteRole(ctx context.Context, req *account.DeleteRoleRequest
 		return nil
 	}
 
-	Result := account.Role{
-		ID:    result.ID,
-		Title: result.Title,
-	}
-
+	roleResponse := populateRoleResponse(result)
 	res.ResponseInfo = t.response.OK()
-	res.Result = &Result
+	res.Result = &roleResponse
 
 	return nil
 }
@@ -141,13 +123,9 @@ func (t *Account) FindRoleByTitle(ctx context.Context, req *account.FindRoleByTi
 		return nil
 	}
 
-	Result := account.Role{
-		ID:    result.ID,
-		Title: result.Title,
-	}
-
+	roleResponse := populateRoleResponse(result)
 	res.ResponseInfo = t.response.OK()
-	res.Result = &Result
+	res.Result = &roleResponse
 
 	return nil
 }

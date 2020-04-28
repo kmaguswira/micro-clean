@@ -40,11 +40,15 @@ func (t *createUserUseCase) Execute(input CreateUserInput) (domain.User, error) 
 	}
 
 	newUser.SetPassword(input.Password)
+	newUser.GenerateActivationToken()
 
 	result, err := t.readWriteRepository.CreateUser(&newUser)
 
 	if err == nil {
 		return *result, nil
 	}
+
+	//TODO: send email activation
+
 	return domain.User{}, errors.New("Bad Request")
 }

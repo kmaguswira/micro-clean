@@ -8,11 +8,10 @@ service Account {
 	rpc PingPong(stream Ping) returns (stream Pong) {}
 	rpc SignUp(SignUpRequest) returns (SignUpResponse) {}
 	rpc SignIn (SignInRequest) returns (SignInResponse) {}
-	// rpc AccountActivation (AccountActivationRequest) returns (AccountActivationResponse) {}
-	// rpc ForgotPassword (ForgotPasswordRequest) returns (ForgotPasswordResponse) {}
-	// rpc ResetPassword (ResetPasswordRequest) returns (ResetPasswordResponse) {}
-	// rpc ChangePassword (ChangePasswordRequest) returns (ChangePasswordResponse) {}
-
+	rpc ActivateUser (ActivateUserRequest) returns (ActivateUserResponse) {}
+	rpc ForgotPassword (ForgotPasswordRequest) returns (ForgotPasswordResponse) {}
+	rpc ResetPassword (ResetPasswordRequest) returns (ResetPasswordResponse) {}
+	rpc ChangePassword (ChangePasswordRequest) returns (ChangePasswordResponse) {}
 	rpc CreateRole (CreateRoleRequest) returns (CreateRoleResponse) {}
 	rpc FindRoleById (FindRoleByIdRequest) returns (FindRoleByIdResponse) {}
 	rpc FindAllRole (FindAllRoleRequest) returns (FindAllRoleResponse) {}
@@ -128,37 +127,39 @@ message SignInResponse {
 	User result = 2;
 }
 
-// message AccountActivationRequest {
+message ActivateUserRequest {
+	string token = 1;
+}
 
-// }
+message ActivateUserResponse {
+	BaseResponse responseInfo = 1;
+}
 
-// message AccountActivationResponse {
+message ForgotPasswordRequest {
+	string email = 1;
+}
 
-// }
+message ForgotPasswordResponse {
+	BaseResponse responseInfo = 1;
+}
 
-// message ForgotPasswordRequest {
+message ResetPasswordRequest {
+	string token = 1;
+	string password = 2;
+}
 
-// }
+message ResetPasswordResponse {
+	BaseResponse responseInfo = 1;
+}
 
-// message ForgotPasswordResponse {
+message ChangePasswordRequest {
+	string oldPassword = 1;
+	string newPassword = 2;
+}
 
-// }
-
-// message ResetPasswordRequest {
-
-// }
-
-// message ResetPasswordResponse {
-
-// }
-
-// message ChangePasswordRequest {
-
-// }
-
-// message ChangePasswordResponse {
-
-// }
+message ChangePasswordResponse {
+	BaseResponse responseInfo = 1;
+}
 
 message CreateRoleRequest {
 	Role new = 1;

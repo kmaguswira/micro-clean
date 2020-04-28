@@ -52,6 +52,7 @@ func RouterV1(router *gin.Engine) {
 
 			authGroup.POST("/sign-up", auth.SignUp)
 			authGroup.POST("/sign-in", auth.SignIn)
+			authGroup.GET("/activate-user/:token", auth.ActivateUser)
 			// authGroup.GET("/self", auth.Self)
 			// authGroup.POST("/sign-in/admin", auth.PostSignInAdmin)
 			// authGroup.GET("/all", user.GetUsers)
