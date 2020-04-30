@@ -6,7 +6,14 @@ import (
 
 type Config struct {
 	Name         string       `json:"name"`
+	Server       server       `json:"server"`
 	Repositories repositories `json:"repositories"`
+}
+
+type server struct {
+	Name   string `json:"name"`
+	Port   string `json:"port"`
+	Secret string `json:"secret"`
 }
 
 type repositories struct {

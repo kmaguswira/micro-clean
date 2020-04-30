@@ -148,7 +148,7 @@ var ACLs = func(permitted []domain.Role) []domain.ACL {
 		domain.ACL{
 			Handler:   "github.com/kmaguswira/micro-clean/app/web/controllers.AuthController.Self-fm",
 			Title:     "",
-			IsPublic:  true,
+			IsPublic:  false,
 			Permitted: permitted,
 		},
 		domain.ACL{
