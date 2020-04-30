@@ -1,8 +1,8 @@
 syntax = "proto3";
 
-package go.micro.srv.notification;
+package go.micro.srv.file;
 
-service Notification {
+service File {
 	rpc Call(Request) returns (Response) {}
 	rpc Stream(StreamingRequest) returns (stream StreamingResponse) {}
 	rpc PingPong(stream Ping) returns (stream Pong) {}

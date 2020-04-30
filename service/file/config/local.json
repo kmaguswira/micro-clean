@@ -1,8 +1,8 @@
 {
     "name": "local",
     "server": {
-        "name": "kmaguswira.srv.notification",
-        "port": "3102",
+        "name": "kmaguswira.srv.file",
+        "port": "3103",
         "secret": "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
     },
     "repositories": {
