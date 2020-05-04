@@ -37,6 +37,11 @@ type NotificationService interface {
 	Call(ctx context.Context, in *Request, opts ...client.CallOption) (*Response, error)
 	Stream(ctx context.Context, in *StreamingRequest, opts ...client.CallOption) (Notification_StreamService, error)
 	PingPong(ctx context.Context, opts ...client.CallOption) (Notification_PingPongService, error)
+	CreateEmailTemplate(ctx context.Context, in *CreateEmailTemplateRequest, opts ...client.CallOption) (*CreateEmailTemplateResponse, error)
+	FindEmailTemplateById(ctx context.Context, in *FindEmailTemplateByIdRequest, opts ...client.CallOption) (*FindEmailTemplateByIdResponse, error)
+	FindAllEmailTemplate(ctx context.Context, in *FindAllEmailTemplateRequest, opts ...client.CallOption) (*FindAllEmailTemplateResponse, error)
+	UpdateEmailTemplate(ctx context.Context, in *UpdateEmailTemplateRequest, opts ...client.CallOption) (*UpdateEmailTemplateResponse, error)
+	DeleteEmailTemplate(ctx context.Context, in *DeleteEmailTemplateRequest, opts ...client.CallOption) (*DeleteEmailTemplateResponse, error)
 }
 
 type notificationService struct {
@@ -157,12 +162,67 @@ func (x *notificationServicePingPong) Recv() (*Pong, error) {
 	return m, nil
 }
 
+func (c *notificationService) CreateEmailTemplate(ctx context.Context, in *CreateEmailTemplateRequest, opts ...client.CallOption) (*CreateEmailTemplateResponse, error) {
+	req := c.c.NewRequest(c.name, "Notification.CreateEmailTemplate", in)
+	out := new(CreateEmailTemplateResponse)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *notificationService) FindEmailTemplateById(ctx context.Context, in *FindEmailTemplateByIdRequest, opts ...client.CallOption) (*FindEmailTemplateByIdResponse, error) {
+	req := c.c.NewRequest(c.name, "Notification.FindEmailTemplateById", in)
+	out := new(FindEmailTemplateByIdResponse)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *notificationService) FindAllEmailTemplate(ctx context.Context, in *FindAllEmailTemplateRequest, opts ...client.CallOption) (*FindAllEmailTemplateResponse, error) {
+	req := c.c.NewRequest(c.name, "Notification.FindAllEmailTemplate", in)
+	out := new(FindAllEmailTemplateResponse)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *notificationService) UpdateEmailTemplate(ctx context.Context, in *UpdateEmailTemplateRequest, opts ...client.CallOption) (*UpdateEmailTemplateResponse, error) {
+	req := c.c.NewRequest(c.name, "Notification.UpdateEmailTemplate", in)
+	out := new(UpdateEmailTemplateResponse)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *notificationService) DeleteEmailTemplate(ctx context.Context, in *DeleteEmailTemplateRequest, opts ...client.CallOption) (*DeleteEmailTemplateResponse, error) {
+	req := c.c.NewRequest(c.name, "Notification.DeleteEmailTemplate", in)
+	out := new(DeleteEmailTemplateResponse)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // Server API for Notification service
 
 type NotificationHandler interface {
 	Call(context.Context, *Request, *Response) error
 	Stream(context.Context, *StreamingRequest, Notification_StreamStream) error
 	PingPong(context.Context, Notification_PingPongStream) error
+	CreateEmailTemplate(context.Context, *CreateEmailTemplateRequest, *CreateEmailTemplateResponse) error
+	FindEmailTemplateById(context.Context, *FindEmailTemplateByIdRequest, *FindEmailTemplateByIdResponse) error
+	FindAllEmailTemplate(context.Context, *FindAllEmailTemplateRequest, *FindAllEmailTemplateResponse) error
+	UpdateEmailTemplate(context.Context, *UpdateEmailTemplateRequest, *UpdateEmailTemplateResponse) error
+	DeleteEmailTemplate(context.Context, *DeleteEmailTemplateRequest, *DeleteEmailTemplateResponse) error
 }
 
 func RegisterNotificationHandler(s server.Server, hdlr NotificationHandler, opts ...server.HandlerOption) error {
@@ -170,6 +230,11 @@ func RegisterNotificationHandler(s server.Server, hdlr NotificationHandler, opts
 		Call(ctx context.Context, in *Request, out *Response) error
 		Stream(ctx context.Context, stream server.Stream) error
 		PingPong(ctx context.Context, stream server.Stream) error
+		CreateEmailTemplate(ctx context.Context, in *CreateEmailTemplateRequest, out *CreateEmailTemplateResponse) error
+		FindEmailTemplateById(ctx context.Context, in *FindEmailTemplateByIdRequest, out *FindEmailTemplateByIdResponse) error
+		FindAllEmailTemplate(ctx context.Context, in *FindAllEmailTemplateRequest, out *FindAllEmailTemplateResponse) error
+		UpdateEmailTemplate(ctx context.Context, in *UpdateEmailTemplateRequest, out *UpdateEmailTemplateResponse) error
+		DeleteEmailTemplate(ctx context.Context, in *DeleteEmailTemplateRequest, out *DeleteEmailTemplateResponse) error
 	}
 	type Notification struct {
 		notification
@@ -259,4 +324,24 @@ func (x *notificationPingPongStream) Recv() (*Ping, error) {
 		return nil, err
 	}
 	return m, nil
+}
+
+func (h *notificationHandler) CreateEmailTemplate(ctx context.Context, in *CreateEmailTemplateRequest, out *CreateEmailTemplateResponse) error {
+	return h.NotificationHandler.CreateEmailTemplate(ctx, in, out)
+}
+
+func (h *notificationHandler) FindEmailTemplateById(ctx context.Context, in *FindEmailTemplateByIdRequest, out *FindEmailTemplateByIdResponse) error {
+	return h.NotificationHandler.FindEmailTemplateById(ctx, in, out)
+}
+
+func (h *notificationHandler) FindAllEmailTemplate(ctx context.Context, in *FindAllEmailTemplateRequest, out *FindAllEmailTemplateResponse) error {
+	return h.NotificationHandler.FindAllEmailTemplate(ctx, in, out)
+}
+
+func (h *notificationHandler) UpdateEmailTemplate(ctx context.Context, in *UpdateEmailTemplateRequest, out *UpdateEmailTemplateResponse) error {
+	return h.NotificationHandler.UpdateEmailTemplate(ctx, in, out)
+}
+
+func (h *notificationHandler) DeleteEmailTemplate(ctx context.Context, in *DeleteEmailTemplateRequest, out *DeleteEmailTemplateResponse) error {
+	return h.NotificationHandler.DeleteEmailTemplate(ctx, in, out)
 }

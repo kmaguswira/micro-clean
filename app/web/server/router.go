@@ -90,6 +90,17 @@ func RouterV1(router *gin.Engine) {
 			aclGroup.PUT("/:id", acl.Update)
 			aclGroup.GET("/", acl.FindAll)
 		}
+
+		emailTemplateGroup := v1.Group("email-template")
+		{
+			emailTemplate := new(controllers.EmailTemplateController)
+
+			emailTemplateGroup.POST("/create", emailTemplate.Create)
+			emailTemplateGroup.GET("/:id", emailTemplate.FindById)
+			emailTemplateGroup.DELETE("/:id", emailTemplate.Delete)
+			emailTemplateGroup.PUT("/:id", emailTemplate.Update)
+			emailTemplateGroup.GET("/", emailTemplate.FindAll)
+		}
 	}
 
 }

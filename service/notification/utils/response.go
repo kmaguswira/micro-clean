@@ -1,7 +1,7 @@
 package utils
 
 import (
-	_proto "github.com/kmaguswira/micro-clean/service/file/proto/file"
+	_proto "github.com/kmaguswira/micro-clean/service/notification/proto/notification"
 )
 
 type Response struct{}

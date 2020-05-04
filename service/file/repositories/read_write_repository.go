@@ -18,6 +18,6 @@ func NewReadWriteRepository(DB *gorm.DB) iface.IReadWriteRepository {
 	}
 	config := config.GetConfig()
 	return &readWriteRepository{
-		db: NewDB(config.Repositories.Read, Registered),
+		db: NewDB(config.Repositories.ReadWrite, Registered),
 	}
 }

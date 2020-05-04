@@ -6,6 +6,11 @@ service Notification {
 	rpc Call(Request) returns (Response) {}
 	rpc Stream(StreamingRequest) returns (stream StreamingResponse) {}
 	rpc PingPong(stream Ping) returns (stream Pong) {}
+	rpc CreateEmailTemplate (CreateEmailTemplateRequest) returns (CreateEmailTemplateResponse) {}
+	rpc FindEmailTemplateById (FindEmailTemplateByIdRequest) returns (FindEmailTemplateByIdResponse) {}
+	rpc FindAllEmailTemplate (FindAllEmailTemplateRequest) returns (FindAllEmailTemplateResponse) {}
+	rpc UpdateEmailTemplate (UpdateEmailTemplateRequest) returns (UpdateEmailTemplateResponse) {}
+	rpc DeleteEmailTemplate (DeleteEmailTemplateRequest) returns (DeleteEmailTemplateResponse) {}
 }
 
 message Message {
@@ -53,4 +58,62 @@ message BaseQuery {
 	int64 limit = 3;
 	int64 offset = 4;
 	string sort = 5;
+}
+
+message EmailTemplate {
+	string ID = 1;
+	string Title = 2;
+	string Subject = 3;
+	string Body = 4;
+	string Language = 5;
+}
+
+
+///////////////////////////////////
+// REQUEST-RESPONSE
+///////////////////////////////////
+
+message CreateEmailTemplateRequest {
+	EmailTemplate new = 1;
+}
+
+message CreateEmailTemplateResponse {
+	BaseResponse responseInfo = 1;
+	EmailTemplate result = 2;
+}
+
+message FindEmailTemplateByIdRequest {
+	string id = 1;
+}
+
+message FindEmailTemplateByIdResponse {
+	BaseResponse responseInfo = 1;
+	EmailTemplate result = 2;
+}
+
+message FindAllEmailTemplateRequest {
+	BaseQuery query = 1;
+}
+
+message FindAllEmailTemplateResponse {
+	BaseResponse responseInfo = 1;
+	repeated EmailTemplate result = 2;
+}
+
+message UpdateEmailTemplateRequest {
+	EmailTemplate update = 1;
+}
+
+message UpdateEmailTemplateResponse {
+	BaseResponse responseInfo = 1;
+	EmailTemplate result = 2;
+}
+
+message DeleteEmailTemplateRequest {
+	string id = 1;
+}
+
+message DeleteEmailTemplateResponse {
+	BaseResponse responseInfo = 1;
+	EmailTemplate result = 2;
 }

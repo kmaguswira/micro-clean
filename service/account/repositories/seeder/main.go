@@ -27,7 +27,6 @@ func main() {
 }
 
 func seeding() {
-	fmt.Println(config.GetConfig())
 	readWriteRepository := repositories.NewReadWriteRepository(nil)
 
 	sr, _ := readWriteRepository.CreateRole(&SuperAdminRole)
@@ -237,6 +236,36 @@ var ACLs = func(permitted []domain.Role) []domain.ACL {
 		},
 		domain.ACL{
 			Handler:   "github.com/kmaguswira/micro-clean/app/web/controllers.ACLController.FindAll-fm",
+			Title:     "",
+			IsPublic:  true,
+			Permitted: permitted,
+		},
+		domain.ACL{
+			Handler:   "github.com/kmaguswira/micro-clean/app/web/controllers.EmailTemplateController.Create-fm",
+			Title:     "",
+			IsPublic:  true,
+			Permitted: permitted,
+		},
+		domain.ACL{
+			Handler:   "github.com/kmaguswira/micro-clean/app/web/controllers.EmailTemplateController.FindById-fm",
+			Title:     "",
+			IsPublic:  true,
+			Permitted: permitted,
+		},
+		domain.ACL{
+			Handler:   "github.com/kmaguswira/micro-clean/app/web/controllers.EmailTemplateController.Delete-fm",
+			Title:     "",
+			IsPublic:  true,
+			Permitted: permitted,
+		},
+		domain.ACL{
+			Handler:   "github.com/kmaguswira/micro-clean/app/web/controllers.EmailTemplateController.Update-fm",
+			Title:     "",
+			IsPublic:  true,
+			Permitted: permitted,
+		},
+		domain.ACL{
+			Handler:   "github.com/kmaguswira/micro-clean/app/web/controllers.EmailTemplateController.FindAll-fm",
 			Title:     "",
 			IsPublic:  true,
 			Permitted: permitted,

@@ -3,21 +3,34 @@ package handler
 import (
 	"context"
 
+	"github.com/kmaguswira/micro-clean/service/notification/application/usecases"
+	"github.com/kmaguswira/micro-clean/service/notification/domain"
 	notification "github.com/kmaguswira/micro-clean/service/notification/proto/notification"
+	"github.com/kmaguswira/micro-clean/service/notification/repositories"
 	"github.com/kmaguswira/micro-clean/service/notification/utils"
 	"github.com/micro/go-micro/util/log"
 )
 
 type Notification struct {
-	response utils.Response
+	createEmailTemplateUseCase   usecases.ICreateEmailTemplate
+	findEmailTemplateByIDUseCase usecases.IFindEmailTemplateByID
+	deleteEmailTemplateUseCase   usecases.IDeleteEmailTemplate
+	updateEmailTemplateUseCase   usecases.IUpdateEmailTemplate
+	findAllEmailTemplateUseCase  usecases.IFindAllEmailTemplate
+	response                     utils.Response
 }
 
 func NewNotification() *Notification {
-	// readWriteRepository := repositories.NewReadWriteRepository(nil)
-	// readRepository := repositories.NewReadRepository(nil)
+	readWriteRepository := repositories.NewReadWriteRepository(nil)
+	readRepository := repositories.NewReadRepository(nil)
 
 	return &Notification{
-		response: utils.Response{},
+		createEmailTemplateUseCase:   usecases.NewCreateEmailTemplateUseCase(readWriteRepository),
+		findEmailTemplateByIDUseCase: usecases.NewFindEmailTemplateByIDUseCase(readRepository),
+		deleteEmailTemplateUseCase:   usecases.NewDeleteEmailTemplateUseCase(readWriteRepository),
+		updateEmailTemplateUseCase:   usecases.NewUpdateEmailTemplateUseCase(readWriteRepository),
+		findAllEmailTemplateUseCase:  usecases.NewFindAllEmailTemplateUseCase(readRepository),
+		response:                     utils.Response{},
 	}
 }
 
@@ -56,4 +69,16 @@ func (e *Notification) PingPong(ctx context.Context, stream notification.Notific
 			return err
 		}
 	}
+}
+
+func populateEmailTemplateResponse(emailTemplate domain.EmailTemplate) notification.EmailTemplate {
+	emailTemplateResponse := notification.EmailTemplate{
+		ID:       emailTemplate.ID,
+		Title:    emailTemplate.Title,
+		Subject:  emailTemplate.Subject,
+		Body:     emailTemplate.Body,
+		Language: emailTemplate.Language,
+	}
+
+	return emailTemplateResponse
 }

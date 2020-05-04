@@ -4,6 +4,7 @@ import (
 	"context"
 
 	file "github.com/kmaguswira/micro-clean/service/file/proto/file"
+	"github.com/kmaguswira/micro-clean/service/file/repositories"
 	"github.com/kmaguswira/micro-clean/service/file/utils"
 	"github.com/micro/go-micro/util/log"
 )
@@ -13,8 +14,8 @@ type File struct {
 }
 
 func NewFile() *File {
-	// readWriteRepository := repositories.NewReadWriteRepository(nil)
-	// readRepository := repositories.NewReadRepository(nil)
+	repositories.NewReadWriteRepository(nil)
+	repositories.NewReadRepository(nil)
 
 	return &File{
 		response: utils.Response{},
