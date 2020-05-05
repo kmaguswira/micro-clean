@@ -10,6 +10,7 @@ import (
 	account "github.com/kmaguswira/micro-clean/service/account/proto/account"
 	"github.com/kmaguswira/micro-clean/service/account/repositories"
 	"github.com/kmaguswira/micro-clean/service/account/utils"
+	"github.com/micro/go-micro"
 	"github.com/micro/go-micro/util/log"
 )
 
@@ -38,9 +39,10 @@ type Account struct {
 	resetPasswordUseCase    usecases.IResetPassword
 	changePasswordUseCase   usecases.IChangePassword
 	response                utils.Response
+	sendEmailPublisher      micro.Publisher
 }
 
-func NewAccount() *Account {
+func NewAccount(service micro.Service) *Account {
 	readWriteRepository := repositories.NewReadWriteRepository(nil)
 	readRepository := repositories.NewReadRepository(nil)
 
@@ -69,6 +71,7 @@ func NewAccount() *Account {
 		resetPasswordUseCase:    usecases.NewResetPasswordUseCase(readRepository, readWriteRepository),
 		changePasswordUseCase:   usecases.NewChangePasswordUseCase(readRepository, readWriteRepository),
 		response:                utils.Response{},
+		sendEmailPublisher:      micro.NewPublisher("kmaguswira.srv.notification.send-email", service.Client()),
 	}
 }
 

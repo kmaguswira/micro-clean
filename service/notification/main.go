@@ -8,7 +8,7 @@ import (
 	"github.com/kmaguswira/micro-clean/service/notification/config"
 	"github.com/kmaguswira/micro-clean/service/notification/handler"
 
-	// "github.com/kmaguswira/micro-clean/service/notification/subscriber"
+	"github.com/kmaguswira/micro-clean/service/notification/subscriber"
 	"github.com/micro/go-micro"
 	"github.com/micro/go-micro/server"
 	"github.com/micro/go-micro/util/log"
@@ -52,10 +52,11 @@ func bootstrap() {
 	notification.RegisterNotificationHandler(service.Server(), notificationHandler)
 
 	// Register Struct as Subscriber
-	// micro.RegisterSubscriber("kmaguswira.srv.notification", service.Server(), new(subscriber.Notification))
+	notificationSubscriber := subscriber.NewNotification()
+	micro.RegisterSubscriber("kmaguswira.srv.notification.send-email", service.Server(), notificationSubscriber)
 
-	// Register Function as Subscriber
-	// micro.RegisterSubscriber("kmaguswira.srv.notification", service.Server(), subscriber.Handler)
+	// // Register Function as Subscriber
+	// micro.RegisterSubscriber("kmaguswira.srv.notification.send-email", service.Server(), subscriber.Handler)
 
 	// Run service
 	if err := service.Run(); err != nil {

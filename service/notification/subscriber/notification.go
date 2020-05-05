@@ -2,19 +2,25 @@ package subscriber
 
 import (
 	"context"
+
 	"github.com/micro/go-micro/util/log"
 
 	notification "github.com/kmaguswira/micro-clean/service/notification/proto/notification"
 )
 
-type Notification struct{}
+func (t *Notification) SendEmail(ctx context.Context, req *notification.SendEmailRequest) error {
+	log.Log("Handler Received message: ", req.TemplateTitle)
+	data := []interface{}{}
+	for i := 0; i < len(req.Data); i++ {
+		data = append(data, req.Data[i])
+	}
 
-func (e *Notification) Handle(ctx context.Context, msg *notification.Message) error {
-	log.Log("Handler Received message: ", msg.Say)
+	t.sendEmailUseCase.Execute(req.TemplateTitle, req.ToName, req.ToEmail, data)
+
 	return nil
 }
 
-func Handler(ctx context.Context, msg *notification.Message) error {
-	log.Log("Function Received message: ", msg.Say)
+func Handler(ctx context.Context, req *notification.SendEmailRequest) error {
+	log.Log("Function Received message: ", req.TemplateTitle)
 	return nil
 }

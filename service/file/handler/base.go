@@ -6,6 +6,7 @@ import (
 	file "github.com/kmaguswira/micro-clean/service/file/proto/file"
 	"github.com/kmaguswira/micro-clean/service/file/repositories"
 	"github.com/kmaguswira/micro-clean/service/file/utils"
+	"github.com/micro/go-micro"
 	"github.com/micro/go-micro/util/log"
 )
 
@@ -13,7 +14,7 @@ type File struct {
 	response utils.Response
 }
 
-func NewFile() *File {
+func NewFile(service micro.Service) *File {
 	repositories.NewReadWriteRepository(nil)
 	repositories.NewReadRepository(nil)
 

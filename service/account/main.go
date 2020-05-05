@@ -48,7 +48,7 @@ func bootstrap() {
 	service.Init()
 
 	// Register Handler
-	accountHandler := handler.NewAccount()
+	accountHandler := handler.NewAccount(service)
 	account.RegisterAccountHandler(service.Server(), accountHandler)
 
 	// Register Struct as Subscriber
