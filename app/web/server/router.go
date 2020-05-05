@@ -4,6 +4,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/kmaguswira/micro-clean/app/web/controllers"
 	"github.com/kmaguswira/micro-clean/app/web/middlewares"
+	"github.com/micro/go-micro/client"
 )
 
 func SetupRouter(env string) *gin.Engine {
@@ -19,8 +20,10 @@ func SetupRouter(env string) *gin.Engine {
 		router.Static("/public", "./public")
 	}
 
-	router.Use(middlewares.CorsMiddleware())
-	router.Use(middlewares.AuthorizationMiddleware())
+	corsMiddleware := middlewares.NewCORSMiddleware()
+	router.Use(corsMiddleware.Handler())
+	authorizationMiddleware := middlewares.NewAuthorizationMiddleware(client.DefaultClient)
+	router.Use(authorizationMiddleware.Handler())
 
 	RouterV1(router)
 
@@ -33,21 +36,21 @@ func RouterV1(router *gin.Engine) {
 	{
 		healthGroup := v1.Group("health")
 		{
-			health := new(controllers.HealthController)
+			health := controllers.NewHealthController()
 
 			healthGroup.GET("/check", health.Check)
 		}
 
-		// uploadGroup := v1.Group("upload")
-		// {
-		// 	upload := new(controllers.UploadController)
+		uploadGroup := v1.Group("upload")
+		{
+			upload := controllers.NewUploadController(client.DefaultClient)
 
-		// 	uploadGroup.POST("/picture", upload.Picture)
-		// }
+			uploadGroup.POST("/images", upload.Images)
+		}
 
 		authGroup := v1.Group("auth")
 		{
-			auth := new(controllers.AuthController)
+			auth := controllers.NewAuthController(client.DefaultClient)
 
 			authGroup.POST("/sign-up", auth.SignUp)
 			authGroup.POST("/sign-in", auth.SignIn)
@@ -60,7 +63,7 @@ func RouterV1(router *gin.Engine) {
 
 		userGroup := v1.Group("user")
 		{
-			user := new(controllers.UserController)
+			user := controllers.NewUserController(client.DefaultClient)
 
 			userGroup.POST("/create", user.Create)
 			userGroup.GET("/:id", user.FindById)
@@ -71,7 +74,7 @@ func RouterV1(router *gin.Engine) {
 
 		roleGroup := v1.Group("role")
 		{
-			role := new(controllers.RoleController)
+			role := controllers.NewRoleController(client.DefaultClient)
 
 			roleGroup.POST("/create", role.Create)
 			roleGroup.GET("/:id", role.FindById)
@@ -82,7 +85,7 @@ func RouterV1(router *gin.Engine) {
 
 		aclGroup := v1.Group("acl")
 		{
-			acl := new(controllers.ACLController)
+			acl := controllers.NewACLController(client.DefaultClient)
 
 			aclGroup.POST("/create", acl.Create)
 			aclGroup.GET("/:id", acl.FindById)
@@ -93,7 +96,7 @@ func RouterV1(router *gin.Engine) {
 
 		emailTemplateGroup := v1.Group("email-template")
 		{
-			emailTemplate := new(controllers.EmailTemplateController)
+			emailTemplate := controllers.NewEmailTemplateController(client.DefaultClient)
 
 			emailTemplateGroup.POST("/create", emailTemplate.Create)
 			emailTemplateGroup.GET("/:id", emailTemplate.FindById)

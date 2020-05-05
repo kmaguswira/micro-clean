@@ -5,13 +5,21 @@ import (
 	"github.com/kmaguswira/micro-clean/app/web/requests"
 	account "github.com/kmaguswira/micro-clean/service/account/proto/account"
 	"github.com/kmaguswira/micro-clean/utils"
+	"github.com/micro/go-micro/client"
 )
 
-type UserController struct {
+type userController struct {
 	utils.Response
+	accountService account.AccountService
 }
 
-func (t UserController) Create(c *gin.Context) {
+func NewUserController(client client.Client) userController {
+	return userController{
+		accountService: account.NewAccountService("kmaguswira.srv.account", client),
+	}
+}
+
+func (t *userController) Create(c *gin.Context) {
 	var createUserRequest requests.CreateUser
 
 	if err := c.BindJSON(&createUserRequest); err != nil {
@@ -19,7 +27,7 @@ func (t UserController) Create(c *gin.Context) {
 		return
 	}
 
-	response, err := accountService.CreateUser(c, &account.CreateUserRequest{
+	response, err := t.accountService.CreateUser(c, &account.CreateUserRequest{
 		New: &account.User{
 			Name:     createUserRequest.Name,
 			Username: createUserRequest.Username,
@@ -39,10 +47,10 @@ func (t UserController) Create(c *gin.Context) {
 	return
 }
 
-func (t UserController) FindById(c *gin.Context) {
+func (t *userController) FindById(c *gin.Context) {
 	id := c.Param("id")
 
-	response, err := accountService.FindUserById(c, &account.FindUserByIdRequest{
+	response, err := t.accountService.FindUserById(c, &account.FindUserByIdRequest{
 		Id: id,
 	})
 
@@ -56,10 +64,10 @@ func (t UserController) FindById(c *gin.Context) {
 	return
 }
 
-func (t UserController) Delete(c *gin.Context) {
+func (t *userController) Delete(c *gin.Context) {
 	id := c.Param("id")
 
-	response, err := accountService.DeleteUser(c, &account.DeleteUserRequest{
+	response, err := t.accountService.DeleteUser(c, &account.DeleteUserRequest{
 		Id: id,
 	})
 
@@ -73,7 +81,7 @@ func (t UserController) Delete(c *gin.Context) {
 	return
 }
 
-func (t UserController) Update(c *gin.Context) {
+func (t *userController) Update(c *gin.Context) {
 	id := c.Param("id")
 
 	var updateUserRequest requests.UpdateUser
@@ -83,7 +91,7 @@ func (t UserController) Update(c *gin.Context) {
 		return
 	}
 
-	response, err := accountService.UpdateUser(c, &account.UpdateUserRequest{
+	response, err := t.accountService.UpdateUser(c, &account.UpdateUserRequest{
 		Update: &account.User{
 			ID:       id,
 			Name:     updateUserRequest.Name,
@@ -104,10 +112,10 @@ func (t UserController) Update(c *gin.Context) {
 	return
 }
 
-func (t UserController) FindAll(c *gin.Context) {
+func (t *userController) FindAll(c *gin.Context) {
 	q := utils.QueryBuilder(c)
 
-	response, err := accountService.FindAllUser(c, &account.FindAllUserRequest{
+	response, err := t.accountService.FindAllUser(c, &account.FindAllUserRequest{
 		Query: &account.BaseQuery{
 			QueryKey:   q.QueryKey,
 			QueryValue: q.QueryValue,

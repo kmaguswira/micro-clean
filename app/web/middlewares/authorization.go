@@ -1,6 +1,7 @@
 package middlewares
 
 import (
+	"fmt"
 	"log"
 	"strings"
 
@@ -11,19 +12,28 @@ import (
 	"github.com/micro/go-micro/client"
 )
 
-var accountService = account.NewAccountService("kmaguswira.srv.account", client.DefaultClient)
-var r utils.Response
+type authorizationMiddleware struct {
+	accountService account.AccountService
+	utils.Response
+}
 
-func AuthorizationMiddleware() gin.HandlerFunc {
+func NewAuthorizationMiddleware(client client.Client) authorizationMiddleware {
+	return authorizationMiddleware{
+		accountService: account.NewAccountService("kmaguswira.srv.account", client),
+	}
+}
+
+func (t *authorizationMiddleware) Handler() gin.HandlerFunc {
 	cfg := config.GetConfig()
 
 	return func(c *gin.Context) {
-		response, _ := accountService.FindACLByHandler(c, &account.FindACLByHandlerRequest{
+		response, _ := t.accountService.FindACLByHandler(c, &account.FindACLByHandlerRequest{
 			Handler: c.HandlerName(),
 		})
 
 		if response.Result == nil {
-			r.InternalError(c, "Can't Connect to Account Service")
+			fmt.Println(c.HandlerName())
+			t.InternalError(c, "Can't Connect to Account Service")
 			return
 		}
 
@@ -40,7 +50,7 @@ func AuthorizationMiddleware() gin.HandlerFunc {
 
 					if err != nil {
 						log.Println(err)
-						r.NotAuthorize(c, err.Error())
+						t.NotAuthorize(c, err.Error())
 						return
 					}
 
@@ -50,14 +60,14 @@ func AuthorizationMiddleware() gin.HandlerFunc {
 						c.Set(utils.JWT_USER_ID, userID)
 						c.Set(utils.JWT_ROLE_ID, roleID)
 					} else {
-						r.NotAuthorize(c, err.Error())
+						t.NotAuthorize(c, err.Error())
 						return
 					}
 				}
 			}
 
 			if roleID == "" || !strings.Contains(response.Result.Permitted, roleID) {
-				r.Forbidden(c, "Role Not Allowed")
+				t.Forbidden(c, "Role Not Allowed")
 				return
 			}
 		}

@@ -6,7 +6,6 @@ import (
 	"github.com/kmaguswira/micro-clean/service/account/application/global"
 	"github.com/kmaguswira/micro-clean/service/account/application/usecases"
 	account "github.com/kmaguswira/micro-clean/service/account/proto/account"
-	notification "github.com/kmaguswira/micro-clean/service/notification/proto/notification"
 	"github.com/micro/go-micro/util/log"
 )
 
@@ -33,17 +32,6 @@ func (t *Account) SignUp(ctx context.Context, req *account.SignUpRequest, res *a
 	if err != nil {
 		res.ResponseInfo = t.response.InternalServerError()
 		return nil
-	}
-
-	//TODO: send email activation
-	ev := &notification.SendEmailRequest{
-		ToName:        result.User.Name,
-		ToEmail:       result.User.Email,
-		TemplateTitle: "activation",
-		Data:          []string{result.User.Name},
-	}
-	if err := t.sendEmailPublisher.Publish(ctx, ev); err != nil {
-		log.Logf("error publishing: %v", err)
 	}
 
 	res.ResponseInfo = t.response.Created()

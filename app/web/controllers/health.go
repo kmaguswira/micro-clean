@@ -5,11 +5,15 @@ import (
 	"github.com/kmaguswira/micro-clean/utils"
 )
 
-type HealthController struct {
+type healthController struct {
 	utils.Response
 }
 
-func (t HealthController) Check(c *gin.Context) {
+func NewHealthController() healthController {
+	return healthController{}
+}
+
+func (t *healthController) Check(c *gin.Context) {
 	test := utils.QueryBuilder(c)
 	t.OKSingleData(c, test)
 	return

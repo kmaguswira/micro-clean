@@ -8,6 +8,7 @@ require (
 	github.com/Rosaniline/gorm-ut v0.0.0-20190331143837-786b71894576
 	github.com/ahmetb/go-linq v3.0.0+incompatible
 	github.com/dgrijalva/jwt-go v3.2.0+incompatible
+	github.com/disintegration/imaging v1.6.2
 	github.com/gin-gonic/gin v1.6.2
 	github.com/go-test/deep v1.0.5
 	github.com/golang/protobuf v1.4.0

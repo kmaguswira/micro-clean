@@ -6,6 +6,16 @@ service File {
 	rpc Call(Request) returns (Response) {}
 	rpc Stream(StreamingRequest) returns (stream StreamingResponse) {}
 	rpc PingPong(stream Ping) returns (stream Pong) {}
+	rpc CreateImage (CreateImageRequest) returns (CreateImageResponse) {}
+	rpc FindImageById (FindImageByIdRequest) returns (FindImageByIdResponse) {}
+	rpc FindAllImage (FindAllImageRequest) returns (FindAllImageResponse) {}
+	rpc UpdateImage (UpdateImageRequest) returns (UpdateImageResponse) {}
+	rpc DeleteImage (DeleteImageRequest) returns (DeleteImageResponse) {}
+	rpc CreateDocument (CreateDocumentRequest) returns (CreateDocumentResponse) {}
+	rpc FindDocumentById (FindDocumentByIdRequest) returns (FindDocumentByIdResponse) {}
+	rpc FindAllDocument (FindAllDocumentRequest) returns (FindAllDocumentResponse) {}
+	rpc UpdateDocument (UpdateDocumentRequest) returns (UpdateDocumentResponse) {}
+	rpc DeleteDocument (DeleteDocumentRequest) returns (DeleteDocumentResponse) {}
 }
 
 message Message {
@@ -53,4 +63,122 @@ message BaseQuery {
 	int64 limit = 3;
 	int64 offset = 4;
 	string sort = 5;
+}
+
+message Image {
+	string ID = 1;
+	string Name = 2;
+	string Path = 3;
+	string Slug = 4;
+	string Thumbnail = 5;
+	string Type = 6;
+	string Title = 7;
+	string Alt = 8;
+	string Description = 9;
+	string Info = 10;
+}
+
+message Document {
+	string ID = 1;
+	string Name = 2;
+	string Path = 3;
+	string Slug = 4;
+	string Type = 5;
+	string Description = 6;
+	string Info = 7;
+}
+
+
+///////////////////////////////////
+// REQUEST-RESPONSE
+///////////////////////////////////
+
+message CreateImageRequest {
+	Image new = 1;
+}
+
+message CreateImageResponse {
+	BaseResponse responseInfo = 1;
+	Image result = 2;
+}
+
+message FindImageByIdRequest {
+	string id = 1;
+}
+
+message FindImageByIdResponse {
+	BaseResponse responseInfo = 1;
+	Image result = 2;
+}
+
+message FindAllImageRequest {
+	BaseQuery query = 1;
+}
+
+message FindAllImageResponse {
+	BaseResponse responseInfo = 1;
+	repeated Image result = 2;
+}
+
+message UpdateImageRequest {
+	Image update = 1;
+}
+
+message UpdateImageResponse {
+	BaseResponse responseInfo = 1;
+	Image result = 2;
+}
+
+message DeleteImageRequest {
+	string id = 1;
+}
+
+message DeleteImageResponse {
+	BaseResponse responseInfo = 1;
+	Image result = 2;
+}
+
+message CreateDocumentRequest {
+	Document new = 1;
+}
+
+message CreateDocumentResponse {
+	BaseResponse responseInfo = 1;
+	Document result = 2;
+}
+
+message FindDocumentByIdRequest {
+	string id = 1;
+}
+
+message FindDocumentByIdResponse {
+	BaseResponse responseInfo = 1;
+	Document result = 2;
+}
+
+message FindAllDocumentRequest {
+	BaseQuery query = 1;
+}
+
+message FindAllDocumentResponse {
+	BaseResponse responseInfo = 1;
+	repeated Document result = 2;
+}
+
+message UpdateDocumentRequest {
+	Document update = 1;
+}
+
+message UpdateDocumentResponse {
+	BaseResponse responseInfo = 1;
+	Document result = 2;
+}
+
+message DeleteDocumentRequest {
+	string id = 1;
+}
+
+message DeleteDocumentResponse {
+	BaseResponse responseInfo = 1;
+	Document result = 2;
 }

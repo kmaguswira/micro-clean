@@ -5,13 +5,21 @@ import (
 	"github.com/kmaguswira/micro-clean/app/web/requests"
 	account "github.com/kmaguswira/micro-clean/service/account/proto/account"
 	"github.com/kmaguswira/micro-clean/utils"
+	"github.com/micro/go-micro/client"
 )
 
-type RoleController struct {
+type roleController struct {
 	utils.Response
+	accountService account.AccountService
 }
 
-func (t RoleController) Create(c *gin.Context) {
+func NewRoleController(client client.Client) roleController {
+	return roleController{
+		accountService: account.NewAccountService("kmaguswira.srv.account", client),
+	}
+}
+
+func (t *roleController) Create(c *gin.Context) {
 	var createRoleRequest requests.CreateRole
 
 	if err := c.BindJSON(&createRoleRequest); err != nil {
@@ -19,7 +27,7 @@ func (t RoleController) Create(c *gin.Context) {
 		return
 	}
 
-	response, err := accountService.CreateRole(c, &account.CreateRoleRequest{
+	response, err := t.accountService.CreateRole(c, &account.CreateRoleRequest{
 		New: &account.Role{
 			Title: createRoleRequest.Title,
 		},
@@ -34,10 +42,10 @@ func (t RoleController) Create(c *gin.Context) {
 	return
 }
 
-func (t RoleController) FindById(c *gin.Context) {
+func (t *roleController) FindById(c *gin.Context) {
 	id := c.Param("id")
 
-	response, err := accountService.FindRoleById(c, &account.FindRoleByIdRequest{
+	response, err := t.accountService.FindRoleById(c, &account.FindRoleByIdRequest{
 		Id: id,
 	})
 
@@ -51,10 +59,10 @@ func (t RoleController) FindById(c *gin.Context) {
 	return
 }
 
-func (t RoleController) Delete(c *gin.Context) {
+func (t *roleController) Delete(c *gin.Context) {
 	id := c.Param("id")
 
-	response, err := accountService.DeleteRole(c, &account.DeleteRoleRequest{
+	response, err := t.accountService.DeleteRole(c, &account.DeleteRoleRequest{
 		Id: id,
 	})
 
@@ -68,7 +76,7 @@ func (t RoleController) Delete(c *gin.Context) {
 	return
 }
 
-func (t RoleController) Update(c *gin.Context) {
+func (t *roleController) Update(c *gin.Context) {
 	id := c.Param("id")
 
 	var updateRoleRequest requests.UpdateRole
@@ -78,7 +86,7 @@ func (t RoleController) Update(c *gin.Context) {
 		return
 	}
 
-	response, err := accountService.UpdateRole(c, &account.UpdateRoleRequest{
+	response, err := t.accountService.UpdateRole(c, &account.UpdateRoleRequest{
 		Update: &account.Role{
 			ID:    id,
 			Title: updateRoleRequest.Title,
@@ -95,10 +103,10 @@ func (t RoleController) Update(c *gin.Context) {
 	return
 }
 
-func (t RoleController) FindAll(c *gin.Context) {
+func (t *roleController) FindAll(c *gin.Context) {
 	q := utils.QueryBuilder(c)
 
-	response, err := accountService.FindAllRole(c, &account.FindAllRoleRequest{
+	response, err := t.accountService.FindAllRole(c, &account.FindAllRoleRequest{
 		Query: &account.BaseQuery{
 			QueryKey:   q.QueryKey,
 			QueryValue: q.QueryValue,

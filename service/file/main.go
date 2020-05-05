@@ -48,7 +48,7 @@ func bootstrap() {
 	service.Init()
 
 	// Register Handler
-	fileHandler := handler.NewFile(service)
+	fileHandler := handler.NewFile()
 	file.RegisterFileHandler(service.Server(), fileHandler)
 
 	// Register Struct as Subscriber

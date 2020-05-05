@@ -7,13 +7,21 @@ import (
 	"github.com/kmaguswira/micro-clean/app/web/requests"
 	account "github.com/kmaguswira/micro-clean/service/account/proto/account"
 	"github.com/kmaguswira/micro-clean/utils"
+	"github.com/micro/go-micro/client"
 )
 
-type ACLController struct {
+type aclController struct {
 	utils.Response
+	accountService account.AccountService
 }
 
-func (t ACLController) Create(c *gin.Context) {
+func NewACLController(client client.Client) aclController {
+	return aclController{
+		accountService: account.NewAccountService("kmaguswira.srv.account", client),
+	}
+}
+
+func (t *aclController) Create(c *gin.Context) {
 	var createACLRequest requests.CreateACL
 
 	if err := c.BindJSON(&createACLRequest); err != nil {
@@ -23,7 +31,7 @@ func (t ACLController) Create(c *gin.Context) {
 
 	fmt.Println(createACLRequest.IsPublic)
 
-	response, err := accountService.CreateACL(c, &account.CreateACLRequest{
+	response, err := t.accountService.CreateACL(c, &account.CreateACLRequest{
 		New: &account.ACL{
 			Handler:   createACLRequest.Handler,
 			IsPublic:  createACLRequest.IsPublic,
@@ -41,10 +49,10 @@ func (t ACLController) Create(c *gin.Context) {
 	return
 }
 
-func (t ACLController) FindById(c *gin.Context) {
+func (t *aclController) FindById(c *gin.Context) {
 	id := c.Param("id")
 
-	response, err := accountService.FindACLById(c, &account.FindACLByIdRequest{
+	response, err := t.accountService.FindACLById(c, &account.FindACLByIdRequest{
 		Id: id,
 	})
 
@@ -58,10 +66,10 @@ func (t ACLController) FindById(c *gin.Context) {
 	return
 }
 
-func (t ACLController) Delete(c *gin.Context) {
+func (t *aclController) Delete(c *gin.Context) {
 	id := c.Param("id")
 
-	response, err := accountService.DeleteACL(c, &account.DeleteACLRequest{
+	response, err := t.accountService.DeleteACL(c, &account.DeleteACLRequest{
 		Id: id,
 	})
 
@@ -75,7 +83,7 @@ func (t ACLController) Delete(c *gin.Context) {
 	return
 }
 
-func (t ACLController) Update(c *gin.Context) {
+func (t *aclController) Update(c *gin.Context) {
 	id := c.Param("id")
 
 	var updateACLRequest requests.UpdateACL
@@ -85,7 +93,7 @@ func (t ACLController) Update(c *gin.Context) {
 		return
 	}
 
-	response, err := accountService.UpdateACL(c, &account.UpdateACLRequest{
+	response, err := t.accountService.UpdateACL(c, &account.UpdateACLRequest{
 		Update: &account.ACL{
 			ID:        id,
 			Handler:   updateACLRequest.Handler,
@@ -105,10 +113,10 @@ func (t ACLController) Update(c *gin.Context) {
 	return
 }
 
-func (t ACLController) FindAll(c *gin.Context) {
+func (t *aclController) FindAll(c *gin.Context) {
 	q := utils.QueryBuilder(c)
 
-	response, err := accountService.FindAllACL(c, &account.FindAllACLRequest{
+	response, err := t.accountService.FindAllACL(c, &account.FindAllACLRequest{
 		Query: &account.BaseQuery{
 			QueryKey:   q.QueryKey,
 			QueryValue: q.QueryValue,

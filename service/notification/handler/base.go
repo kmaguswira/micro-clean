@@ -9,7 +9,6 @@ import (
 	notification "github.com/kmaguswira/micro-clean/service/notification/proto/notification"
 	"github.com/kmaguswira/micro-clean/service/notification/repositories"
 	"github.com/kmaguswira/micro-clean/service/notification/utils"
-	"github.com/micro/go-micro"
 	"github.com/micro/go-micro/util/log"
 )
 
@@ -23,7 +22,7 @@ type Notification struct {
 	response                     utils.Response
 }
 
-func NewNotification(service micro.Service) *Notification {
+func NewNotification() *Notification {
 	readWriteRepository := repositories.NewReadWriteRepository(nil)
 	readRepository := repositories.NewReadRepository(nil)
 	sendEmailService := external_service.NewSendGridService()

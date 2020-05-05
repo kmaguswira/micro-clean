@@ -8,7 +8,13 @@ import (
 	"github.com/kmaguswira/micro-clean/app/web/config"
 )
 
-func CorsMiddleware() gin.HandlerFunc {
+type corsMiddleware struct{}
+
+func NewCORSMiddleware() corsMiddleware {
+	return corsMiddleware{}
+}
+
+func (t *corsMiddleware) Handler() gin.HandlerFunc {
 	config := config.GetConfig()
 
 	return func(c *gin.Context) {

@@ -2,22 +2,32 @@ package controllers
 
 import (
 	"fmt"
+	"log"
 
 	"github.com/gin-gonic/gin"
 	"github.com/kmaguswira/micro-clean/app/web/config"
 	"github.com/kmaguswira/micro-clean/app/web/requests"
 	account "github.com/kmaguswira/micro-clean/service/account/proto/account"
+	notification "github.com/kmaguswira/micro-clean/service/notification/proto/notification"
 	"github.com/kmaguswira/micro-clean/utils"
+	"github.com/micro/go-micro"
 	"github.com/micro/go-micro/client"
 )
 
-var accountService = account.NewAccountService("kmaguswira.srv.account", client.DefaultClient)
-
-type AuthController struct {
+type authController struct {
+	accountService     account.AccountService
+	sendEmailPublisher micro.Publisher
 	utils.Response
 }
 
-func (t AuthController) SignIn(c *gin.Context) {
+func NewAuthController(client client.Client) authController {
+	return authController{
+		accountService:     account.NewAccountService("kmaguswira.srv.account", client),
+		sendEmailPublisher: micro.NewPublisher("kmaguswira.srv.notification.send-email", client),
+	}
+}
+
+func (t *authController) SignIn(c *gin.Context) {
 	var signInRequest requests.SignIn
 
 	if err := c.BindJSON(&signInRequest); err != nil {
@@ -25,7 +35,7 @@ func (t AuthController) SignIn(c *gin.Context) {
 		return
 	}
 
-	response, err := accountService.SignIn(c, &account.SignInRequest{
+	response, err := t.accountService.SignIn(c, &account.SignInRequest{
 		User:     signInRequest.User,
 		Password: signInRequest.Password,
 	})
@@ -49,7 +59,7 @@ func (t AuthController) SignIn(c *gin.Context) {
 	return
 }
 
-func (t AuthController) SignUp(c *gin.Context) {
+func (t *authController) SignUp(c *gin.Context) {
 	var signUpRequest requests.SignUp
 
 	if err := c.BindJSON(&signUpRequest); err != nil {
@@ -57,7 +67,7 @@ func (t AuthController) SignUp(c *gin.Context) {
 		return
 	}
 
-	response, err := accountService.SignUp(c, &account.SignUpRequest{
+	response, err := t.accountService.SignUp(c, &account.SignUpRequest{
 		Email:    signUpRequest.Email,
 		Username: signUpRequest.Username,
 		Password: signUpRequest.Password,
@@ -69,14 +79,25 @@ func (t AuthController) SignUp(c *gin.Context) {
 		return
 	}
 
+	//TODO: send email activation
+	ev := &notification.SendEmailRequest{
+		ToName:        signUpRequest.Name,
+		ToEmail:       signUpRequest.Email,
+		TemplateTitle: "activation",
+		Data:          []string{signUpRequest.Name},
+	}
+	if err := t.sendEmailPublisher.Publish(c, ev); err != nil {
+		log.Printf("error publishing: %v", err)
+	}
+
 	t.OKSingleData(c, response)
 	return
 }
 
-func (t AuthController) ActivateUser(c *gin.Context) {
+func (t *authController) ActivateUser(c *gin.Context) {
 	token := c.Param("token")
 
-	response, err := accountService.ActivateUser(c, &account.ActivateUserRequest{
+	response, err := t.accountService.ActivateUser(c, &account.ActivateUserRequest{
 		Token: token,
 	})
 
@@ -89,14 +110,14 @@ func (t AuthController) ActivateUser(c *gin.Context) {
 	return
 }
 
-func (t AuthController) ForgotPassword(c *gin.Context) {
+func (t *authController) ForgotPassword(c *gin.Context) {
 	var forgotPasswordRequest requests.ForgotPassword
 
 	if err := c.BindJSON(&forgotPasswordRequest); err != nil {
 		t.BadRequest(c, err.Error())
 		return
 	}
-	response, err := accountService.ForgotPassword(c, &account.ForgotPasswordRequest{
+	response, err := t.accountService.ForgotPassword(c, &account.ForgotPasswordRequest{
 		Email: forgotPasswordRequest.Email,
 	})
 
@@ -109,7 +130,7 @@ func (t AuthController) ForgotPassword(c *gin.Context) {
 	return
 }
 
-func (t AuthController) ResetPassword(c *gin.Context) {
+func (t *authController) ResetPassword(c *gin.Context) {
 	token := c.Param("token")
 	var resetPasswordRequest requests.ResetPassword
 
@@ -117,7 +138,7 @@ func (t AuthController) ResetPassword(c *gin.Context) {
 		t.BadRequest(c, err.Error())
 		return
 	}
-	response, err := accountService.ResetPassword(c, &account.ResetPasswordRequest{
+	response, err := t.accountService.ResetPassword(c, &account.ResetPasswordRequest{
 		Token:    token,
 		Password: resetPasswordRequest.Password,
 	})
@@ -131,7 +152,7 @@ func (t AuthController) ResetPassword(c *gin.Context) {
 	return
 }
 
-func (t AuthController) ChangePassword(c *gin.Context) {
+func (t *authController) ChangePassword(c *gin.Context) {
 	userID := c.MustGet(utils.JWT_USER_ID).(string)
 	var changePasswordRequest requests.ChangePassword
 
@@ -140,7 +161,7 @@ func (t AuthController) ChangePassword(c *gin.Context) {
 		return
 	}
 
-	response, err := accountService.ChangePassword(c, &account.ChangePasswordRequest{
+	response, err := t.accountService.ChangePassword(c, &account.ChangePasswordRequest{
 		UserID:      userID,
 		OldPassword: changePasswordRequest.OldPassword,
 		NewPassword: changePasswordRequest.NewPassword,
@@ -155,9 +176,9 @@ func (t AuthController) ChangePassword(c *gin.Context) {
 	return
 }
 
-func (t AuthController) Self(c *gin.Context) {
+func (t *authController) Self(c *gin.Context) {
 	userID := c.MustGet(utils.JWT_USER_ID).(string)
-	response, err := accountService.FindUserById(c, &account.FindUserByIdRequest{
+	response, err := t.accountService.FindUserById(c, &account.FindUserByIdRequest{
 		Id: userID,
 	})
 
