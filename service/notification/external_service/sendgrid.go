@@ -1,7 +1,6 @@
 package external_service
 
 import (
-	"fmt"
 	"log"
 
 	iface "github.com/kmaguswira/micro-clean/service/notification/application/external_service"
@@ -31,9 +30,7 @@ func (t *SendGridService) SendEmail(input global.SendEmailInput) (bool, error) {
 		log.Println(err)
 		return false, err
 	}
+	log.Println(response.StatusCode)
 
-	fmt.Println(response.StatusCode)
-	fmt.Println(response.Body)
-	fmt.Println(response.Headers)
 	return true, nil
 }

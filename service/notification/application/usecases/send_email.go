@@ -46,8 +46,6 @@ func (t *sendEmailUseCase) Execute(templateTitle string, toName string, toEmail 
 		HTML:             fmt.Sprintf(result.HTML, data...),
 	}
 
-	fmt.Println(data)
-
 	response, err := t.sendEmailService.SendEmail(input)
 
 	if err != nil {
