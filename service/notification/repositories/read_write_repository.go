@@ -28,10 +28,13 @@ func NewReadWriteRepository(DB *gorm.DB) iface.IReadWriteRepository {
 
 func (t *readWriteRepository) CreateEmailTemplate(emailTemplate *domain.EmailTemplate) (*domain.EmailTemplate, error) {
 	newEmailTemplate := entity.EmailTemplate{
-		Title:    emailTemplate.Title,
-		Subject:  emailTemplate.Subject,
-		Body:     emailTemplate.Body,
-		Language: emailTemplate.Language,
+		Title:     emailTemplate.Title,
+		Subject:   emailTemplate.Subject,
+		HTML:      emailTemplate.HTML,
+		PlainText: emailTemplate.PlainText,
+		Language:  emailTemplate.Language,
+		FromName:  emailTemplate.FromName,
+		FromEmail: emailTemplate.FromEmail,
 	}
 	t.db.Create(&newEmailTemplate)
 
@@ -64,8 +67,11 @@ func (t *readWriteRepository) UpdateEmailTemplate(emailTemplateUpdated *domain.E
 
 	emailTemplate.Title = emailTemplateUpdated.Title
 	emailTemplate.Subject = emailTemplateUpdated.Subject
-	emailTemplate.Body = emailTemplateUpdated.Body
+	emailTemplate.HTML = emailTemplateUpdated.HTML
+	emailTemplate.PlainText = emailTemplateUpdated.PlainText
 	emailTemplate.Language = emailTemplateUpdated.Language
+	emailTemplate.FromName = emailTemplateUpdated.FromName
+	emailTemplate.FromEmail = emailTemplateUpdated.FromEmail
 
 	t.db.Save(&emailTemplate)
 	return emailTemplateUpdated, nil

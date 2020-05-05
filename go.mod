@@ -17,6 +17,8 @@ require (
 	github.com/micro/go-micro/v2 v2.4.0
 	github.com/micro/protoc-gen-micro v1.0.0 // indirect
 	github.com/rs/xid v1.2.1
+	github.com/sendgrid/rest v2.4.1+incompatible // indirect
+	github.com/sendgrid/sendgrid-go v3.5.0+incompatible
 	github.com/stretchr/testify v1.4.0
 	golang.org/x/crypto v0.0.0-20200221231518-2aa609cf4a9d
 	golang.org/x/net v0.0.0-20200324143707-d3edc9973b7e // indirect

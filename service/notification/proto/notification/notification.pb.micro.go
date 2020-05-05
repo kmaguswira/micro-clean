@@ -42,6 +42,7 @@ type NotificationService interface {
 	FindAllEmailTemplate(ctx context.Context, in *FindAllEmailTemplateRequest, opts ...client.CallOption) (*FindAllEmailTemplateResponse, error)
 	UpdateEmailTemplate(ctx context.Context, in *UpdateEmailTemplateRequest, opts ...client.CallOption) (*UpdateEmailTemplateResponse, error)
 	DeleteEmailTemplate(ctx context.Context, in *DeleteEmailTemplateRequest, opts ...client.CallOption) (*DeleteEmailTemplateResponse, error)
+	SendEmail(ctx context.Context, in *SendEmailRequest, opts ...client.CallOption) (*SendEmailResponse, error)
 }
 
 type notificationService struct {
@@ -212,6 +213,16 @@ func (c *notificationService) DeleteEmailTemplate(ctx context.Context, in *Delet
 	return out, nil
 }
 
+func (c *notificationService) SendEmail(ctx context.Context, in *SendEmailRequest, opts ...client.CallOption) (*SendEmailResponse, error) {
+	req := c.c.NewRequest(c.name, "Notification.SendEmail", in)
+	out := new(SendEmailResponse)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // Server API for Notification service
 
 type NotificationHandler interface {
@@ -223,6 +234,7 @@ type NotificationHandler interface {
 	FindAllEmailTemplate(context.Context, *FindAllEmailTemplateRequest, *FindAllEmailTemplateResponse) error
 	UpdateEmailTemplate(context.Context, *UpdateEmailTemplateRequest, *UpdateEmailTemplateResponse) error
 	DeleteEmailTemplate(context.Context, *DeleteEmailTemplateRequest, *DeleteEmailTemplateResponse) error
+	SendEmail(context.Context, *SendEmailRequest, *SendEmailResponse) error
 }
 
 func RegisterNotificationHandler(s server.Server, hdlr NotificationHandler, opts ...server.HandlerOption) error {
@@ -235,6 +247,7 @@ func RegisterNotificationHandler(s server.Server, hdlr NotificationHandler, opts
 		FindAllEmailTemplate(ctx context.Context, in *FindAllEmailTemplateRequest, out *FindAllEmailTemplateResponse) error
 		UpdateEmailTemplate(ctx context.Context, in *UpdateEmailTemplateRequest, out *UpdateEmailTemplateResponse) error
 		DeleteEmailTemplate(ctx context.Context, in *DeleteEmailTemplateRequest, out *DeleteEmailTemplateResponse) error
+		SendEmail(ctx context.Context, in *SendEmailRequest, out *SendEmailResponse) error
 	}
 	type Notification struct {
 		notification
@@ -344,4 +357,8 @@ func (h *notificationHandler) UpdateEmailTemplate(ctx context.Context, in *Updat
 
 func (h *notificationHandler) DeleteEmailTemplate(ctx context.Context, in *DeleteEmailTemplateRequest, out *DeleteEmailTemplateResponse) error {
 	return h.NotificationHandler.DeleteEmailTemplate(ctx, in, out)
+}
+
+func (h *notificationHandler) SendEmail(ctx context.Context, in *SendEmailRequest, out *SendEmailResponse) error {
+	return h.NotificationHandler.SendEmail(ctx, in, out)
 }

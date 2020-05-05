@@ -12,11 +12,14 @@ type IUpdateEmailTemplate interface {
 }
 
 type UpdateEmailTemplateInput struct {
-	ID       string
-	Title    string
-	Subject  string
-	Body     string
-	Language string
+	ID        string
+	Title     string
+	Subject   string
+	HTML      string
+	PlainText string
+	Language  string
+	FromName  string
+	FromEmail string
 }
 
 type updateEmailTemplateUseCase struct {
@@ -31,11 +34,14 @@ func NewUpdateEmailTemplateUseCase(ReadWriteRepository repositories.IReadWriteRe
 
 func (t *updateEmailTemplateUseCase) Execute(input UpdateEmailTemplateInput) (domain.EmailTemplate, error) {
 	emailTemplate := domain.EmailTemplate{
-		ID:       input.ID,
-		Title:    input.Title,
-		Subject:  input.Subject,
-		Body:     input.Body,
-		Language: input.Language,
+		ID:        input.ID,
+		Title:     input.Title,
+		Subject:   input.Subject,
+		HTML:      input.HTML,
+		PlainText: input.PlainText,
+		Language:  input.Language,
+		FromName:  input.FromName,
+		FromEmail: input.FromEmail,
 	}
 
 	result, err := t.readWriteRepository.UpdateEmailTemplate(&emailTemplate)

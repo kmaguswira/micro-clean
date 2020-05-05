@@ -25,5 +25,11 @@
             "drop": false
         }
         
+    },
+    "externalServices": {
+        "sendgrid": {
+            "name": "go",
+            "apikey": "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"
+        }
     }
 }

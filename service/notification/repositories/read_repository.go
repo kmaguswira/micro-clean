@@ -57,3 +57,16 @@ func (t *readRepository) FindAllEmailTemplates(input global.FindAllInput) (*[]do
 
 	return &result, nil
 }
+
+func (t *readRepository) FindEmailTemplateByTitle(input string) (*domain.EmailTemplate, error) {
+	var emailTemplate entity.EmailTemplate
+
+	if err := t.db.Where("title = ?", input).First(&emailTemplate).Error; err != nil {
+		err := fmt.Errorf("Email Template with title %q not found", input)
+		return nil, err
+	}
+
+	emailTemplateDomain := populateEmailTemplateDomain(emailTemplate)
+
+	return &emailTemplateDomain, nil
+}

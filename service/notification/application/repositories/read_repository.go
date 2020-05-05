@@ -8,4 +8,5 @@ import (
 type IReadRepository interface {
 	FindEmailTemplateByID(input string) (*domain.EmailTemplate, error)
 	FindAllEmailTemplates(input global.FindAllInput) (*[]domain.EmailTemplate, error)
+	FindEmailTemplateByTitle(input string) (*domain.EmailTemplate, error)
 }

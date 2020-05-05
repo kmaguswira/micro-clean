@@ -100,6 +100,7 @@ func RouterV1(router *gin.Engine) {
 			emailTemplateGroup.DELETE("/:id", emailTemplate.Delete)
 			emailTemplateGroup.PUT("/:id", emailTemplate.Update)
 			emailTemplateGroup.GET("/", emailTemplate.FindAll)
+			emailTemplateGroup.POST("/send-email", emailTemplate.SendEmail)
 		}
 	}
 

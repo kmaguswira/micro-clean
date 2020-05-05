@@ -15,10 +15,13 @@ func (t *Notification) CreateEmailTemplate(ctx context.Context, req *notificatio
 	log.Log("Received Notification.CreateEmailTemplate request")
 
 	input := usecases.CreateEmailTemplateInput{
-		Title:    req.New.Title,
-		Subject:  req.New.Subject,
-		Body:     req.New.Body,
-		Language: req.New.Language,
+		Title:     req.New.Title,
+		Subject:   req.New.Subject,
+		HTML:      req.New.HTML,
+		PlainText: req.New.PlainText,
+		Language:  req.New.Language,
+		FromName:  req.New.FromName,
+		FromEmail: req.New.FromEmail,
 	}
 
 	result, err := t.createEmailTemplateUseCase.Execute(input)
@@ -87,11 +90,14 @@ func (t *Notification) UpdateEmailTemplate(ctx context.Context, req *notificatio
 	log.Log("Received Notification.UpdateEmailTemplate")
 
 	input := usecases.UpdateEmailTemplateInput{
-		ID:       req.Update.ID,
-		Title:    req.Update.Title,
-		Subject:  req.Update.Subject,
-		Body:     req.Update.Body,
-		Language: req.Update.Language,
+		ID:        req.Update.ID,
+		Title:     req.Update.Title,
+		Subject:   req.Update.Subject,
+		HTML:      req.Update.HTML,
+		PlainText: req.Update.PlainText,
+		Language:  req.Update.Language,
+		FromName:  req.Update.FromName,
+		FromEmail: req.Update.FromEmail,
 	}
 
 	result, err := t.updateEmailTemplateUseCase.Execute(input)
@@ -122,5 +128,24 @@ func (t *Notification) DeleteEmailTemplate(ctx context.Context, req *notificatio
 	res.ResponseInfo = t.response.OK()
 	res.Result = &emailTemplateResponse
 
+	return nil
+}
+
+func (t *Notification) SendEmail(ctx context.Context, req *notification.SendEmailRequest, res *notification.SendEmailResponse) error {
+	log.Log("Received Notification.SendEmail")
+
+	data := []interface{}{}
+	for i := 0; i < len(req.Data); i++ {
+		data = append(data, req.Data[i])
+	}
+
+	_, err := t.sendEmailUseCase.Execute(req.TemplateTitle, req.ToName, req.ToEmail, data)
+
+	if err != nil {
+		res.ResponseInfo = t.response.InternalServerError()
+		return nil
+	}
+
+	res.ResponseInfo = t.response.OK()
 	return nil
 }

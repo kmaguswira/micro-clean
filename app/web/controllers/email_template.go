@@ -24,10 +24,13 @@ func (t EmailTemplateController) Create(c *gin.Context) {
 
 	response, err := notificationService.CreateEmailTemplate(c, &notification.CreateEmailTemplateRequest{
 		New: &notification.EmailTemplate{
-			Title:    createEmailTemplateRequest.Title,
-			Subject:  createEmailTemplateRequest.Subject,
-			Body:     createEmailTemplateRequest.Body,
-			Language: createEmailTemplateRequest.Language,
+			Title:     createEmailTemplateRequest.Title,
+			Subject:   createEmailTemplateRequest.Subject,
+			HTML:      createEmailTemplateRequest.HTML,
+			PlainText: createEmailTemplateRequest.PlainText,
+			Language:  createEmailTemplateRequest.Language,
+			FromName:  createEmailTemplateRequest.FromName,
+			FromEmail: createEmailTemplateRequest.FromEmail,
 		},
 	})
 
@@ -86,11 +89,14 @@ func (t EmailTemplateController) Update(c *gin.Context) {
 
 	response, err := notificationService.UpdateEmailTemplate(c, &notification.UpdateEmailTemplateRequest{
 		Update: &notification.EmailTemplate{
-			ID:       id,
-			Title:    updateEmailTemplateRequest.Title,
-			Subject:  updateEmailTemplateRequest.Subject,
-			Body:     updateEmailTemplateRequest.Body,
-			Language: updateEmailTemplateRequest.Language,
+			ID:        id,
+			Title:     updateEmailTemplateRequest.Title,
+			Subject:   updateEmailTemplateRequest.Subject,
+			HTML:      updateEmailTemplateRequest.HTML,
+			PlainText: updateEmailTemplateRequest.PlainText,
+			Language:  updateEmailTemplateRequest.Language,
+			FromName:  updateEmailTemplateRequest.FromName,
+			FromEmail: updateEmailTemplateRequest.FromEmail,
 		},
 	})
 
@@ -115,6 +121,31 @@ func (t EmailTemplateController) FindAll(c *gin.Context) {
 			Offset:     q.Offset,
 			Sort:       q.Sort,
 		},
+	})
+
+	if err != nil {
+		t.BadRequest(c, err.Error())
+		return
+	}
+
+	t.OKSingleData(c, response)
+
+	return
+}
+
+func (t EmailTemplateController) SendEmail(c *gin.Context) {
+	var sendEmailRequest requests.SendEmail
+
+	if err := c.BindJSON(&sendEmailRequest); err != nil {
+		t.BadRequest(c, err.Error())
+		return
+	}
+
+	response, err := notificationService.SendEmail(c, &notification.SendEmailRequest{
+		TemplateTitle: sendEmailRequest.TemplateTitle,
+		ToName:        sendEmailRequest.ToName,
+		ToEmail:       sendEmailRequest.ToEmail,
+		Data:          sendEmailRequest.Data,
 	})
 
 	if err != nil {

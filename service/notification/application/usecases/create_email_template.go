@@ -12,10 +12,13 @@ type ICreateEmailTemplate interface {
 }
 
 type CreateEmailTemplateInput struct {
-	Title    string
-	Subject  string
-	Body     string
-	Language string
+	Title     string
+	Subject   string
+	HTML      string
+	PlainText string
+	Language  string
+	FromName  string
+	FromEmail string
 }
 
 type createEmailTemplateUseCase struct {
@@ -30,10 +33,13 @@ func NewCreateEmailTemplateUseCase(ReadWriteRepository repositories.IReadWriteRe
 
 func (t *createEmailTemplateUseCase) Execute(input CreateEmailTemplateInput) (domain.EmailTemplate, error) {
 	newEmailTemplate := domain.EmailTemplate{
-		Title:    input.Title,
-		Subject:  input.Subject,
-		Body:     input.Body,
-		Language: input.Language,
+		Title:     input.Title,
+		Subject:   input.Subject,
+		HTML:      input.HTML,
+		PlainText: input.PlainText,
+		Language:  input.Language,
+		FromName:  input.FromName,
+		FromEmail: input.FromEmail,
 	}
 	result, err := t.readWriteRepository.CreateEmailTemplate(&newEmailTemplate)
 

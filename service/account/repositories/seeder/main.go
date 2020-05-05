@@ -270,6 +270,12 @@ var ACLs = func(permitted []domain.Role) []domain.ACL {
 			IsPublic:  true,
 			Permitted: permitted,
 		},
+		domain.ACL{
+			Handler:   "github.com/kmaguswira/micro-clean/app/web/controllers.EmailTemplateController.SendEmail-fm",
+			Title:     "",
+			IsPublic:  true,
+			Permitted: permitted,
+		},
 	}
 
 }

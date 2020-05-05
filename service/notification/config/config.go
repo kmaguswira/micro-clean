@@ -5,9 +5,10 @@ import (
 )
 
 type Config struct {
-	Name         string       `json:"name"`
-	Server       server       `json:"server"`
-	Repositories repositories `json:"repositories"`
+	Name             string           `json:"name"`
+	Server           server           `json:"server"`
+	Repositories     repositories     `json:"repositories"`
+	ExternalServices externalServices `json:"externalServices"`
 }
 
 type server struct {
@@ -29,6 +30,15 @@ type DB struct {
 	Host     string `json:"host"`
 	Port     string `json:"port"`
 	Drop     bool   `json:"drop"`
+}
+
+type externalServices struct {
+	Sendgrid externalService `json:"sendgrid"`
+}
+
+type externalService struct {
+	Name   string `json:"go"`
+	APIKEY string `json:"apikey"`
 }
 
 func Init(env string) {

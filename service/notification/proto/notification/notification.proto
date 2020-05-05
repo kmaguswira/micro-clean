@@ -11,6 +11,7 @@ service Notification {
 	rpc FindAllEmailTemplate (FindAllEmailTemplateRequest) returns (FindAllEmailTemplateResponse) {}
 	rpc UpdateEmailTemplate (UpdateEmailTemplateRequest) returns (UpdateEmailTemplateResponse) {}
 	rpc DeleteEmailTemplate (DeleteEmailTemplateRequest) returns (DeleteEmailTemplateResponse) {}
+	rpc SendEmail (SendEmailRequest) returns (SendEmailResponse) {}
 }
 
 message Message {
@@ -64,8 +65,11 @@ message EmailTemplate {
 	string ID = 1;
 	string Title = 2;
 	string Subject = 3;
-	string Body = 4;
-	string Language = 5;
+	string HTML = 4;
+	string PlainText = 5;
+	string Language = 6;
+	string FromName = 7;
+	string FromEmail = 8;
 }
 
 
@@ -116,4 +120,15 @@ message DeleteEmailTemplateRequest {
 message DeleteEmailTemplateResponse {
 	BaseResponse responseInfo = 1;
 	EmailTemplate result = 2;
+}
+
+message SendEmailRequest {
+	string templateTitle = 1;
+	string toName = 2;
+	string toEmail = 3;
+	repeated string data = 4;
+}
+
+message SendEmailResponse {
+	BaseResponse responseInfo = 1;
 }
