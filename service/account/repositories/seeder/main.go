@@ -336,5 +336,17 @@ var ACLs = func(permitted []domain.Role) []domain.ACL {
 			IsPublic:  true,
 			Permitted: permitted,
 		},
+		domain.ACL{
+			Handler:   "github.com/kmaguswira/micro-clean/app/web/controllers.(*uploadController).Images-fm",
+			Title:     "",
+			IsPublic:  true,
+			Permitted: permitted,
+		},
+		domain.ACL{
+			Handler:   "github.com/kmaguswira/micro-clean/app/web/controllers.(*uploadController).Documents-fm",
+			Title:     "",
+			IsPublic:  true,
+			Permitted: permitted,
+		},
 	}
 }

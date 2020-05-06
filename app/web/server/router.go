@@ -46,6 +46,7 @@ func RouterV1(router *gin.Engine) {
 			upload := controllers.NewUploadController(client.DefaultClient)
 
 			uploadGroup.POST("/images", upload.Images)
+			uploadGroup.POST("/documents", upload.Documents)
 		}
 
 		authGroup := v1.Group("auth")

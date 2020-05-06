@@ -33,7 +33,7 @@ func (t *authorizationMiddleware) Handler() gin.HandlerFunc {
 
 		if response.Result == nil {
 			fmt.Println(c.HandlerName())
-			t.InternalError(c, "Can't Connect to Account Service")
+			t.NotFound(c, "No Handler Found")
 			return
 		}
 

@@ -1,4 +1,5 @@
 .DS_Store
+app/web/public
 
 # Binaries for programs and plugins
 *.exe
