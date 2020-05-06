@@ -37,6 +37,16 @@ type FileService interface {
 	Call(ctx context.Context, in *Request, opts ...client.CallOption) (*Response, error)
 	Stream(ctx context.Context, in *StreamingRequest, opts ...client.CallOption) (File_StreamService, error)
 	PingPong(ctx context.Context, opts ...client.CallOption) (File_PingPongService, error)
+	CreateImage(ctx context.Context, in *CreateImageRequest, opts ...client.CallOption) (*CreateImageResponse, error)
+	FindImageById(ctx context.Context, in *FindImageByIdRequest, opts ...client.CallOption) (*FindImageByIdResponse, error)
+	FindAllImage(ctx context.Context, in *FindAllImageRequest, opts ...client.CallOption) (*FindAllImageResponse, error)
+	UpdateImage(ctx context.Context, in *UpdateImageRequest, opts ...client.CallOption) (*UpdateImageResponse, error)
+	DeleteImage(ctx context.Context, in *DeleteImageRequest, opts ...client.CallOption) (*DeleteImageResponse, error)
+	CreateDocument(ctx context.Context, in *CreateDocumentRequest, opts ...client.CallOption) (*CreateDocumentResponse, error)
+	FindDocumentById(ctx context.Context, in *FindDocumentByIdRequest, opts ...client.CallOption) (*FindDocumentByIdResponse, error)
+	FindAllDocument(ctx context.Context, in *FindAllDocumentRequest, opts ...client.CallOption) (*FindAllDocumentResponse, error)
+	UpdateDocument(ctx context.Context, in *UpdateDocumentRequest, opts ...client.CallOption) (*UpdateDocumentResponse, error)
+	DeleteDocument(ctx context.Context, in *DeleteDocumentRequest, opts ...client.CallOption) (*DeleteDocumentResponse, error)
 }
 
 type fileService struct {
@@ -157,12 +167,122 @@ func (x *fileServicePingPong) Recv() (*Pong, error) {
 	return m, nil
 }
 
+func (c *fileService) CreateImage(ctx context.Context, in *CreateImageRequest, opts ...client.CallOption) (*CreateImageResponse, error) {
+	req := c.c.NewRequest(c.name, "File.CreateImage", in)
+	out := new(CreateImageResponse)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *fileService) FindImageById(ctx context.Context, in *FindImageByIdRequest, opts ...client.CallOption) (*FindImageByIdResponse, error) {
+	req := c.c.NewRequest(c.name, "File.FindImageById", in)
+	out := new(FindImageByIdResponse)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *fileService) FindAllImage(ctx context.Context, in *FindAllImageRequest, opts ...client.CallOption) (*FindAllImageResponse, error) {
+	req := c.c.NewRequest(c.name, "File.FindAllImage", in)
+	out := new(FindAllImageResponse)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *fileService) UpdateImage(ctx context.Context, in *UpdateImageRequest, opts ...client.CallOption) (*UpdateImageResponse, error) {
+	req := c.c.NewRequest(c.name, "File.UpdateImage", in)
+	out := new(UpdateImageResponse)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *fileService) DeleteImage(ctx context.Context, in *DeleteImageRequest, opts ...client.CallOption) (*DeleteImageResponse, error) {
+	req := c.c.NewRequest(c.name, "File.DeleteImage", in)
+	out := new(DeleteImageResponse)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *fileService) CreateDocument(ctx context.Context, in *CreateDocumentRequest, opts ...client.CallOption) (*CreateDocumentResponse, error) {
+	req := c.c.NewRequest(c.name, "File.CreateDocument", in)
+	out := new(CreateDocumentResponse)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *fileService) FindDocumentById(ctx context.Context, in *FindDocumentByIdRequest, opts ...client.CallOption) (*FindDocumentByIdResponse, error) {
+	req := c.c.NewRequest(c.name, "File.FindDocumentById", in)
+	out := new(FindDocumentByIdResponse)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *fileService) FindAllDocument(ctx context.Context, in *FindAllDocumentRequest, opts ...client.CallOption) (*FindAllDocumentResponse, error) {
+	req := c.c.NewRequest(c.name, "File.FindAllDocument", in)
+	out := new(FindAllDocumentResponse)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *fileService) UpdateDocument(ctx context.Context, in *UpdateDocumentRequest, opts ...client.CallOption) (*UpdateDocumentResponse, error) {
+	req := c.c.NewRequest(c.name, "File.UpdateDocument", in)
+	out := new(UpdateDocumentResponse)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *fileService) DeleteDocument(ctx context.Context, in *DeleteDocumentRequest, opts ...client.CallOption) (*DeleteDocumentResponse, error) {
+	req := c.c.NewRequest(c.name, "File.DeleteDocument", in)
+	out := new(DeleteDocumentResponse)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // Server API for File service
 
 type FileHandler interface {
 	Call(context.Context, *Request, *Response) error
 	Stream(context.Context, *StreamingRequest, File_StreamStream) error
 	PingPong(context.Context, File_PingPongStream) error
+	CreateImage(context.Context, *CreateImageRequest, *CreateImageResponse) error
+	FindImageById(context.Context, *FindImageByIdRequest, *FindImageByIdResponse) error
+	FindAllImage(context.Context, *FindAllImageRequest, *FindAllImageResponse) error
+	UpdateImage(context.Context, *UpdateImageRequest, *UpdateImageResponse) error
+	DeleteImage(context.Context, *DeleteImageRequest, *DeleteImageResponse) error
+	CreateDocument(context.Context, *CreateDocumentRequest, *CreateDocumentResponse) error
+	FindDocumentById(context.Context, *FindDocumentByIdRequest, *FindDocumentByIdResponse) error
+	FindAllDocument(context.Context, *FindAllDocumentRequest, *FindAllDocumentResponse) error
+	UpdateDocument(context.Context, *UpdateDocumentRequest, *UpdateDocumentResponse) error
+	DeleteDocument(context.Context, *DeleteDocumentRequest, *DeleteDocumentResponse) error
 }
 
 func RegisterFileHandler(s server.Server, hdlr FileHandler, opts ...server.HandlerOption) error {
@@ -170,6 +290,16 @@ func RegisterFileHandler(s server.Server, hdlr FileHandler, opts ...server.Handl
 		Call(ctx context.Context, in *Request, out *Response) error
 		Stream(ctx context.Context, stream server.Stream) error
 		PingPong(ctx context.Context, stream server.Stream) error
+		CreateImage(ctx context.Context, in *CreateImageRequest, out *CreateImageResponse) error
+		FindImageById(ctx context.Context, in *FindImageByIdRequest, out *FindImageByIdResponse) error
+		FindAllImage(ctx context.Context, in *FindAllImageRequest, out *FindAllImageResponse) error
+		UpdateImage(ctx context.Context, in *UpdateImageRequest, out *UpdateImageResponse) error
+		DeleteImage(ctx context.Context, in *DeleteImageRequest, out *DeleteImageResponse) error
+		CreateDocument(ctx context.Context, in *CreateDocumentRequest, out *CreateDocumentResponse) error
+		FindDocumentById(ctx context.Context, in *FindDocumentByIdRequest, out *FindDocumentByIdResponse) error
+		FindAllDocument(ctx context.Context, in *FindAllDocumentRequest, out *FindAllDocumentResponse) error
+		UpdateDocument(ctx context.Context, in *UpdateDocumentRequest, out *UpdateDocumentResponse) error
+		DeleteDocument(ctx context.Context, in *DeleteDocumentRequest, out *DeleteDocumentResponse) error
 	}
 	type File struct {
 		file
@@ -259,4 +389,44 @@ func (x *filePingPongStream) Recv() (*Ping, error) {
 		return nil, err
 	}
 	return m, nil
+}
+
+func (h *fileHandler) CreateImage(ctx context.Context, in *CreateImageRequest, out *CreateImageResponse) error {
+	return h.FileHandler.CreateImage(ctx, in, out)
+}
+
+func (h *fileHandler) FindImageById(ctx context.Context, in *FindImageByIdRequest, out *FindImageByIdResponse) error {
+	return h.FileHandler.FindImageById(ctx, in, out)
+}
+
+func (h *fileHandler) FindAllImage(ctx context.Context, in *FindAllImageRequest, out *FindAllImageResponse) error {
+	return h.FileHandler.FindAllImage(ctx, in, out)
+}
+
+func (h *fileHandler) UpdateImage(ctx context.Context, in *UpdateImageRequest, out *UpdateImageResponse) error {
+	return h.FileHandler.UpdateImage(ctx, in, out)
+}
+
+func (h *fileHandler) DeleteImage(ctx context.Context, in *DeleteImageRequest, out *DeleteImageResponse) error {
+	return h.FileHandler.DeleteImage(ctx, in, out)
+}
+
+func (h *fileHandler) CreateDocument(ctx context.Context, in *CreateDocumentRequest, out *CreateDocumentResponse) error {
+	return h.FileHandler.CreateDocument(ctx, in, out)
+}
+
+func (h *fileHandler) FindDocumentById(ctx context.Context, in *FindDocumentByIdRequest, out *FindDocumentByIdResponse) error {
+	return h.FileHandler.FindDocumentById(ctx, in, out)
+}
+
+func (h *fileHandler) FindAllDocument(ctx context.Context, in *FindAllDocumentRequest, out *FindAllDocumentResponse) error {
+	return h.FileHandler.FindAllDocument(ctx, in, out)
+}
+
+func (h *fileHandler) UpdateDocument(ctx context.Context, in *UpdateDocumentRequest, out *UpdateDocumentResponse) error {
+	return h.FileHandler.UpdateDocument(ctx, in, out)
+}
+
+func (h *fileHandler) DeleteDocument(ctx context.Context, in *DeleteDocumentRequest, out *DeleteDocumentResponse) error {
+	return h.FileHandler.DeleteDocument(ctx, in, out)
 }

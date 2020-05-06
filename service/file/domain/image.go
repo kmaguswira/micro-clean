@@ -11,4 +11,5 @@ type Image struct {
 	Alt         string
 	Description string
 	Info        string
+	Cdn         bool
 }

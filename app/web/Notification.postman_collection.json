@@ -1,0 +1,155 @@
+{
+	"info": {
+		"_postman_id": "f3b5000f-fd24-4346-a2a8-ca56d934b6ba",
+		"name": "Notification",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "localhost:3100/v1/email-template/create",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"title\": \"signup\",\n\t\"subject\": \"adkfjalkdfaslkdfj\",\n\t\"html\": \"asdfklajdfsafjaf\",\n\t\"plainText\": \"adfasd\",\n\t\"language\": \"en\",\n\t\"fromName\": \"adfadfsf\",\n\t\"fromEmail\": \"adfafa@mail.com\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:3100/v1/email-template/create",
+					"host": [
+						"localhost"
+					],
+					"port": "3100",
+					"path": [
+						"v1",
+						"email-template",
+						"create"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:3100/v1/email-template?l=10&o=0&q={\"title=\":\"signup\"}",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:3100/v1/email-template?l=10&o=0&q={\"title=\":\"signup\"}",
+					"host": [
+						"localhost"
+					],
+					"port": "3100",
+					"path": [
+						"v1",
+						"email-template"
+					],
+					"query": [
+						{
+							"key": "l",
+							"value": "10"
+						},
+						{
+							"key": "o",
+							"value": "0"
+						},
+						{
+							"key": "q",
+							"value": "{\"title=\":\"signup\"}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:3100/v1/email-template/bqnu5flh5s5tqpjithd0",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:3100/v1/email-template/bqogk6dh5s5imo1eupo0",
+					"host": [
+						"localhost"
+					],
+					"port": "3100",
+					"path": [
+						"v1",
+						"email-template",
+						"bqogk6dh5s5imo1eupo0"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:3100/v1/email-template/bqnu5flh5s5tqpjithd0",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"title\": \"signup_updated\",\n    \"subject\": \"adkfjalkdfaslkdfj\",\n    \"html\": \"asdfklajdfsafjaf\",\n    \"plainText\": \"asdfasf\",\n    \"language\": \"en\",\n    \"fromName\": \"asdfafsf\",\n    \"fromEmail\": \"asdfasf\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:3100/v1/email-template/bqogk6dh5s5imo1eupo0",
+					"host": [
+						"localhost"
+					],
+					"port": "3100",
+					"path": [
+						"v1",
+						"email-template",
+						"bqogk6dh5s5imo1eupo0"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:3100/v1/email-template/bqnu3o5h5s5tdsfleb1g",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "localhost:3100/v1/email-template/bqogk6dh5s5imo1eupo0",
+					"host": [
+						"localhost"
+					],
+					"port": "3100",
+					"path": [
+						"v1",
+						"email-template",
+						"bqogk6dh5s5imo1eupo0"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}

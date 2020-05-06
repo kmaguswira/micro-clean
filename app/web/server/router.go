@@ -105,6 +105,27 @@ func RouterV1(router *gin.Engine) {
 			emailTemplateGroup.GET("/", emailTemplate.FindAll)
 			emailTemplateGroup.POST("/send-email", emailTemplate.SendEmail)
 		}
-	}
 
+		imageGroup := v1.Group("image")
+		{
+			image := controllers.NewImageController(client.DefaultClient)
+
+			imageGroup.POST("/create", image.Create)
+			imageGroup.GET("/:id", image.FindById)
+			imageGroup.DELETE("/:id", image.Delete)
+			imageGroup.PUT("/:id", image.Update)
+			imageGroup.GET("/", image.FindAll)
+		}
+
+		documentGroup := v1.Group("document")
+		{
+			document := controllers.NewDocumentController(client.DefaultClient)
+
+			documentGroup.POST("/create", document.Create)
+			documentGroup.GET("/:id", document.FindById)
+			documentGroup.DELETE("/:id", document.Delete)
+			documentGroup.PUT("/:id", document.Update)
+			documentGroup.GET("/", document.FindAll)
+		}
+	}
 }

@@ -8,4 +8,5 @@ type Document struct {
 	Type        string
 	Description string
 	Info        string
+	Cdn         bool
 }

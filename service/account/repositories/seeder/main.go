@@ -276,6 +276,65 @@ var ACLs = func(permitted []domain.Role) []domain.ACL {
 			IsPublic:  true,
 			Permitted: permitted,
 		},
+		domain.ACL{
+			Handler:   "github.com/kmaguswira/micro-clean/app/web/controllers.(*ImageController).Create-fm",
+			Title:     "",
+			IsPublic:  true,
+			Permitted: permitted,
+		},
+		domain.ACL{
+			Handler:   "github.com/kmaguswira/micro-clean/app/web/controllers.(*ImageController).FindById-fm",
+			Title:     "",
+			IsPublic:  true,
+			Permitted: permitted,
+		},
+		domain.ACL{
+			Handler:   "github.com/kmaguswira/micro-clean/app/web/controllers.(*ImageController).Delete-fm",
+			Title:     "",
+			IsPublic:  true,
+			Permitted: permitted,
+		},
+		domain.ACL{
+			Handler:   "github.com/kmaguswira/micro-clean/app/web/controllers.(*ImageController).Update-fm",
+			Title:     "",
+			IsPublic:  true,
+			Permitted: permitted,
+		},
+		domain.ACL{
+			Handler:   "github.com/kmaguswira/micro-clean/app/web/controllers.(*ImageController).FindAll-fm",
+			Title:     "",
+			IsPublic:  true,
+			Permitted: permitted,
+		},
+		domain.ACL{
+			Handler:   "github.com/kmaguswira/micro-clean/app/web/controllers.(*DocumentController).Create-fm",
+			Title:     "",
+			IsPublic:  true,
+			Permitted: permitted,
+		},
+		domain.ACL{
+			Handler:   "github.com/kmaguswira/micro-clean/app/web/controllers.(*DocumentController).FindById-fm",
+			Title:     "",
+			IsPublic:  true,
+			Permitted: permitted,
+		},
+		domain.ACL{
+			Handler:   "github.com/kmaguswira/micro-clean/app/web/controllers.(*DocumentController).Delete-fm",
+			Title:     "",
+			IsPublic:  true,
+			Permitted: permitted,
+		},
+		domain.ACL{
+			Handler:   "github.com/kmaguswira/micro-clean/app/web/controllers.(*DocumentController).Update-fm",
+			Title:     "",
+			IsPublic:  true,
+			Permitted: permitted,
+		},
+		domain.ACL{
+			Handler:   "github.com/kmaguswira/micro-clean/app/web/controllers.(*DocumentController).FindAll-fm",
+			Title:     "",
+			IsPublic:  true,
+			Permitted: permitted,
+		},
 	}
-
 }

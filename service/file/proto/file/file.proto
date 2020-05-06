@@ -76,6 +76,7 @@ message Image {
 	string Alt = 8;
 	string Description = 9;
 	string Info = 10;
+	bool Cdn = 11;
 }
 
 message Document {
@@ -86,6 +87,7 @@ message Document {
 	string Type = 5;
 	string Description = 6;
 	string Info = 7;
+	bool Cdn = 8;
 }
 
 

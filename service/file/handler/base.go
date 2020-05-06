@@ -3,6 +3,8 @@ package handler
 import (
 	"context"
 
+	"github.com/kmaguswira/micro-clean/service/file/application/usecases"
+	"github.com/kmaguswira/micro-clean/service/file/domain"
 	file "github.com/kmaguswira/micro-clean/service/file/proto/file"
 	"github.com/kmaguswira/micro-clean/service/file/repositories"
 	"github.com/kmaguswira/micro-clean/service/file/utils"
@@ -10,15 +12,35 @@ import (
 )
 
 type File struct {
-	response utils.Response
+	response                utils.Response
+	createImageUseCase      usecases.ICreateImage
+	findImageByIDUseCase    usecases.IFindImageByID
+	deleteImageUseCase      usecases.IDeleteImage
+	updateImageUseCase      usecases.IUpdateImage
+	findAllImageUseCase     usecases.IFindAllImage
+	createDocumentUseCase   usecases.ICreateDocument
+	findDocumentByIDUseCase usecases.IFindDocumentByID
+	deleteDocumentUseCase   usecases.IDeleteDocument
+	updateDocumentUseCase   usecases.IUpdateDocument
+	findAllDocumentUseCase  usecases.IFindAllDocument
 }
 
 func NewFile() *File {
-	repositories.NewReadWriteRepository(nil)
-	repositories.NewReadRepository(nil)
+	readWriteRepository := repositories.NewReadWriteRepository(nil)
+	readRepository := repositories.NewReadRepository(nil)
 
 	return &File{
-		response: utils.Response{},
+		createImageUseCase:      usecases.NewCreateImageUseCase(readWriteRepository),
+		findImageByIDUseCase:    usecases.NewFindImageByIDUseCase(readRepository),
+		deleteImageUseCase:      usecases.NewDeleteImageUseCase(readWriteRepository),
+		updateImageUseCase:      usecases.NewUpdateImageUseCase(readWriteRepository),
+		findAllImageUseCase:     usecases.NewFindAllImageUseCase(readRepository),
+		createDocumentUseCase:   usecases.NewCreateDocumentUseCase(readWriteRepository),
+		findDocumentByIDUseCase: usecases.NewFindDocumentByIDUseCase(readRepository),
+		deleteDocumentUseCase:   usecases.NewDeleteDocumentUseCase(readWriteRepository),
+		updateDocumentUseCase:   usecases.NewUpdateDocumentUseCase(readWriteRepository),
+		findAllDocumentUseCase:  usecases.NewFindAllDocumentUseCase(readRepository),
+		response:                utils.Response{},
 	}
 }
 
@@ -57,4 +79,37 @@ func (e *File) PingPong(ctx context.Context, stream file.File_PingPongStream) er
 			return err
 		}
 	}
+}
+
+func populateImageResponse(image domain.Image) file.Image {
+	imageResponse := file.Image{
+		ID:          image.ID,
+		Name:        image.Name,
+		Path:        image.Path,
+		Slug:        image.Slug,
+		Thumbnail:   image.Thumbnail,
+		Type:        image.Type,
+		Title:       image.Title,
+		Alt:         image.Alt,
+		Description: image.Description,
+		Info:        image.Info,
+		Cdn:         image.Cdn,
+	}
+
+	return imageResponse
+}
+
+func populateDocumentResponse(document domain.Document) file.Document {
+	documentResponse := file.Document{
+		ID:          document.ID,
+		Name:        document.Name,
+		Path:        document.Path,
+		Slug:        document.Slug,
+		Type:        document.Type,
+		Description: document.Description,
+		Info:        document.Info,
+		Cdn:         document.Cdn,
+	}
+
+	return documentResponse
 }

@@ -1,0 +1,300 @@
+{
+	"info": {
+		"_postman_id": "11679fb6-a727-4fd1-bc45-96a775a5f588",
+		"name": "File",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "localhost:3100/v1/image/create",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\": \"name\",\n\t\"path\": \"path\",\n\t\"slug\": \"slug\",\n\t\"thumbnail\": \"thumbnail\",\n\t\"type\": \"type\",\n\t\"title\": \"title\",\n\t\"alt\": \"alt\",\n\t\"description\": \"description\",\n\t\"info\": \"info\",\n\t\"cdn\": true\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:3100/v1/image/create",
+					"host": [
+						"localhost"
+					],
+					"port": "3100",
+					"path": [
+						"v1",
+						"image",
+						"create"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:3100/v1/document/create",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\": \"name\",\n\t\"path\": \"path\",\n\t\"slug\": \"slug\",\n\t\"type\": \"type\",\n\t\"description\": \"description\",\n\t\"info\": \"info\",\n\t\"cdn\": true\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:3100/v1/document/create",
+					"host": [
+						"localhost"
+					],
+					"port": "3100",
+					"path": [
+						"v1",
+						"document",
+						"create"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:3100/v1/image/bqp745lh5s5ofi18240g",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\": \"name updated\",\n\t\"path\": \"path\",\n\t\"slug\": \"slug\",\n\t\"thumbnail\": \"thumbnail\",\n\t\"type\": \"type\",\n\t\"title\": \"title\",\n\t\"alt\": \"alt\",\n\t\"description\": \"description\",\n\t\"info\": \"info\",\n\t\"cdn\": true\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:3100/v1/image/bqp745lh5s5ofi18240g",
+					"host": [
+						"localhost"
+					],
+					"port": "3100",
+					"path": [
+						"v1",
+						"image",
+						"bqp745lh5s5ofi18240g"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:3100/v1/document/bqp76t5h5s5ofi18241g",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\": \"name updated\",\n\t\"path\": \"path\",\n\t\"slug\": \"slug\",\n\t\"type\": \"type\",\n\t\"description\": \"description\",\n\t\"info\": \"info\",\n\t\"cdn\": true\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:3100/v1/document/bqp76t5h5s5ofi18241g",
+					"host": [
+						"localhost"
+					],
+					"port": "3100",
+					"path": [
+						"v1",
+						"document",
+						"bqp76t5h5s5ofi18241g"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:3100/v1/image/bqp75nlh5s5ofi182410",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:3100/v1/image/bqp75nlh5s5ofi182410",
+					"host": [
+						"localhost"
+					],
+					"port": "3100",
+					"path": [
+						"v1",
+						"image",
+						"bqp75nlh5s5ofi182410"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:3100/v1/document/bqp76t5h5s5ofi18241g",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:3100/v1/document/bqp76t5h5s5ofi18241g",
+					"host": [
+						"localhost"
+					],
+					"port": "3100",
+					"path": [
+						"v1",
+						"document",
+						"bqp76t5h5s5ofi18241g"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:3100/v1/image?l=10&o=0&q={\"cdn=\":\"true\"}",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:3100/v1/image?l=10&o=0&q={\"cdn=\":\"true\"}",
+					"host": [
+						"localhost"
+					],
+					"port": "3100",
+					"path": [
+						"v1",
+						"image"
+					],
+					"query": [
+						{
+							"key": "l",
+							"value": "10"
+						},
+						{
+							"key": "o",
+							"value": "0"
+						},
+						{
+							"key": "q",
+							"value": "{\"cdn=\":\"true\"}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:3100/v1/document?l=10&o=0&q={\"cdn=\":\"true\"} Copy",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:3100/v1/document?l=10&o=0&q={\"cdn=\":\"true\"}",
+					"host": [
+						"localhost"
+					],
+					"port": "3100",
+					"path": [
+						"v1",
+						"document"
+					],
+					"query": [
+						{
+							"key": "l",
+							"value": "10"
+						},
+						{
+							"key": "o",
+							"value": "0"
+						},
+						{
+							"key": "q",
+							"value": "{\"cdn=\":\"true\"}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:3100/v1/image/bqp75nlh5s5ofi182410",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "localhost:3100/v1/image/bqp75nlh5s5ofi182410",
+					"host": [
+						"localhost"
+					],
+					"port": "3100",
+					"path": [
+						"v1",
+						"image",
+						"bqp75nlh5s5ofi182410"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:3100/v1/document/bqp76t5h5s5ofi18241g",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "localhost:3100/v1/document/bqp76t5h5s5ofi18241g",
+					"host": [
+						"localhost"
+					],
+					"port": "3100",
+					"path": [
+						"v1",
+						"document",
+						"bqp76t5h5s5ofi18241g"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}
