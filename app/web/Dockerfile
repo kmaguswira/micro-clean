@@ -11,14 +11,14 @@ COPY . /app/
 RUN go mod download
 
 ##### BUILD APPS OR SERVICES #####
-RUN cd /app/service/notification && CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o ./service-notification
+RUN cd /app/app/web && CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o ./app-web
 ##### END STAGE 1 #####
 
 ##### STAGE 2 #####
 FROM alpine:latest as prod
 RUN apk --no-cache add ca-certificates
 RUN mkdir config
-COPY --from=dev /app/service/notification/config  /config
-COPY --from=dev /app/service/notification/service-notification  /
-CMD ./service-notification
+COPY --from=dev /app/app/web/config  /config
+COPY --from=dev /app/app/web/app-web  /
+CMD ./app-web
 ##### END STAGE 2 #####

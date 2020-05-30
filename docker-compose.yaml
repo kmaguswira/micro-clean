@@ -1,0 +1,95 @@
+version: '3.4'
+services:
+  app-web:
+    container_name: app-web
+    build:
+      context: .
+      dockerfile: ./app/web/Dockerfile
+      target: dev
+    image: kmaguswira/golang:1.0.0
+    working_dir: /app
+    entrypoint: /bin/sh
+    stdin_open: true
+    tty: true
+    volumes:
+      - .:/app
+    ports:
+      - 3100:3100
+    depends_on:
+      - mysql
+    networks:
+      - micro-clean
+  service-account:
+    container_name: service-account
+    build:
+      context: .
+      dockerfile: ./service/account/Dockerfile
+      target: dev
+    image: kmaguswira/golang:1.0.0
+    working_dir: /app
+    entrypoint: /bin/sh
+    stdin_open: true
+    tty: true
+    volumes:
+      - .:/app
+    ports:
+      - 3101:3101
+    depends_on:
+      - mysql
+    networks:
+      - micro-clean
+  service-file:
+    container_name: service-file
+    build:
+      context: .
+      dockerfile: ./service/file/Dockerfile
+      target: dev
+    image: kmaguswira/golang:1.0.0
+    working_dir: /app
+    entrypoint: /bin/sh
+    stdin_open: true
+    tty: true
+    volumes:
+      - .:/app
+    ports:
+      - 3103:3103
+    depends_on:
+      - mysql
+    networks:
+      - micro-clean
+  service-notification:
+    container_name: service-notification
+    build:
+      context: .
+      dockerfile: ./service/notification/Dockerfile
+      target: dev
+    image: kmaguswira/golang:1.0.0
+    working_dir: /app
+    entrypoint: /bin/sh
+    stdin_open: true
+    tty: true
+    volumes:
+      - .:/app
+    ports:
+      - 3102:3102
+    depends_on:
+      - mysql
+    networks:
+      - micro-clean
+  mysql:
+    image: mysql:5.7
+    container_name: mysql
+    ports: 
+      - 3306:3306
+    environment: 
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=micro_clean
+    volumes:
+      - db:/var/lib/mysql
+    networks:
+      - micro-clean
+volumes:
+  db:
+networks:
+  micro-clean:
+    driver: bridge

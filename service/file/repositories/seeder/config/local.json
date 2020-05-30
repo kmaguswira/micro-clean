@@ -6,7 +6,7 @@
             "name": "micro_clean",
             "user": "root",
             "password": "root",
-            "host": "localhost",
+            "host": "mysql",
             "port": "3306",
             "drop": false
         }
