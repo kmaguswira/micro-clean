@@ -5,7 +5,7 @@ services:
     build:
       context: .
       dockerfile: ./app/web/Dockerfile
-      target: dev
+      target: prod
     image: kmaguswira/golang:1.0.0
     working_dir: /app
     entrypoint: /bin/sh
@@ -17,6 +17,9 @@ services:
       - 3100:3100
     depends_on:
       - mysql
+      - service-account
+      - service-file
+      - service-notification
     networks:
       - micro-clean
   service-account:
@@ -24,7 +27,7 @@ services:
     build:
       context: .
       dockerfile: ./service/account/Dockerfile
-      target: dev
+      target: prod
     image: kmaguswira/golang:1.0.0
     working_dir: /app
     entrypoint: /bin/sh
@@ -43,7 +46,7 @@ services:
     build:
       context: .
       dockerfile: ./service/file/Dockerfile
-      target: dev
+      target: prod
     image: kmaguswira/golang:1.0.0
     working_dir: /app
     entrypoint: /bin/sh
@@ -62,7 +65,7 @@ services:
     build:
       context: .
       dockerfile: ./service/notification/Dockerfile
-      target: dev
+      target: prod
     image: kmaguswira/golang:1.0.0
     working_dir: /app
     entrypoint: /bin/sh

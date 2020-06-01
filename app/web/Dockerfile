@@ -15,7 +15,7 @@ RUN go mod download
 ##### STAGE 1 #####
 FROM base as dev
 COPY . /app/
-RUN cd /app/app/web && CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o ./app-web
+RUN cd /app/app/web && CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o ./app-web .
 ##### END STAGE 1 #####
 
 ##### STAGE 2 #####

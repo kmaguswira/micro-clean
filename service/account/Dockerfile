@@ -15,7 +15,7 @@ RUN go mod download
 ##### STAGE 1 #####
 FROM base as dev
 COPY . /app/
-RUN cd /app/service/account && CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o ./service-account
+RUN cd /app/service/account && CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o ./service-account .
 ##### END STAGE 1 #####
 
 ##### STAGE 2 #####
