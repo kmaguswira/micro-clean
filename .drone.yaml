@@ -1,0 +1,32 @@
+---
+kind: pipeline
+type: kubernetes
+name: default
+
+steps:
+- name: build-app-web
+  image: docker:dind
+  volumes:
+  - name: dockersock
+    path: /var/run
+  environment:
+    DOCKER_USER:
+      from_secret: DOCKER_HUB_USERNAME
+    DOCKER_PASSWORD:
+      from_secret: DOCKER_HUB_PASSWORD
+  commands:
+  - sleep 5 
+  - docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
+  - docker build ./app/web -t kmaguswira/micro-clean-app-web:latest
+  - docker push kmaguswira/micro-clean-app-web:latest
+
+services:
+- name: docker
+  image: docker:dind
+  privileged: true
+  volumes:
+  - name: dockersock
+    path: /var/run
+volumes:
+- name: dockersock
+  temp: {}
