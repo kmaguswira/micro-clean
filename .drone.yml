@@ -1,0 +1,40 @@
+---
+kind: pipeline
+type: kubernetes
+name: build
+
+steps:
+- name: build-app-web
+  image: docker:dind
+  volumes:
+  - name: dockersock
+    path: /var/run
+  environment:
+    DOCKER_HUB_USERNAME:
+      from_secret: DOCKER_HUB_USERNAME
+    DOCKER_HUB_PASSWORD:
+      from_secret: DOCKER_HUB_PASSWORD
+  commands:
+  - docker login -u $DOCKER_HUB_USERNAME -p $DOCKER_HUB_PASSWORD
+- name: deploy
+  image: sinlead/drone-kubectl
+  settings:
+    kubernetes_server:
+      from_secret: KUBERNETES_SERVER
+    kubernetes_cert:
+      from_secret: KUBERNETES_CRT
+    kubernetes_token:
+      from_secret: KUBERNETES_TOKEN
+  commands:
+    - echo $kubernetes_server
+    # - kubectl -n helloworld apply -f deploy.yml
+services:
+- name: docker
+  image: docker:dind
+  privileged: true
+  volumes:
+  - name: dockersock
+    path: /var/run
+volumes:
+- name: dockersock
+  temp: {}
