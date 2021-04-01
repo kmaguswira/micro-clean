@@ -4,14 +4,14 @@ import (
 	"fmt"
 	"log"
 
+	"github.com/asim/go-micro/v3"
+	"github.com/asim/go-micro/v3/client"
 	"github.com/gin-gonic/gin"
 	"github.com/kmaguswira/micro-clean/app/web/config"
 	"github.com/kmaguswira/micro-clean/app/web/requests"
 	account "github.com/kmaguswira/micro-clean/service/account/proto/account"
 	notification "github.com/kmaguswira/micro-clean/service/notification/proto/notification"
 	"github.com/kmaguswira/micro-clean/utils"
-	"github.com/micro/go-micro"
-	"github.com/micro/go-micro/client"
 )
 
 type authController struct {

@@ -1,11 +1,11 @@
 package controllers
 
 import (
+	"github.com/asim/go-micro/v3/client"
 	"github.com/gin-gonic/gin"
 	"github.com/kmaguswira/micro-clean/app/web/requests"
 	notification "github.com/kmaguswira/micro-clean/service/notification/proto/notification"
 	"github.com/kmaguswira/micro-clean/utils"
-	"github.com/micro/go-micro/client"
 )
 
 type emailTemplateController struct {

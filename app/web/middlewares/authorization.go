@@ -5,11 +5,11 @@ import (
 	"log"
 	"strings"
 
+	"github.com/asim/go-micro/v3/client"
 	"github.com/gin-gonic/gin"
 	"github.com/kmaguswira/micro-clean/app/web/config"
 	account "github.com/kmaguswira/micro-clean/service/account/proto/account"
 	"github.com/kmaguswira/micro-clean/utils"
-	"github.com/micro/go-micro/client"
 )
 
 type authorizationMiddleware struct {

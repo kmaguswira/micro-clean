@@ -6,11 +6,11 @@ import (
 	"path/filepath"
 	"strings"
 
+	"github.com/asim/go-micro/v3/client"
 	"github.com/disintegration/imaging"
 	"github.com/gin-gonic/gin"
 	file "github.com/kmaguswira/micro-clean/service/file/proto/file"
 	"github.com/kmaguswira/micro-clean/utils"
-	"github.com/micro/go-micro/client"
 	"github.com/rs/xid"
 )
 

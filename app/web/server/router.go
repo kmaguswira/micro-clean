@@ -1,10 +1,10 @@
 package server
 
 import (
+	"github.com/asim/go-micro/v3/client"
 	"github.com/gin-gonic/gin"
 	"github.com/kmaguswira/micro-clean/app/web/controllers"
 	"github.com/kmaguswira/micro-clean/app/web/middlewares"
-	"github.com/micro/go-micro/client"
 )
 
 func SetupRouter(env string) *gin.Engine {
