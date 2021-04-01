@@ -9,8 +9,8 @@ import (
 )
 
 type FindAllRequest struct {
-	Limit      int64
-	Offset     int64
+	Limit      int32
+	Offset     int32
 	Sort       string
 	QueryKey   string
 	QueryValue []string
@@ -28,11 +28,13 @@ func QueryBuilder(c *gin.Context) *FindAllRequest {
 	}
 
 	if limit, isExist := c.GetQuery(LIMIT_ID_FIND_ALL_REQUEST); isExist {
-		findAllRequest.Limit, _ = strconv.ParseInt(limit, 10, 64)
+		tmp, _ := strconv.ParseInt(limit, 10, 32)
+		findAllRequest.Limit = int32(tmp)
 	}
 
 	if offset, isExist := c.GetQuery(OFFSET_ID_FIND_ALL_REQUEST); isExist {
-		findAllRequest.Offset, _ = strconv.ParseInt(offset, 10, 64)
+		tmp, _ := strconv.ParseInt(offset, 10, 32)
+		findAllRequest.Offset = int32(tmp)
 	}
 
 	if where, isExist := c.GetQuery(QUERY_ID_FIND_ALL_REQUEST); isExist {

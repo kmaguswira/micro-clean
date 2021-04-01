@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-package kmaguswira.srv.account;
+package account;
 option go_package = "proto/account";
 
 service Account {
@@ -91,15 +91,15 @@ message Role {
 message BaseResponse {
     string status = 1;
     string message = 2;
-    int64 limit = 3;
-    int64 offset = 4;
+    int32 limit = 3;
+    int32 offset = 4;
 }
 
 message BaseQuery {
 	string queryKey = 1;
 	repeated string queryValue = 2;
-	int64 limit = 3;
-	int64 offset = 4;
+	int32 limit = 3;
+	int32 offset = 4;
 	string sort = 5;
 }
 

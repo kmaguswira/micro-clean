@@ -63,8 +63,8 @@ func (t *File) FindAllImage(ctx context.Context, req *file.FindAllImageRequest, 
 
 	input := global.FindAllInput{
 		QueryKey: req.Query.QueryKey,
-		Limit:    req.Query.Limit,
-		Offset:   req.Query.Offset,
+		Limit:    int(req.Query.Limit),
+		Offset:   int(req.Query.Offset),
 		Sort:     req.Query.Sort,
 	}
 
@@ -186,8 +186,8 @@ func (t *File) FindAllDocument(ctx context.Context, req *file.FindAllDocumentReq
 
 	input := global.FindAllInput{
 		QueryKey: req.Query.QueryKey,
-		Limit:    req.Query.Limit,
-		Offset:   req.Query.Offset,
+		Limit:    int(req.Query.Limit),
+		Offset:   int(req.Query.Offset),
 		Sort:     req.Query.Sort,
 	}
 

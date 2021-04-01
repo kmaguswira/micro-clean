@@ -3,8 +3,8 @@ package entity
 type Image struct {
 	BaseModel
 	Name        string `gorm:"type:varchar(255)"`
-	Path        string `gorm:"type:varchar(255)"`
-	Slug        string `gorm:"type:varchar(255)"`
+	Path        string `gorm:"type:text"`
+	Slug        string `gorm:"type:text"`
 	Thumbnail   string `gorm:"type:varchar(255)"`
 	Type        string `gorm:"type:varchar(255)"`
 	Title       string `gorm:"type:varchar(255)"`

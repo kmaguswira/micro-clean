@@ -3,11 +3,11 @@ package repositories
 import (
 	"fmt"
 
-	"github.com/jinzhu/gorm"
 	iface "github.com/kmaguswira/micro-clean/service/file/application/repositories"
 	"github.com/kmaguswira/micro-clean/service/file/config"
 	"github.com/kmaguswira/micro-clean/service/file/domain"
 	"github.com/kmaguswira/micro-clean/service/file/repositories/entity"
+	"gorm.io/gorm"
 )
 
 type readWriteRepository struct {
@@ -22,7 +22,7 @@ func NewReadWriteRepository(DB *gorm.DB) iface.IReadWriteRepository {
 	}
 	config := config.GetConfig()
 	return &readWriteRepository{
-		db: NewDB(config.Repositories.ReadWrite, Registered),
+		db: NewDB(config.Repositories.ReadWrite),
 	}
 }
 
