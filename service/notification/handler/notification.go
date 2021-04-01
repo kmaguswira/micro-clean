@@ -60,8 +60,8 @@ func (t *Notification) FindAllEmailTemplate(ctx context.Context, req *notificati
 
 	input := global.FindAllInput{
 		QueryKey: req.Query.QueryKey,
-		Limit:    req.Query.Limit,
-		Offset:   req.Query.Offset,
+		Limit:    int(req.Query.Limit),
+		Offset:   int(req.Query.Offset),
 		Sort:     req.Query.Sort,
 	}
 

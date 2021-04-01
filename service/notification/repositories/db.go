@@ -3,15 +3,12 @@ package repositories
 import (
 	"fmt"
 	"log"
-	"reflect"
 
-	"github.com/jinzhu/gorm"
-	// "github.com/jinzhu/gorm/dialects/postgres"
-	// "github.com/jinzhu/gorm/dialects/sqlite"
-	// "github.com/jinzhu/gorm/dialects/mssql"
-	_ "github.com/jinzhu/gorm/dialects/mysql"
+	// "gorm.io/driver/postgres"
+	// "gorm.io/driver/sqlite"
 	"github.com/kmaguswira/micro-clean/service/notification/config"
-	"github.com/kmaguswira/micro-clean/service/notification/utils"
+	"gorm.io/driver/mysql"
+	"gorm.io/gorm"
 )
 
 type DB struct {
@@ -19,10 +16,9 @@ type DB struct {
 	err error
 }
 
-func NewDB(connection config.DB, RegisteredTables []interface{}) *gorm.DB {
+func NewDB(connection config.DB) *gorm.DB {
 	db := new(DB)
 	db.Connect(connection)
-	db.Migrate(connection.Drop, RegisteredTables)
 
 	return db.db
 }
@@ -46,7 +42,7 @@ func (t *DB) Connect(connection config.DB) {
 		)
 	}
 
-	t.db, t.err = gorm.Open(connection.Driver, dbinfo)
+	t.db, t.err = gorm.Open(mysql.Open(dbinfo), &gorm.Config{})
 
 	if t.err != nil {
 		log.Println("Failed to connect to database")
@@ -55,22 +51,4 @@ func (t *DB) Connect(connection config.DB) {
 
 	// t.db.LogMode(true)
 	log.Println("DB connected")
-}
-
-func (t *DB) Migrate(isDrop bool, tables []interface{}) {
-	reverseTables := utils.ReverseArray(tables)
-
-	for _, model := range reverseTables {
-		if isDrop {
-			t.db.DropTableIfExists(model)
-		}
-	}
-
-	for _, model := range tables {
-		if err := t.db.AutoMigrate(model).Error; err != nil {
-			log.Println(err)
-		} else {
-			log.Println("Auto migrating", reflect.TypeOf(model).Name(), "...")
-		}
-	}
 }
