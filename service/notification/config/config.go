@@ -29,7 +29,6 @@ type DB struct {
 	Password string `json:"password"`
 	Host     string `json:"host"`
 	Port     string `json:"port"`
-	Drop     bool   `json:"drop"`
 }
 
 type externalServices struct {

@@ -6,7 +6,8 @@ import (
 	"os"
 	"text/tabwriter"
 
-	"github.com/kmaguswira/micro-clean/service/file/repositories/seeder/config"
+	"github.com/kmaguswira/micro-clean/service/file/config"
+	"github.com/kmaguswira/micro-clean/service/file/repositories"
 )
 
 func main() {
@@ -29,7 +30,6 @@ func main() {
 }
 
 func seeding() {
-	fmt.Println(config.GetConfig())
-	// readWriteRepository := repositories.NewReadWriteRepository(nil)
+	repositories.NewReadWriteRepository(nil)
 
 }

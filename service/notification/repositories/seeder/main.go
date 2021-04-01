@@ -6,9 +6,9 @@ import (
 	"os"
 	"text/tabwriter"
 
+	"github.com/kmaguswira/micro-clean/service/notification/config"
 	"github.com/kmaguswira/micro-clean/service/notification/domain"
 	"github.com/kmaguswira/micro-clean/service/notification/repositories"
-	"github.com/kmaguswira/micro-clean/service/notification/repositories/seeder/config"
 )
 
 func main() {
@@ -31,7 +31,6 @@ func main() {
 }
 
 func seeding() {
-	fmt.Println(config.GetConfig())
 	readWriteRepository := repositories.NewReadWriteRepository(nil)
 
 	for i := 0; i < len(EmailTemplates); i++ {

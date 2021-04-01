@@ -1,5 +1,19 @@
 {
+    "name": "local",
+    "server": {
+        "name": "kmaguswira.srv.notification",
+        "port": "3102",
+        "secret": "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
+    },
     "repositories": {
+        "read": {
+            "driver": "mysql",
+            "name": "micro_clean",
+            "user": "root",
+            "password": "root",
+            "host": "mysql",
+            "port": "3306"
+        },
         "readWrite": {
             "driver": "mysql",
             "name": "micro_clean",
@@ -7,6 +21,13 @@
             "password": "root",
             "host": "mysql",
             "port": "3306"
+        }
+        
+    },
+    "externalServices": {
+        "sendgrid": {
+            "name": "go",
+            "apikey": "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"
         }
     }
 }

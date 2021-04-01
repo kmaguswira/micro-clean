@@ -7,9 +7,9 @@ import (
 	"text/tabwriter"
 
 	"github.com/kmaguswira/micro-clean/service/account/application/global"
+	"github.com/kmaguswira/micro-clean/service/account/config"
 	"github.com/kmaguswira/micro-clean/service/account/domain"
 	"github.com/kmaguswira/micro-clean/service/account/repositories"
-	"github.com/kmaguswira/micro-clean/service/account/repositories/seeder/config"
 )
 
 func main() {
