@@ -10,7 +10,7 @@ import (
 	account "github.com/kmaguswira/micro-clean/service/account/proto/account"
 	"github.com/kmaguswira/micro-clean/service/account/repositories"
 	"github.com/kmaguswira/micro-clean/service/account/utils"
-	"github.com/micro/go-micro/util/log"
+	"github.com/asim/go-micro/v3/util/log"
 )
 
 type Account struct {

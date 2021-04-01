@@ -1,7 +1,7 @@
 package config
 
 import (
-	"github.com/micro/go-micro/v2/config"
+	"github.com/kmaguswira/micro-clean/utils"
 )
 
 type Config struct {
@@ -31,12 +31,14 @@ type DB struct {
 	Drop     bool   `json:"drop"`
 }
 
+var config Config
+
 func Init(env string) {
-	config.LoadFile("config/" + env + ".json")
+	conf := utils.Config{}
+
+	conf.Parse(env, &config)
 }
 
-func GetConfig() *Config {
-	var cfg Config
-	config.Scan(&cfg)
-	return &cfg
+func GetConfig() Config {
+	return config
 }

@@ -4,11 +4,11 @@ import (
 	"context"
 
 	. "github.com/ahmetb/go-linq"
+	"github.com/asim/go-micro/v3/util/log"
 	"github.com/kmaguswira/micro-clean/service/file/application/global"
 	"github.com/kmaguswira/micro-clean/service/file/application/usecases"
 	"github.com/kmaguswira/micro-clean/service/file/domain"
 	file "github.com/kmaguswira/micro-clean/service/file/proto/file"
-	"github.com/micro/go-micro/util/log"
 )
 
 func (t *File) CreateImage(ctx context.Context, req *file.CreateImageRequest, res *file.CreateImageResponse) error {

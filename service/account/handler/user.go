@@ -8,7 +8,7 @@ import (
 	"github.com/kmaguswira/micro-clean/service/account/application/usecases"
 	"github.com/kmaguswira/micro-clean/service/account/domain"
 	account "github.com/kmaguswira/micro-clean/service/account/proto/account"
-	"github.com/micro/go-micro/util/log"
+	"github.com/asim/go-micro/v3/util/log"
 )
 
 func (t *Account) CreateUser(ctx context.Context, req *account.CreateUserRequest, res *account.CreateUserResponse) error {

@@ -3,12 +3,12 @@ package handler
 import (
 	"context"
 
+	"github.com/asim/go-micro/v3/util/log"
 	"github.com/kmaguswira/micro-clean/service/file/application/usecases"
 	"github.com/kmaguswira/micro-clean/service/file/domain"
 	file "github.com/kmaguswira/micro-clean/service/file/proto/file"
 	"github.com/kmaguswira/micro-clean/service/file/repositories"
 	"github.com/kmaguswira/micro-clean/service/file/utils"
-	"github.com/micro/go-micro/util/log"
 )
 
 type File struct {

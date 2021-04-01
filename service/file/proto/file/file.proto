@@ -1,6 +1,7 @@
 syntax = "proto3";
 
 package go.micro.srv.file;
+option go_package = "proto/file";
 
 service File {
 	rpc Call(Request) returns (Response) {}

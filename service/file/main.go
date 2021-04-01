@@ -4,14 +4,15 @@ import (
 	"flag"
 	"fmt"
 	"os"
+	"text/tabwriter"
 
 	"github.com/kmaguswira/micro-clean/service/file/config"
 	"github.com/kmaguswira/micro-clean/service/file/handler"
 
 	// "github.com/kmaguswira/micro-clean/service/file/subscriber"
-	"github.com/micro/go-micro"
-	"github.com/micro/go-micro/server"
-	"github.com/micro/go-micro/util/log"
+	"github.com/asim/go-micro/v3"
+	"github.com/asim/go-micro/v3/server"
+	"github.com/asim/go-micro/v3/util/log"
 
 	file "github.com/kmaguswira/micro-clean/service/file/proto/file"
 )
@@ -20,10 +21,14 @@ func main() {
 	env := flag.String("e", "local", "")
 
 	flag.Usage = func() {
-		fmt.Println("FLAG	DESCRIPTION		DEFAULT			OPTIONS")
-		fmt.Println("-e		Environment		local			development/local/local_test/staging/production/test/migrate")
+		w := tabwriter.NewWriter(os.Stdout, 0, 0, 3, ' ', tabwriter.Debug)
+		fmt.Fprintln(w, "FLAG \t DESCRIPTION \t DEFAULT \t OPTIONS")
+		fmt.Fprintln(w, "-e \t Environments \t local \t local/production")
+
+		w.Flush()
 		os.Exit(1)
 	}
+
 	flag.Parse()
 
 	config.Init(*env)
