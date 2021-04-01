@@ -4,11 +4,11 @@ import (
 	"context"
 
 	. "github.com/ahmetb/go-linq"
+	"github.com/asim/go-micro/v3/util/log"
 	"github.com/kmaguswira/micro-clean/service/notification/application/global"
 	"github.com/kmaguswira/micro-clean/service/notification/application/usecases"
 	"github.com/kmaguswira/micro-clean/service/notification/domain"
 	notification "github.com/kmaguswira/micro-clean/service/notification/proto/notification"
-	"github.com/micro/go-micro/util/log"
 )
 
 func (t *Notification) CreateEmailTemplate(ctx context.Context, req *notification.CreateEmailTemplateRequest, res *notification.CreateEmailTemplateResponse) error {

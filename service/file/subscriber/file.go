@@ -2,7 +2,8 @@ package subscriber
 
 import (
 	"context"
-	"github.com/micro/go-micro/util/log"
+
+	"github.com/asim/go-micro/v3/util/log"
 
 	file "github.com/kmaguswira/micro-clean/service/file/proto/file"
 )

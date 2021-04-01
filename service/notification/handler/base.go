@@ -3,13 +3,13 @@ package handler
 import (
 	"context"
 
+	"github.com/asim/go-micro/v3/util/log"
 	"github.com/kmaguswira/micro-clean/service/notification/application/usecases"
 	"github.com/kmaguswira/micro-clean/service/notification/domain"
 	"github.com/kmaguswira/micro-clean/service/notification/external_service"
 	notification "github.com/kmaguswira/micro-clean/service/notification/proto/notification"
 	"github.com/kmaguswira/micro-clean/service/notification/repositories"
 	"github.com/kmaguswira/micro-clean/service/notification/utils"
-	"github.com/micro/go-micro/util/log"
 )
 
 type Notification struct {

@@ -4,14 +4,15 @@ import (
 	"flag"
 	"fmt"
 	"os"
+	"text/tabwriter"
 
 	"github.com/kmaguswira/micro-clean/service/notification/config"
 	"github.com/kmaguswira/micro-clean/service/notification/handler"
 
+	"github.com/asim/go-micro/v3"
+	"github.com/asim/go-micro/v3/server"
+	"github.com/asim/go-micro/v3/util/log"
 	"github.com/kmaguswira/micro-clean/service/notification/subscriber"
-	"github.com/micro/go-micro"
-	"github.com/micro/go-micro/server"
-	"github.com/micro/go-micro/util/log"
 
 	notification "github.com/kmaguswira/micro-clean/service/notification/proto/notification"
 )
@@ -20,10 +21,14 @@ func main() {
 	env := flag.String("e", "local", "")
 
 	flag.Usage = func() {
-		fmt.Println("FLAG	DESCRIPTION		DEFAULT			OPTIONS")
-		fmt.Println("-e		Environment		local			development/local/local_test/staging/production/test/migrate")
+		w := tabwriter.NewWriter(os.Stdout, 0, 0, 3, ' ', tabwriter.Debug)
+		fmt.Fprintln(w, "FLAG \t DESCRIPTION \t DEFAULT \t OPTIONS")
+		fmt.Fprintln(w, "-e \t Environments \t local \t local/production")
+
+		w.Flush()
 		os.Exit(1)
 	}
+
 	flag.Parse()
 
 	config.Init(*env)
@@ -34,7 +39,7 @@ func bootstrap() {
 	// New Service
 	cfg := config.GetConfig()
 	service := micro.NewService(
-		micro.Name("kmaguswira.srv.notification"),
+		micro.Name("notification"),
 		micro.Version("latest"),
 		micro.Server(
 			server.NewServer(

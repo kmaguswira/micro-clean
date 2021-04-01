@@ -1,11 +1,6 @@
 package config
 
-import (
-	"encoding/json"
-	"fmt"
-	"io/ioutil"
-	"os"
-)
+import "github.com/kmaguswira/micro-clean/utils"
 
 type Config struct {
 	Name           string         `json:"name"`
@@ -49,18 +44,14 @@ type cors struct {
 	AllowCredentials bool     `json:"allowCredentials"`
 }
 
-var config *Config
+var config Config
 
 func Init(env string) {
-	jsonFile, err := os.Open("config/" + env + ".json")
-	if err != nil {
-		fmt.Println(err)
-	}
-	defer jsonFile.Close()
-	byteValue, _ := ioutil.ReadAll(jsonFile)
-	json.Unmarshal(byteValue, &config)
+	conf := utils.Config{}
+
+	conf.Parse(env, &config)
 }
 
-func GetConfig() *Config {
+func GetConfig() Config {
 	return config
 }

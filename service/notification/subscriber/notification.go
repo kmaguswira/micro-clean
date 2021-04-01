@@ -3,7 +3,7 @@ package subscriber
 import (
 	"context"
 
-	"github.com/micro/go-micro/util/log"
+	"github.com/asim/go-micro/v3/util/log"
 
 	notification "github.com/kmaguswira/micro-clean/service/notification/proto/notification"
 )

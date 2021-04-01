@@ -6,7 +6,7 @@ import (
 	"github.com/kmaguswira/micro-clean/service/account/application/global"
 	"github.com/kmaguswira/micro-clean/service/account/application/usecases"
 	account "github.com/kmaguswira/micro-clean/service/account/proto/account"
-	"github.com/micro/go-micro/util/log"
+	"github.com/asim/go-micro/v3/util/log"
 )
 
 func (t *Account) SignUp(ctx context.Context, req *account.SignUpRequest, res *account.SignUpResponse) error {

@@ -1,11 +1,11 @@
 package controllers
 
 import (
+	"github.com/asim/go-micro/v3/client"
 	"github.com/gin-gonic/gin"
 	"github.com/kmaguswira/micro-clean/app/web/requests"
 	file "github.com/kmaguswira/micro-clean/service/file/proto/file"
 	"github.com/kmaguswira/micro-clean/utils"
-	"github.com/micro/go-micro/client"
 )
 
 type documentController struct {
