@@ -10,11 +10,11 @@ type User struct {
 	Email               string `gorm:"type:varchar(255)"`
 	Username            string `gorm:"type:varchar(255)"`
 	Password            string `gorm:"type:varchar(255)"`
-	ActivationToken     string `gorm:"type:varchar(255)"`
-	ForgotPasswordToken string `gorm:"type:varchar(255)"`
-	RefreshToken        string `gorm:"type:varchar(255)"`
-	RoleID              string `gorm:"type:char(20) REFERENCES roles(id)"`
-	Role                Role   `gorm:"foreignkey:ID;association_foreignkey:RoleID"`
+	ActivationToken     string `gorm:"type:varchar(255);column:activationToken"`
+	ForgotPasswordToken string `gorm:"type:varchar(255);column:forgotPasswordToken"`
+	RefreshToken        string `gorm:"type:varchar(255);column:refreshToken"`
+	RoleID              string `gorm:"type:char(20);column:roleId"`
+	Role                Role
 	Status              string `gorm:"type:varchar(255)"`
 }
 

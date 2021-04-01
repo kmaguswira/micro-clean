@@ -28,7 +28,6 @@ type DB struct {
 	Password string `json:"password"`
 	Host     string `json:"host"`
 	Port     string `json:"port"`
-	Drop     bool   `json:"drop"`
 }
 
 var config Config

@@ -7,11 +7,11 @@ import (
 	"github.com/kmaguswira/micro-clean/service/account/application/global"
 
 	. "github.com/ahmetb/go-linq"
-	"github.com/jinzhu/gorm"
 	iface "github.com/kmaguswira/micro-clean/service/account/application/repositories"
 	"github.com/kmaguswira/micro-clean/service/account/config"
 	"github.com/kmaguswira/micro-clean/service/account/domain"
 	"github.com/kmaguswira/micro-clean/service/account/repositories/entity"
+	"gorm.io/gorm"
 )
 
 type readWriteRepository struct {
@@ -26,7 +26,7 @@ func NewReadWriteRepository(DB *gorm.DB) iface.IReadWriteRepository {
 	}
 	config := config.GetConfig()
 	return &readWriteRepository{
-		db: NewDB(config.Repositories.ReadWrite, Registered),
+		db: NewDB(config.Repositories.ReadWrite),
 	}
 }
 
