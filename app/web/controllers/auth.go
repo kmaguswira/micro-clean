@@ -79,13 +79,13 @@ func (t *authController) SignUp(c *gin.Context) {
 		return
 	}
 
-	//TODO: send email activation
 	ev := &notification.SendEmailRequest{
 		ToName:        signUpRequest.Name,
 		ToEmail:       signUpRequest.Email,
 		TemplateTitle: "activation",
 		Data:          []string{signUpRequest.Name},
 	}
+
 	if err := t.sendEmailPublisher.Publish(c, ev); err != nil {
 		log.Printf("error publishing: %v", err)
 	}
