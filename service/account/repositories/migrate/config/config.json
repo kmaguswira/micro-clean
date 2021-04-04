@@ -1,5 +1,4 @@
 {
-    "name": "local",
     "repositories": {
         "readWrite": {
             "driver": "mysql",
@@ -7,8 +6,7 @@
             "user": "root",
             "password": "root",
             "host": "mysql",
-            "port": "3306",
-            "drop": false
+            "port": "3306"
         }
         
     }

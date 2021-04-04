@@ -4,11 +4,11 @@ import (
 	"context"
 
 	. "github.com/ahmetb/go-linq"
+	"github.com/asim/go-micro/v3/util/log"
 	"github.com/kmaguswira/micro-clean/service/account/application/global"
 	"github.com/kmaguswira/micro-clean/service/account/application/usecases"
 	"github.com/kmaguswira/micro-clean/service/account/domain"
 	account "github.com/kmaguswira/micro-clean/service/account/proto/account"
-	"github.com/asim/go-micro/v3/util/log"
 )
 
 func (t *Account) CreateUser(ctx context.Context, req *account.CreateUserRequest, res *account.CreateUserResponse) error {
@@ -59,8 +59,8 @@ func (t *Account) FindAllUser(ctx context.Context, req *account.FindAllUserReque
 
 	input := global.FindAllInput{
 		QueryKey: req.Query.QueryKey,
-		Limit:    req.Query.Limit,
-		Offset:   req.Query.Offset,
+		Limit:    int(req.Query.Limit),
+		Offset:   int(req.Query.Offset),
 		Sort:     req.Query.Sort,
 	}
 

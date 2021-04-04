@@ -7,8 +7,8 @@ import (
 type FindAllInput struct {
 	QueryKey   string
 	QueryValue []interface{}
-	Limit      int64
-	Offset     int64
+	Limit      int
+	Offset     int
 	Sort       string
 }
 

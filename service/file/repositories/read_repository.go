@@ -4,12 +4,12 @@ import (
 	"fmt"
 
 	. "github.com/ahmetb/go-linq"
-	"github.com/jinzhu/gorm"
 	"github.com/kmaguswira/micro-clean/service/file/application/global"
 	iface "github.com/kmaguswira/micro-clean/service/file/application/repositories"
 	"github.com/kmaguswira/micro-clean/service/file/config"
 	"github.com/kmaguswira/micro-clean/service/file/domain"
 	"github.com/kmaguswira/micro-clean/service/file/repositories/entity"
+	"gorm.io/gorm"
 )
 
 type readRepository struct {
@@ -24,7 +24,7 @@ func NewReadRepository(DB *gorm.DB) iface.IReadRepository {
 	}
 	config := config.GetConfig()
 	return &readRepository{
-		db: NewDB(config.Repositories.Read, Registered),
+		db: NewDB(config.Repositories.Read),
 	}
 }
 

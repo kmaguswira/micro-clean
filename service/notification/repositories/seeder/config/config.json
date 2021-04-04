@@ -1,0 +1,14 @@
+{
+    "name": "local",
+    "repositories": {
+        "readWrite": {
+            "driver": "mysql",
+            "name": "micro_clean",
+            "user": "root",
+            "password": "root",
+            "host": "mysql",
+            "port": "3306"
+        }
+        
+    }
+}
