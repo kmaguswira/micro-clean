@@ -15,7 +15,7 @@ type emailTemplateController struct {
 
 func NewEmailTemplateController(client client.Client) emailTemplateController {
 	return emailTemplateController{
-		notificationService: notification.NewNotificationService("kmaguswira.srv.notification", client),
+		notificationService: notification.NewNotificationService("notification", client),
 	}
 }
 

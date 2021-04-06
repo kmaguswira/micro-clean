@@ -22,8 +22,8 @@ type authController struct {
 
 func NewAuthController(client client.Client) authController {
 	return authController{
-		accountService:     account.NewAccountService("kmaguswira.srv.account", client),
-		sendEmailPublisher: micro.NewPublisher("kmaguswira.srv.notification.send-email", client),
+		accountService:     account.NewAccountService("account", client),
+		sendEmailPublisher: micro.NewPublisher("notification.send-email", client),
 	}
 }
 

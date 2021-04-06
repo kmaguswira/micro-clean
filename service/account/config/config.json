@@ -1,7 +1,7 @@
 {
     "name": "local",
     "server": {
-        "name": "kmaguswira.srv.account",
+        "name": "account",
         "port": "3101",
         "secret": "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
     },

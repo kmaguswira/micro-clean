@@ -58,10 +58,10 @@ func bootstrap() {
 
 	// Register Struct as Subscriber
 	notificationSubscriber := subscriber.NewNotification()
-	micro.RegisterSubscriber("kmaguswira.srv.notification.send-email", service.Server(), notificationSubscriber)
+	micro.RegisterSubscriber("notification.send-email", service.Server(), notificationSubscriber)
 
 	// // Register Function as Subscriber
-	// micro.RegisterSubscriber("kmaguswira.srv.notification.send-email", service.Server(), subscriber.Handler)
+	// micro.RegisterSubscriber("notification.send-email", service.Server(), subscriber.Handler)
 
 	// Run service
 	if err := service.Run(); err != nil {

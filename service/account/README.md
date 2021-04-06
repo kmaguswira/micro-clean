@@ -16,7 +16,7 @@ micro new github.com/kmaguswira/micro-clean/service/account --namespace=kmaguswi
 
 ## Configuration
 
-- FQDN: kmaguswira.srv.account
+- FQDN: account
 - Type: srv
 - Alias: account
 

@@ -15,7 +15,7 @@ type documentController struct {
 
 func NewDocumentController(client client.Client) documentController {
 	return documentController{
-		fileService: file.NewFileService("kmaguswira.srv.file", client),
+		fileService: file.NewFileService("file", client),
 	}
 }
 

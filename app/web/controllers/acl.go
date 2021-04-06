@@ -17,7 +17,7 @@ type aclController struct {
 
 func NewACLController(client client.Client) aclController {
 	return aclController{
-		accountService: account.NewAccountService("kmaguswira.srv.account", client),
+		accountService: account.NewAccountService("account", client),
 	}
 }
 

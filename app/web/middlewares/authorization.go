@@ -19,7 +19,7 @@ type authorizationMiddleware struct {
 
 func NewAuthorizationMiddleware(client client.Client) authorizationMiddleware {
 	return authorizationMiddleware{
-		accountService: account.NewAccountService("kmaguswira.srv.account", client),
+		accountService: account.NewAccountService("account", client),
 	}
 }
 

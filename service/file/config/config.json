@@ -1,7 +1,7 @@
 {
     "name": "local",
     "server": {
-        "name": "kmaguswira.srv.file",
+        "name": "file",
         "port": "3103",
         "secret": "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
     },

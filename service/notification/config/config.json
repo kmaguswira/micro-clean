@@ -1,7 +1,7 @@
 {
     "name": "local",
     "server": {
-        "name": "kmaguswira.srv.notification",
+        "name": "notification",
         "port": "3102",
         "secret": "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
     },

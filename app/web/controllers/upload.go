@@ -21,7 +21,7 @@ type uploadController struct {
 
 func NewUploadController(client client.Client) uploadController {
 	return uploadController{
-		fileService: file.NewFileService("kmaguswira.srv.file", client),
+		fileService: file.NewFileService("file", client),
 	}
 }
 

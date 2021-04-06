@@ -15,7 +15,7 @@ type imageController struct {
 
 func NewImageController(client client.Client) imageController {
 	return imageController{
-		fileService: file.NewFileService("kmaguswira.srv.file", client),
+		fileService: file.NewFileService("file", client),
 	}
 }
 

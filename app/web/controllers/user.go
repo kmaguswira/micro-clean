@@ -15,7 +15,7 @@ type userController struct {
 
 func NewUserController(client client.Client) userController {
 	return userController{
-		accountService: account.NewAccountService("kmaguswira.srv.account", client),
+		accountService: account.NewAccountService("account", client),
 	}
 }
 

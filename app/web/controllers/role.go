@@ -15,7 +15,7 @@ type roleController struct {
 
 func NewRoleController(client client.Client) roleController {
 	return roleController{
-		accountService: account.NewAccountService("kmaguswira.srv.account", client),
+		accountService: account.NewAccountService("account", client),
 	}
 }
 

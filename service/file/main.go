@@ -39,7 +39,7 @@ func bootstrap() {
 	// New Service
 	cfg := config.GetConfig()
 	service := micro.NewService(
-		micro.Name("kmaguswira.srv.file"),
+		micro.Name("file"),
 		micro.Version("latest"),
 		micro.Server(
 			server.NewServer(
@@ -57,10 +57,10 @@ func bootstrap() {
 	file.RegisterFileHandler(service.Server(), fileHandler)
 
 	// Register Struct as Subscriber
-	// micro.RegisterSubscriber("kmaguswira.srv.file", service.Server(), new(subscriber.file))
+	// micro.RegisterSubscriber("file", service.Server(), new(subscriber.file))
 
 	// Register Function as Subscriber
-	// micro.RegisterSubscriber("kmaguswira.srv.file", service.Server(), subscriber.Handler)
+	// micro.RegisterSubscriber("file", service.Server(), subscriber.Handler)
 
 	// Run service
 	if err := service.Run(); err != nil {
